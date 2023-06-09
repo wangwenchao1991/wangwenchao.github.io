@@ -20,28 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="技术日记簿">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="查看Linux系统信息123456789101112131415arch      #显示机器的处理器架构(1)uname -m  #显示机器的处理器架构(2)uname -r  #显示正在使用的内核版本dmidecode -q          #显示硬件系统部件 - (SMBIOS &#x2F; DMI)hdparm -i &#x2F;dev&#x2F;hda    #罗列一个磁盘的架构特性hdparm -tT &#x2F;dev&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常用命令">
+<meta property="og:url" content="http://example.com/2019/05/09/%E8%BF%90%E7%BB%B4/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="技术日记簿">
+<meta property="og:description" content="查看Linux系统信息123456789101112131415arch      #显示机器的处理器架构(1)uname -m  #显示机器的处理器架构(2)uname -r  #显示正在使用的内核版本dmidecode -q          #显示硬件系统部件 - (SMBIOS &#x2F; DMI)hdparm -i &#x2F;dev&#x2F;hda    #罗列一个磁盘的架构特性hdparm -tT &#x2F;dev&#x2F;">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-09T05:30:13.000Z">
+<meta property="article:modified_time" content="2023-06-09T05:44:54.020Z">
 <meta property="article:author" content="wenchao">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2019/05/09/%E8%BF%90%E7%BB%B4/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>技术日记簿</title>
+  <title>Linux常用命令 | 技术日记簿</title>
   
 
 
@@ -185,9 +189,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -203,10 +208,9 @@
       <meta itemprop="name" content="技术日记簿">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/09/%E8%BF%90%E7%BB%B4/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Linux常用命令</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          Linux常用命令
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -236,7 +240,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="查看Linux系统信息"><a href="#查看Linux系统信息" class="headerlink" title="查看Linux系统信息"></a>查看Linux系统信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">arch      #显示机器的处理器架构(1)</span><br><span class="line">uname -m  #显示机器的处理器架构(2)</span><br><span class="line">uname -r  #显示正在使用的内核版本</span><br><span class="line">dmidecode -q          #显示硬件系统部件 - (SMBIOS / DMI)</span><br><span class="line">hdparm -i /dev/hda    #罗列一个磁盘的架构特性</span><br><span class="line">hdparm -tT /dev/sda   #在磁盘上执行测试性读取操作</span><br><span class="line">cat /proc/cpuinfo     #显示CPU info的信息</span><br><span class="line">cat /proc/interrupts  #显示中断</span><br><span class="line">cat /proc/meminfo     #校验内存使用</span><br><span class="line">cat /proc/swaps       #显示哪些swap被使用</span><br><span class="line">cat /proc/version     #显示内核的版本</span><br><span class="line">cat /proc/net/dev     #显示网络适配器及统计</span><br><span class="line">cat /proc/mounts      #显示已加载的文件系统</span><br><span class="line">lspci -tv   #罗列PCI设备</span><br><span class="line">lsusb -tv   #显示USB设备</span><br></pre></td></tr></table></figure>
+        <h2 id="查看Linux系统信息"><a href="#查看Linux系统信息" class="headerlink" title="查看Linux系统信息"></a>查看Linux系统信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">arch      #显示机器的处理器架构(1)</span><br><span class="line">uname -m  #显示机器的处理器架构(2)</span><br><span class="line">uname -r  #显示正在使用的内核版本</span><br><span class="line">dmidecode -q          #显示硬件系统部件 - (SMBIOS / DMI)</span><br><span class="line">hdparm -i /dev/hda    #罗列一个磁盘的架构特性</span><br><span class="line">hdparm -tT /dev/sda   #在磁盘上执行测试性读取操作</span><br><span class="line">cat /proc/cpuinfo     #显示CPU info的信息</span><br><span class="line">cat /proc/interrupts  #显示中断</span><br><span class="line">cat /proc/meminfo     #校验内存使用</span><br><span class="line">cat /proc/swaps       #显示哪些swap被使用</span><br><span class="line">cat /proc/version     #显示内核的版本</span><br><span class="line">cat /proc/net/dev     #显示网络适配器及统计</span><br><span class="line">cat /proc/mounts      #显示已加载的文件系统</span><br><span class="line">lspci -tv   #罗列PCI设备</span><br><span class="line">lsusb -tv   #显示USB设备</span><br></pre></td></tr></table></figure>
 <h2 id="date-显示系统日期"><a href="#date-显示系统日期" class="headerlink" title="date 显示系统日期"></a>date 显示系统日期</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cal 2007              #显示2007年的日历表</span><br><span class="line">date 041217002007.00   #设置日期和时间 - 月日时分年.秒</span><br><span class="line">clock -w              #将时间修改保存到 BIOS</span><br></pre></td></tr></table></figure>
 <h2 id="关机-关机、重启、登出"><a href="#关机-关机、重启、登出" class="headerlink" title="关机(关机、重启、登出 )"></a>关机(关机、重启、登出 )</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shutdown -h now    #关闭系统(1)</span><br><span class="line">init 0            #关闭系统(2)</span><br><span class="line">telinit 0         #关闭系统(3)</span><br><span class="line">shutdown -h hours:minutes &amp;   #按预定时间关闭系统</span><br><span class="line">shutdown -c       #取消按预定时间关闭系统</span><br><span class="line">shutdown -r now   #重启(1)</span><br><span class="line">reboot   #重启(2)</span><br><span class="line">logout   #注销</span><br></pre></td></tr></table></figure>
 <h2 id="文件和目录"><a href="#文件和目录" class="headerlink" title="文件和目录"></a>文件和目录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">cd /home    #进入 &#x27;/ home&#x27; 目录&#x27;</span><br><span class="line">cd ..       #返回上一级目录</span><br><span class="line">cd ../..    #返回上两级目录</span><br><span class="line">cd          #进入个人的主目录</span><br><span class="line">cd ~user1   #进入个人的主目录</span><br><span class="line">cd -       #返回上次所在的目录</span><br><span class="line">pwd        #显示工作路径</span><br><span class="line">ls      #查看目录中的文件</span><br><span class="line">ls -F   #查看目录中的文件</span><br><span class="line">ls -l   #显示文件和目录的详细资料</span><br><span class="line">ls -a   #显示隐藏文件</span><br><span class="line">ls *[0-9]*   #显示包含数字的文件名和目录名</span><br><span class="line">tree         #显示文件和目录由根目录开始的树形结构(1)</span><br><span class="line">lstree       #显示文件和目录由根目录开始的树形结构(2)</span><br><span class="line">mkdir dir1         #创建一个叫做 &#x27;dir1&#x27; 的目录&#x27;</span><br><span class="line">mkdir dir1 dir2    #同时创建两个目录</span><br><span class="line">mkdir -p /tmp/dir1/dir2   #创建一个目录树</span><br><span class="line">rm -f file1    #删除一个叫做 &#x27;file1&#x27; 的文件&#x27;</span><br><span class="line">rmdir dir1     #删除一个叫做 &#x27;dir1&#x27; 的目录&#x27;</span><br><span class="line">rm -rf dir1    #删除一个叫做 &#x27;dir1&#x27; 的目录并同时删除其内容</span><br><span class="line">rm -rf dir1 dir2    #同时删除两个目录及它们的内容</span><br><span class="line">mv dir1 new_dir     #重命名/移动 一个目录</span><br><span class="line">cp file1 file2     #复制一个文件</span><br><span class="line">cp dir/* .         #复制一个目录下的所有文件到当前工作目录</span><br><span class="line">cp -a /tmp/dir1 .   #复制一个目录到当前工作目录</span><br><span class="line">cp -a dir1 dir2     #复制一个目录</span><br><span class="line">ln -s file1 lnk1  #创建一个指向文件或目录的软链接</span><br><span class="line">ln file1 lnk1     #创建一个指向文件或目录的物理链接</span><br><span class="line">touch -t 0712250000 file1   #修改一个文件或目录的时间戳 - (YYMMDDhhmm)</span><br><span class="line">file file1 outputs the mime type of the file as texticonv -l   #列出已知的编码</span><br><span class="line">iconv -f fromEncoding -t toEncoding inputFile &gt; outputFile creates a new from the given input file by assuming it is encoded in fromEncoding and converting it to toEncoding.</span><br><span class="line">find . -maxdepth 1 -name *.jpg -print -exec convert &quot;&#123;&#125;&quot; -resize 80x60 &quot;thumbs/&#123;&#125;&quot; \; batch resize files in the current directory and send them to a thumbnails directory (requires convert from Imagemagick)</span><br></pre></td></tr></table></figure>
@@ -261,21 +265,23 @@
 <h2 id="光盘"><a href="#光盘" class="headerlink" title="光盘"></a>光盘</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cdrecord -v gracetime=2 dev=/dev/cdrom -eject blank=fast -force #清空一个可复写的光盘内容</span><br><span class="line">mkisofs /dev/cdrom &gt; cd.iso             #在磁盘上创建一个光盘的iso镜像文件</span><br><span class="line">mkisofs /dev/cdrom | gzip &gt; cd_iso.gz    #在磁盘上创建一个压缩了的光盘iso镜像文件</span><br><span class="line">mkisofs -J -allow-leading-dots -R -V &quot;Label CD&quot; -iso-level 4 -o ./cd.iso data_cd #创建一个目录的iso镜像文件</span><br><span class="line">cdrecord -v dev=/dev/cdrom cd.iso               #刻录一个ISO镜像文件</span><br><span class="line">gzip -dc cd_iso.gz | cdrecord dev=/dev/cdrom -  #刻录一个压缩了的ISO镜像文件</span><br><span class="line">mount -o loop cd.iso /mnt/iso                  #挂载一个ISO镜像文件</span><br><span class="line">cd-paranoia -B             #从一个CD光盘转录音轨到 wav 文件中</span><br><span class="line">cd-paranoia -- &quot;-3&quot;        #从一个CD光盘转录音轨到 wav 文件中（参数-3）</span><br><span class="line">cdrecord --scanbus         #扫描总线以识别scsi通道</span><br><span class="line">dd if=/dev/hdc | md5sum    #校验一个设备的md5sum编码，例如一张 CD</span><br></pre></td></tr></table></figure>
 <h2 id="网络-（以太网和WIFI无线）"><a href="#网络-（以太网和WIFI无线）" class="headerlink" title="网络 - （以太网和WIFI无线）"></a>网络 - （以太网和WIFI无线）</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0    #显示一个以太网卡的配置</span><br><span class="line">ifup eth0        #启用一个 &#x27;eth0&#x27; 网络设备</span><br><span class="line">ifdown eth0      #禁用一个 &#x27;eth0&#x27; 网络设备</span><br><span class="line">ifconfig eth0 192.168.1.1 netmask 255.255.255.0     #控制IP地址</span><br><span class="line">ifconfig eth0 promisc     #设置 &#x27;eth0&#x27; 成混杂模式以嗅探数据包 (sniffing)</span><br><span class="line">dhclient eth0            #以dhcp模式启用 &#x27;eth0&#x27;</span><br><span class="line">route -n    #查看路由表</span><br><span class="line">route add -net 0/0 gw IP_Gateway    #配置默认网关</span><br><span class="line">route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.1.1 #配置静态路由到达网络&#x27;192.168.0.0/16&#x27;</span><br><span class="line">route del 0/0 gw IP_gateway        #删除静态路由hostname #查看机器名</span><br><span class="line">host www.example.com       #把一个主机名解析到一个网际地址或把一个网际地址解析到一个主机名。</span><br><span class="line">nslookup www.example.com   #用于查询DNS的记录，查看域名解析是否正常，在网络故障的时候用来诊断网络问题。</span><br><span class="line">ip link show            #查看网卡信息</span><br><span class="line">mii-tool                #用于查看、管理介质的网络接口的状态</span><br><span class="line">ethtool                 #用于查询和设置网卡配置</span><br><span class="line">netstat -tupl           #用于显示TCP/UDP的状态信息</span><br><span class="line">tcpdump tcp port 80     #显示所有http协议的流量</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -328,6 +334,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BLinux%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">查看Linux系统信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#date-%E6%98%BE%E7%A4%BA%E7%B3%BB%E7%BB%9F%E6%97%A5%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">date 显示系统日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E6%9C%BA-%E5%85%B3%E6%9C%BA%E3%80%81%E9%87%8D%E5%90%AF%E3%80%81%E7%99%BB%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text">关机(关机、重启、登出 )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">文件和目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2"><span class="nav-number">5.</span> <span class="nav-text">文件搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">6.</span> <span class="nav-text">挂载文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E7%9B%B8%E5%85%B3"><span class="nav-number">7.</span> <span class="nav-text">磁盘空间相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%BE%A4%E7%BB%84"><span class="nav-number">8.</span> <span class="nav-text">用户和群组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90"><span class="nav-number">9.</span> <span class="nav-text">文件权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7"><span class="nav-number">10.</span> <span class="nav-text">文件的特殊属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%92%8C%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">打包和压缩文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPM%E5%8C%85%EF%BC%88Fedora-Redhat%E5%8F%8A%E7%B1%BB%E4%BC%BC%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">RPM包（Fedora, Redhat及类似系统）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#YUM%EF%BC%88Fedora-RedHat%E5%8F%8A%E7%B1%BB%E4%BC%BC%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">13.</span> <span class="nav-text">YUM（Fedora, RedHat及类似系统）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DEB%E5%8C%85-Debian-Ubuntu%E5%8F%8A%E7%B1%BB%E4%BC%BC%E7%B3%BB%E7%BB%9F"><span class="nav-number">14.</span> <span class="nav-text">DEB包 (Debian, Ubuntu及类似系统)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APT%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7-Debian-Ubuntu%E5%8F%8A%E7%B1%BB%E4%BC%BC%E7%B3%BB%E7%BB%9F"><span class="nav-number">15.</span> <span class="nav-text">APT软件工具 (Debian, Ubuntu及类似系统)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9"><span class="nav-number">16.</span> <span class="nav-text">查看文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86"><span class="nav-number">17.</span> <span class="nav-text">文本处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2"><span class="nav-number">18.</span> <span class="nav-text">字符设置和文件格式转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90"><span class="nav-number">19.</span> <span class="nav-text">文件系统分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">20.</span> <span class="nav-text">初始化一个文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SWAP%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">21.</span> <span class="nav-text">SWAP文件系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD"><span class="nav-number">22.</span> <span class="nav-text">备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%89%E7%9B%98"><span class="nav-number">23.</span> <span class="nav-text">光盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C-%EF%BC%88%E4%BB%A5%E5%A4%AA%E7%BD%91%E5%92%8CWIFI%E6%97%A0%E7%BA%BF%EF%BC%89"><span class="nav-number">24.</span> <span class="nav-text">网络 - （以太网和WIFI无线）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
