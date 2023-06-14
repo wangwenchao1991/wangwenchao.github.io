@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/third-part/css/ali.font.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Docker自学笔记概述：Docker镜像的设计，使得Docker打破过去【程序即应用】的观念。通过镜像（images）将作业系统核心除外，运作应用程式所需的系统环境，由上而下打包，达到应用程式跨平台间的无缝接轨运作。 基于go语言开发实现的云开源项目。主要目标是通过对应用组件的封装，分发，部署，运行等生命周期的管理。使得应用及其运行环境能做到一次封装，到处运行。 解决了运行环境和配置问题的软件容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker自学笔记">
+<meta property="og:url" content="http://example.com/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="技术日记簿">
+<meta property="og:description" content="Docker自学笔记概述：Docker镜像的设计，使得Docker打破过去【程序即应用】的观念。通过镜像（images）将作业系统核心除外，运作应用程式所需的系统环境，由上而下打包，达到应用程式跨平台间的无缝接轨运作。 基于go语言开发实现的云开源项目。主要目标是通过对应用组件的封装，分发，部署，运行等生命周期的管理。使得应用及其运行环境能做到一次封装，到处运行。 解决了运行环境和配置问题的软件容">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-25T11:20:13.000Z">
+<meta property="article:modified_time" content="2023-06-13T12:16:03.852Z">
+<meta property="article:author" content="wenchao">
+<meta property="article:tag" content="容器">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Docker自学笔记 | 技术日记簿</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="技术日记簿" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">技术日记簿</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/wangwenchao1991" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wenchao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="技术日记簿">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker自学笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-25 19:20:13" itemprop="dateCreated datePublished" datetime="2021-05-25T19:20:13+08:00">2021-05-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-13 20:16:03" itemprop="dateModified" datetime="2023-06-13T20:16:03+08:00">2023-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%B9%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">容器</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Docker自学笔记"><a href="#Docker自学笔记" class="headerlink" title="Docker自学笔记"></a>Docker自学笔记</h2><h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Docker镜像的设计，使得Docker打破过去【程序即应用】的观念。通过镜像（<em>images</em>）将作业系统核心除外，运作应用程式所需的系统环境，由上而下打包，达到应用程式跨平台间的无缝接轨运作。</p>
+<p>基于<strong>go语言</strong>开发实现的云开源项目。主要目标是通过对应用组件的封装，分发，部署，运行等生命周期的管理。使得应用及其运行环境能做到<strong>一次封装，到处运行</strong>。</p>
+<p>解决了运行环境和配置问题的软件容器，方便做持续集成并有助于整体发布的容器虚拟化技术</p>
+<h3 id="基本组成："><a href="#基本组成：" class="headerlink" title="基本组成："></a>基本组成：</h3><ul>
+<li>镜像 image  ：是一个只读的模板，类似于java类</li>
+<li>容器 container ：通过镜像创建，类似于java类的实例</li>
+<li>仓库 repository：集中存放镜像的场所</li>
+</ul>
+<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><p>步骤：</p>
+<ol>
+<li>yum  install -y -epel-release  （docker使用EPEL发布，RHEL系的OS首先要确保已经持有EPEL仓库）</li>
+<li>yum install -y docker-io</li>
+<li>安装后配置文件：&#x2F;etc&#x2F;sysconfig&#x2F;docker</li>
+<li>启动Docker后台服务：service docker start</li>
+<li>版本验证：docker version</li>
+</ol>
+<p>阿里云镜像加速配置：</p>
+<ul>
+<li>登录阿里云管理控制台获取镜像加速专属<em>加速器地址</em></li>
+<li>&#x2F;etc&#x2F;sysconfig&#x2F;docker配置文件中 ，配置 other_ages&#x3D;”–registry-mirror&#x3D;<em>加速器地址</em>“</li>
+<li>检查是否失效 ps -ef|grep docker 查看进程中是否包含该<em>加速器地址</em></li>
+</ul>
+<p>HelloWorld镜像:</p>
+<ul>
+<li><p>docker run hello-world</p>
+</li>
+<li><p>先从本地查找镜像，没有则取远程下载</p>
+</li>
+</ul>
+<h3 id="运行原理："><a href="#运行原理：" class="headerlink" title="运行原理："></a>运行原理：</h3><ul>
+<li>Docker是一个client-serve结构的系统，Docker守护进程运行在主机上，然后通过socker连接从客户</li>
+</ul>
+<p>端访问，守护进程从客户端接受命令并管理运行在主机上的容器。可以把容器看作一个精简版的Linux环境。</p>
+<ul>
+<li><p>为什么比虚拟机快？</p>
+<ul>
+<li>docker有着比虚拟机更少的抽象层。由于docker不需要Hypervisor实现硬件资源虚拟化，运行在docker容器上的程序直接使用的都是实际物理机的硬件资源。因此在CPU、内存利用率上docker将会在效率上有明显优势。</li>
+<li>docker利用的是宿主机的内核，而不需要Guest OS。因此当新建一个容器时，docker不需要和虚拟机一样重新加载一个操作系统内核。然而避免引寻，加载操作系用内核是个比较费时费资源的过程，当新建一个虚拟机时，虚拟机软件需要加载Guest OS,新建过程是分钟级别的。而docker直接利用宿主机的操作系用，新建一个docker容器时秒级的。</li>
+</ul>
+</li>
+<li><p>对比：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Docker容器</th>
+<th>虚拟机（VM）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统</td>
+<td>与宿主机共享OS</td>
+<td>宿主机OS上运行虚拟机OS</td>
+</tr>
+<tr>
+<td>存储大小</td>
+<td>镜像小，便于存储和传输</td>
+<td>镜像庞大（vmdk,vdi等）</td>
+</tr>
+<tr>
+<td>运行性能</td>
+<td>几乎无额外性能损失</td>
+<td>操作系统额外的CPU，内存消耗</td>
+</tr>
+<tr>
+<td>移植性</td>
+<td>轻便，灵活，适用于Linux</td>
+<td>笨重，与虚拟化技术耦合度高</td>
+</tr>
+<tr>
+<td>硬件亲和性</td>
+<td>面向软件开发者</td>
+<td>面向硬件运维者</td>
+</tr>
+<tr>
+<td>部署速度</td>
+<td>快速，秒级</td>
+<td>较慢，10s以上</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h3><ol>
+<li><p>帮助命令</p>
+<ul>
+<li>docker version</li>
+<li>docker info</li>
+<li>docker –help</li>
+</ul>
+</li>
+<li><p>镜像命令</p>
+<ul>
+<li>docker images：列出本地主机上的镜像<ul>
+<li>-a: 所有镜像</li>
+<li>-q:只显示镜像ID</li>
+<li>–digests:显示镜像的摘要信息</li>
+<li>–no-trunc:显示完整 的镜像信息</li>
+</ul>
+</li>
+<li>docker search [xxx]：搜索hub上的镜像<ul>
+<li>-s : 星数超过指定数量的  -s 100  [options]</li>
+</ul>
+</li>
+<li>docker pull [xxx:（版本号，默认时latest）]: 下载镜像</li>
+<li>docker rmi [xxx]:（版本号，默认时latest：删除某个镜像 <ul>
+<li>-f：强制删除</li>
+<li>删除多个  docker rmi -f 镜像名1:tag  镜像名2:tag</li>
+<li>删除全部 docker rmi -f ${docker images -qa}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>容器命令</p>
+<ul>
+<li><p>新建并启动容器： docker run [OPTIONS] IMAGE [COMMAND] [ARG…]</p>
+<p>​    常用options:</p>
+<ul>
+<li>–name :为容器指定一个名字</li>
+<li>-d:后台运行容器，返回容器id，即启动守护式容器</li>
+<li>-i:以交互模式运行容器，通常与*-t* 同时使用</li>
+<li>-t:为容器重新分配一个伪输入终端，通常与*-i*同时使用</li>
+<li>-P:随机端口映射</li>
+<li>-p:指定端口映射，格式：ip:hostPort:containerPort | ip:containerPort | <strong>hostPort:containerPort</strong> | containerPort</li>
+</ul>
+</li>
+<li><p>列出当前所有正在运行的容器：docker ps [OPTIONS]</p>
+<ul>
+<li>-a：列出当前所有正在运行的容器+历史上运行过的</li>
+<li>-l：显示最近创建的容器</li>
+<li>-n：显示最近n个创建的容器</li>
+<li>-q：静默模式，只显示容器编号</li>
+<li>–no-trunc：不截断输出</li>
+</ul>
+</li>
+<li><p>退出容器：</p>
+<ul>
+<li>exit :容器停止退出</li>
+<li>ctrl + P + Q：容器不停止退出</li>
+</ul>
+</li>
+<li><p>启动容器：</p>
+<p> docker start 容器ID或者容器名</p>
+</li>
+<li><p>重启容器：</p>
+<p> dockers restart 容器ID或者容器名</p>
+</li>
+<li><p>停止容器</p>
+<p> docker stop 容器ID或者容器名</p>
+</li>
+<li><p>强制停止</p>
+<p>  docker kill  容器ID或者容器名</p>
+</li>
+<li><p>删除容器</p>
+<p>  docker rm 容器ID或者容器名  , -f 强制删除</p>
+<p>  删除多个容器： docker rm -f ${docker ps - a -q} ,  docker ps -a -q | xargs docker rm</p>
+<blockquote>
+<p><strong>重要</strong>：</p>
+<ul>
+<li><p>启动守护式容器： docker run -d 容器名</p>
+</li>
+<li><p>查看容器日志： docker logs -f -t –tail 容器ID</p>
+</li>
+<li><p>查看容器内运行的进程：docker top 容器ID</p>
+</li>
+<li><p>查看容器内部细节：docker inspect 容器ID</p>
+</li>
+<li><p>进入正在运行的容器并以命令行交互：</p>
+<p>docker exec -it 容器ID bashShell，在容器外打开新的终端，并且可以启动新的进程</p>
+<p>重新进入 docker attach 容器ID，直接进入容器启动命令的终端，不会启动新的进程</p>
+</li>
+<li><p>从容器内拷贝文件到主机上：docker cp 容器ID:容器内路径 目的主机路径</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="镜像原理："><a href="#镜像原理：" class="headerlink" title="镜像原理："></a>镜像原理：</h3><p>​    <em>镜像是一种轻量级的，可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含软件运行时的所有内容，包括代码，运行时，库，环境变量和配置文件。</em></p>
+<h4 id="1-UnionFS（联合文件系统）"><a href="#1-UnionFS（联合文件系统）" class="headerlink" title="1) UnionFS（联合文件系统）"></a>1) UnionFS（联合文件系统）</h4><p>​    Union文件系统是一种分层，轻量级并且高性能的文件系统，<strong>它支持对文件系统的修改作为一次提交来一层层的叠加</strong>，同时可以将不用目录挂载到同一个虚拟文件系统下。Union文件系统是Docker镜像的基础。镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体镜像。</p>
+<p>​    特性：一次同时加载多个文件系统，但从外表看来，只能看到一个文件系统，联合加载会把各层文件系统叠加起来，这样最终的文件系统会包含所有底层文件和目录。</p>
+<h4 id="2-Docker镜像加载原理"><a href="#2-Docker镜像加载原理" class="headerlink" title="2) Docker镜像加载原理"></a>2) Docker镜像加载原理</h4><p>​    docker的镜像实际上由一层一层的文件系统组成，这种层级的文件系统就是UnionFS。</p>
+<blockquote>
+<p>bootfs(boot file system)主要包含bootloader和kernel，bootloader主要是引导加载kernel,Linux刚启动时会加载bootfs文件系统，<strong>在Docker镜像的最底层时bootfs</strong>。这一层与Linux&#x2F;Unix系统是一样的，包含boot加载器和内核，当boot加载完成之后整个内核就在内存中了，此时内存的使用权已由bootfs转交给内核，此时系统也会卸载bootfs。</p>
+</blockquote>
+<blockquote>
+<p>rootfs(root file system)，在bootfs之上，包含的就是Linux系统中的 &#x2F;dev,&#x2F;proc,&#x2F;bin,&#x2F;etc等标准目录和文件。rootfs就是各种不同的操作系统发行版，比如Ubuntu,Centos等</p>
+</blockquote>
+<h4 id="3-分层的镜像"><a href="#3-分层的镜像" class="headerlink" title="3) 分层的镜像"></a>3) 分层的镜像</h4><h4 id="4-为什么Docker镜像采用分层结构？"><a href="#4-为什么Docker镜像采用分层结构？" class="headerlink" title="4) 为什么Docker镜像采用分层结构？"></a>4) 为什么Docker镜像采用分层结构？</h4><pre><code> 共享资源：
+</code></pre>
+<p>​    比如当有多个镜像都从相同的base镜像构建而来，那么宿主机只需要在磁盘上保存一份base镜像，同时内存中也只需要加载一份base镜像，就可以为所有容器服务了。而且镜像的每一层都可以被共享。</p>
+<p> 特点：Docker镜像都是只读的，当启动容器时，和一个新的可写层被加载到镜像的顶部。这一层通常被称为【容器层】，容器层之下的都叫做【镜像层】</p>
+<h3 id="镜像commit"><a href="#镜像commit" class="headerlink" title="镜像commit:"></a>镜像commit:</h3><blockquote>
+<p>docker commit 提交一个容器副本使之成为一个新的镜像</p>
+<p>docker commit -m &#x3D; “提交的描述信息” -a&#x3D;”作者” 容器ID 要创建的目标镜像名:[标签名    ]</p>
+</blockquote>
+<h3 id="Docker容器数据卷："><a href="#Docker容器数据卷：" class="headerlink" title="Docker容器数据卷："></a>Docker容器数据卷：</h3><blockquote>
+<p>​    卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统，因此能绕过ufs提供一些用于<strong>持久存储</strong>或<strong>共享数据</strong>的特性：</p>
+<p>​    数据卷的目的就是做数据的持久化，完全独立于容器的生存周期，因此Docker不会再容器删除时删除其挂载的数据卷</p>
+<p>特点：</p>
+<pre><code>* 数据卷可在容器之间共享或重用数据
+* 卷中的更改可直接生效
+* 卷中的更改不会包含在镜像的更新中
+* 卷的生命周期一直持续到没有容器使用它为止
+</code></pre>
+</blockquote>
+<h4 id="容器内添加数据卷："><a href="#容器内添加数据卷：" class="headerlink" title="容器内添加数据卷："></a>容器内添加数据卷：</h4><h5 id="1）-命令添加-v"><a href="#1）-命令添加-v" class="headerlink" title="1） 命令添加  -v"></a>1） 命令添加  <em>-v</em></h5><p>​    docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录  镜像名</p>
+<p>使用 docker inspect 容器ID ,展示的json中可查看是否添加数据卷成功（”volumes“）</p>
+<p>带权限的命令</p>
+<p>docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录***:ro***  镜像名  (ro: read  only)</p>
+<h5 id="2）DockerFile添加"><a href="#2）DockerFile添加" class="headerlink" title="2）DockerFile添加"></a>2）DockerFile添加</h5><p>​     可在Dockerfile中使用VOLUME指令来给镜像添加一个或多个数据卷。</p>
+<ol>
+<li><p>构建DockerFile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># volume test</span><br><span class="line">FROM centos</span><br><span class="line">VOLUMN [&quot;/data_1&quot;,&quot;data_2&quot;]</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build命令生成镜像</p>
+<blockquote>
+<p>docker build -f   dockerfile文件路径  -t 镜像名 .</p>
+</blockquote>
+</li>
+<li><p>run 运行容器</p>
+</li>
+</ol>
+<p><em>docker会默认根据dockerfile中的数据卷生成宿主机目录</em></p>
+<h4 id="数据卷容器："><a href="#数据卷容器：" class="headerlink" title="数据卷容器："></a>数据卷容器：</h4><blockquote>
+<p>​    命名的容器挂载数据卷，其他容器通过挂载这个（父容器）实现数据共享，挂载数据卷的容器，称之为数据卷容器。</p>
+<p>​    容器之间配置信息的传递，数据卷的生命周期一直持续到没有容器使用它为止。</p>
+<ol>
+<li><p>先启动一个父容器 dc01</p>
+</li>
+<li><p>dc02继承自dc01 ,run 加参数   –volumes from dc01</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile:"></a>DockerFile:</h3><h4 id="1-是什么？"><a href="#1-是什么？" class="headerlink" title="1)  是什么？"></a>1)  是什么？</h4><p>​    Dockerfile是用来构建docker镜像的构建文件，是由一系列命令和参数构成的脚本。</p>
+<p>​    构建步骤：编写dockfile文件  -&gt;  docker build -&gt; docker run</p>
+<blockquote>
+<p>DockerFile文件格式基础：</p>
+<ol>
+<li>每条保留字指令都必须为大写字母且后面需跟随至少一个参数</li>
+<li>指令按照从上到下，顺序执行</li>
+<li>#表示注释</li>
+<li>每条指令都会创建一个新的镜像层，并对镜像进行提交</li>
+</ol>
+<p>执行DockerFile大致流程：</p>
+<ol>
+<li>docker从基础镜像运行一个容器</li>
+<li>执行一条指令并对容器做出修改</li>
+<li>执行类似docker commit 的操作提交一个新的镜像层</li>
+<li>docker基于刚提交的镜像运行一个新容器</li>
+<li>执行dockerfile中的下一条指令直到所有容器都执行完成</li>
+</ol>
+</blockquote>
+<h4 id="2）DockerFile-保留字指令"><a href="#2）DockerFile-保留字指令" class="headerlink" title="2）DockerFile 保留字指令"></a>2）DockerFile 保留字指令</h4><ul>
+<li>FROM    基础镜像，当前镜像基于哪个镜像的</li>
+<li>MAINTAINER    镜像维护者的姓名和邮箱</li>
+<li>RUN    容器构建时需要运行的命令</li>
+<li>EXPOSE    当前容器对外暴露的端口</li>
+<li>WORKDIR    执行在创建容器后，终端默认登陆进来后的工作目录</li>
+<li>ENV    用于构建镜像过程中设置环境变量</li>
+<li>ADD    将宿主目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包</li>
+<li>COPY    类似ADD,拷贝文件和目录到镜像中</li>
+<li>VOLUME    容器数据卷，用于数据保存和持久化工作</li>
+<li>CMD    执行一个容器启动时要运行的命令，Dockfile可以有多个CMD命令，但是只有最后一个生效，CMD会被docker run之后的参数替换</li>
+<li>ENTRYPOINT    指定一个容器启动时要运行的命令，和CMD一样，都是在指定容器启动程序和参数。不会像CMD最后的CMD会替换之前的CMD,</li>
+<li>ONBUILD    当构建一个被继承的Dockerfile时运行命令，父镜像在被子镜像继承后父镜像的onbuild被触发</li>
+</ul>
+<h4 id="3）案例"><a href="#3）案例" class="headerlink" title="3）案例"></a>3）案例</h4><blockquote>
+<p>Base镜像（scratch）,Docker Hub上99%的镜像都是通过在base镜像中安装和配置需要的软件构建出来的</p>
+</blockquote>
+<h5 id="1）-自定义镜像，基于centos修改"><a href="#1）-自定义镜像，基于centos修改" class="headerlink" title="1） 自定义镜像，基于centos修改"></a>1） 自定义镜像，基于centos修改</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM centos  ##来源</span><br><span class="line">MAINTAINER vicent&lt;vincent@163.com&gt;  ##作者信息</span><br><span class="line">ENV MYPATH /usr/local ## 设置环境变量，供后面引用</span><br><span class="line">WORKDIR &amp;MYPATH  ## 设置工作目录 </span><br><span class="line">RUN yum -y install vim   ## 容器构建时需要运行的命令</span><br><span class="line">RUN yum -y install net-tools</span><br><span class="line">EXPOSE 80  ## 容器对外暴露的端口</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>​    DockFile中 CMD和ENTRYPOINT 区别：</p>
+<p>例：DockerFile1: CMD [“curl”,”-s”,”http:<a target="_blank" rel="noopener" href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​        DockerFile2: ENTRYPOINT [“curl”,”-s”,”http:<a target="_blank" rel="noopener" href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​    当使用docker run 后面更参数 -i 时，DockerFile1镜像的容器，会报错，因为相当于使用CMD -i 替换了 CMD [“curl”,”-s”,”http:<a target="_blank" rel="noopener" href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​    而使用DockerFile2镜像的容器，正常，因为相当于 CMD [“curl”,”-s”,”http:<a target="_blank" rel="noopener" href="http://www.baidu.com" ]后追加了">www.baidu.com&quot;]后追加了</a> ”-i“</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AE%B9%E5%99%A8/" rel="tag"># 容器</a>
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/09/%E8%BF%90%E7%BB%B4/vim%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7/" rel="prev" title="vim常用技巧">
+      <i class="fa fa-chevron-left"></i> vim常用技巧
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">Docker自学笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">概述：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">基本组成：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">安装：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">1.4.</span> <span class="nav-text">运行原理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.5.</span> <span class="nav-text">常用命令：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-number">1.6.</span> <span class="nav-text">镜像原理：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-UnionFS%EF%BC%88%E8%81%94%E5%90%88%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%EF%BC%89"><span class="nav-number">1.6.1.</span> <span class="nav-text">1) UnionFS（联合文件系统）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Docker%E9%95%9C%E5%83%8F%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86"><span class="nav-number">1.6.2.</span> <span class="nav-text">2) Docker镜像加载原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%88%86%E5%B1%82%E7%9A%84%E9%95%9C%E5%83%8F"><span class="nav-number">1.6.3.</span> <span class="nav-text">3) 分层的镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88Docker%E9%95%9C%E5%83%8F%E9%87%87%E7%94%A8%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%EF%BC%9F"><span class="nav-number">1.6.4.</span> <span class="nav-text">4) 为什么Docker镜像采用分层结构？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8Fcommit"><span class="nav-number">1.7.</span> <span class="nav-text">镜像commit:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7%EF%BC%9A"><span class="nav-number">1.8.</span> <span class="nav-text">Docker容器数据卷：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%86%85%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%8D%B7%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">容器内添加数据卷：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89-%E5%91%BD%E4%BB%A4%E6%B7%BB%E5%8A%A0-v"><span class="nav-number">1.8.1.1.</span> <span class="nav-text">1） 命令添加  -v</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89DockerFile%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.8.1.2.</span> <span class="nav-text">2）DockerFile添加</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E5%AE%B9%E5%99%A8%EF%BC%9A"><span class="nav-number">1.8.2.</span> <span class="nav-text">数据卷容器：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DockerFile"><span class="nav-number">1.9.</span> <span class="nav-text">DockerFile:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.9.1.</span> <span class="nav-text">1)  是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89DockerFile-%E4%BF%9D%E7%95%99%E5%AD%97%E6%8C%87%E4%BB%A4"><span class="nav-number">1.9.2.</span> <span class="nav-text">2）DockerFile 保留字指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E6%A1%88%E4%BE%8B"><span class="nav-number">1.9.3.</span> <span class="nav-text">3）案例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F%EF%BC%8C%E5%9F%BA%E4%BA%8Ecentos%E4%BF%AE%E6%94%B9"><span class="nav-number">1.9.3.1.</span> <span class="nav-text">1） 自定义镜像，基于centos修改</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wenchao"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">wenchao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangwenchao1991" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangwenchao1991" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/349205260" title="Bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;349205260" rel="noopener" target="_blank"><i class="iconfont icon-bilibili fa-fw"></i>Bilibili</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wenchao</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
