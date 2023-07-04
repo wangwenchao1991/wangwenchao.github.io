@@ -192,6 +192,710 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wenchao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="技术日记簿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">class字节码文件结构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-25 19:20:13" itemprop="dateCreated datePublished" datetime="2022-03-25T19:20:13+08:00">2022-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-07-04 18:31:52" itemprop="dateModified" datetime="2023-07-04T18:31:52+08:00">2023-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="class字节码文件结构"><a href="#class字节码文件结构" class="headerlink" title="class字节码文件结构"></a>class字节码文件结构</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>说明</th>
+<th>长度</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u4</td>
+<td>magic</td>
+<td>魔数,识别Class文件格式</td>
+<td>4个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>minor_version</td>
+<td>副版本号(小版本)</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>major_version</td>
+<td>主版本号(大版本)</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>constant_pool_count</td>
+<td>常量池计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>cp_info</td>
+<td>constant_pool</td>
+<td>常量池表</td>
+<td>n个字节</td>
+<td>constant_pool_count-1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>access_flags</td>
+<td>访问标识</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>this_class</td>
+<td>类索引</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>super_class</td>
+<td>父类索引</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces_count</td>
+<td>接口计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces</td>
+<td>接口索引集合</td>
+<td>2个字节</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>fields_count</td>
+<td>字段计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>field_info</td>
+<td>fields</td>
+<td>字段表</td>
+<td>n个字节</td>
+<td>fields_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>methods_count</td>
+<td>方法计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>method_info</td>
+<td>methods</td>
+<td>方法表</td>
+<td>n个字节</td>
+<td>methods_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>attributes_count</td>
+<td>属性计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>attributes</td>
+<td>属性表</td>
+<td>n个字节</td>
+<td>attributes_count</td>
+</tr>
+</tbody></table>
+<h2 id="Class文件版本号和平台的对应"><a href="#Class文件版本号和平台的对应" class="headerlink" title="Class文件版本号和平台的对应"></a>Class文件版本号和平台的对应</h2><table>
+<thead>
+<tr>
+<th>主版本（十进制）</th>
+<th>副版本（十进制）</th>
+<th>编译器版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45</td>
+<td>3</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>46</td>
+<td>0</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>47</td>
+<td>0</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td>48</td>
+<td>0</td>
+<td>1.4</td>
+</tr>
+<tr>
+<td>49</td>
+<td>0</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>50</td>
+<td>0</td>
+<td>1.6</td>
+</tr>
+<tr>
+<td>51</td>
+<td>0</td>
+<td>1.7</td>
+</tr>
+<tr>
+<td>52</td>
+<td>0</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>53</td>
+<td>0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<td>54</td>
+<td>0</td>
+<td>1.10</td>
+</tr>
+<tr>
+<td>55</td>
+<td>0</td>
+<td>1.11</td>
+</tr>
+</tbody></table>
+<h2 id="class文件数据类型"><a href="#class文件数据类型" class="headerlink" title="class文件数据类型"></a>class文件数据类型</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>定义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无符号数</td>
+<td>无符号数可以用来描述数字、索引引用、数量值或按照utf-8编码构成的字符串值。</td>
+<td>其中无符号数属于基本的数据类型。 以u1、u2、u4、u8来分别代表1个字节、2个字节、4个字节和8个字节</td>
+</tr>
+<tr>
+<td>表</td>
+<td>表是由多个无符号数或其他表构成的复合数据结构。</td>
+<td>所有的表都以“_info”结尾。 由于表没有固定长度，所以通常会在其前面加上个数说明。</td>
+</tr>
+</tbody></table>
+<h2 id="类型描述符"><a href="#类型描述符" class="headerlink" title="类型描述符"></a>类型描述符</h2><table>
+<thead>
+<tr>
+<th>标志符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B</td>
+<td>基本数据类型byte</td>
+</tr>
+<tr>
+<td>C</td>
+<td>基本数据类型char</td>
+</tr>
+<tr>
+<td>D</td>
+<td>基本数据类型double</td>
+</tr>
+<tr>
+<td>F</td>
+<td>基本数据类型float</td>
+</tr>
+<tr>
+<td>I</td>
+<td>基本数据类型int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>基本数据类型long</td>
+</tr>
+<tr>
+<td>S</td>
+<td>基本数据类型short</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>基本数据类型boolean</td>
+</tr>
+<tr>
+<td>V</td>
+<td>代表void类型</td>
+</tr>
+<tr>
+<td>L</td>
+<td>对象类型，比如：<code>Ljava/lang/Object;</code></td>
+</tr>
+<tr>
+<td>[</td>
+<td>数组类型，代表一维数组。比如：<code>double[][][] is [[[D</code></td>
+</tr>
+</tbody></table>
+<h2 id="常量类型和结构"><a href="#常量类型和结构" class="headerlink" title="常量类型和结构"></a>常量类型和结构</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>标志(或标识)</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CONSTANT_utf8_info</td>
+<td>1</td>
+<td>UTF-8编码的字符串</td>
+</tr>
+<tr>
+<td>CONSTANT_Integer_info</td>
+<td>3</td>
+<td>整型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Float_info</td>
+<td>4</td>
+<td>浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Long_info</td>
+<td>5</td>
+<td>长整型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Double_info</td>
+<td>6</td>
+<td>双精度浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Class_info</td>
+<td>7</td>
+<td>类或接口的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_String_info</td>
+<td>8</td>
+<td>字符串类型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Fieldref_info</td>
+<td>9</td>
+<td>字段的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_Methodref_info</td>
+<td>10</td>
+<td>类中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_InterfaceMethodref_info</td>
+<td>11</td>
+<td>接口中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_NameAndType_info</td>
+<td>12</td>
+<td>字段或方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodHandle_info</td>
+<td>15</td>
+<td>表示方法句柄</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodType_info</td>
+<td>16</td>
+<td>标志方法类型</td>
+</tr>
+<tr>
+<td>CONSTANT_InvokeDynamic_info</td>
+<td>18</td>
+<td>表示一个动态方法调用点</td>
+</tr>
+</tbody></table>
+<h2 id="常量类型和结构细节"><a href="#常量类型和结构细节" class="headerlink" title="常量类型和结构细节"></a>常量类型和结构细节</h2><p><img src="/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1598773300484.png" alt="1598773300484"></p>
+<p><img src="/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1598773308492.png" alt="1598773308492"></p>
+<h2 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h2><table>
+<thead>
+<tr>
+<th>标志名称</th>
+<th>标志值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACC_PUBLIC</td>
+<td>0x0001</td>
+<td>标志为public类型</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x0010</td>
+<td>标志被声明为final，只有类可以设置</td>
+</tr>
+<tr>
+<td>ACC_SUPER</td>
+<td>0x0020</td>
+<td>标志允许使用invokespecial字节码指令的新语义，JDK1.0.2之后编译出来的类的这个标志默认为真。（使用增强的方法调用父类方法）</td>
+</tr>
+<tr>
+<td>ACC_INTERFACE</td>
+<td>0x0200</td>
+<td>标志这是一个接口</td>
+</tr>
+<tr>
+<td>ACC_ABSTRACT</td>
+<td>0x0400</td>
+<td>是否为abstract类型，对于接口或者抽象类来说，次标志值为真，其他类型为假</td>
+</tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+<td>0x1000</td>
+<td>标志此类并非由用户代码产生（即：由编译器产生的类，没有源码对应）</td>
+</tr>
+<tr>
+<td>ACC_ANNOTATION</td>
+<td>0x2000</td>
+<td>标志这是一个注解</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td>0x4000</td>
+<td>标志这是一个枚举</td>
+</tr>
+</tbody></table>
+<h2 id="字段表访问标志"><a href="#字段表访问标志" class="headerlink" title="字段表访问标志"></a>字段表访问标志</h2><table>
+<thead>
+<tr>
+<th>标志名称</th>
+<th>标志值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACC_PUBLIC</td>
+<td>0x0001</td>
+<td>字段是否为public</td>
+</tr>
+<tr>
+<td>ACC_PRIVATE</td>
+<td>0x0002</td>
+<td>字段是否为private</td>
+</tr>
+<tr>
+<td>ACC_PROTECTED</td>
+<td>0x0004</td>
+<td>字段是否为protected</td>
+</tr>
+<tr>
+<td>ACC_STATIC</td>
+<td>0x0008</td>
+<td>字段是否为static</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x0010</td>
+<td>字段是否为final</td>
+</tr>
+<tr>
+<td>ACC_VOLATILE</td>
+<td>0x0040</td>
+<td>字段是否为volatile</td>
+</tr>
+<tr>
+<td>ACC_TRANSTENT</td>
+<td>0x0080</td>
+<td>字段是否为transient</td>
+</tr>
+<tr>
+<td>ACC_SYNCHETIC</td>
+<td>0x1000</td>
+<td>字段是否为由编译器自动产生</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td>0x4000</td>
+<td>字段是否为enum</td>
+</tr>
+</tbody></table>
+<h2 id="类索引、父类索引、接口索引"><a href="#类索引、父类索引、接口索引" class="headerlink" title="类索引、父类索引、接口索引"></a>类索引、父类索引、接口索引</h2><table>
+<thead>
+<tr>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u2</td>
+<td>this_class</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>super_class</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces[interfaces_count]</td>
+</tr>
+</tbody></table>
+<h2 id="属性的通用格式"><a href="#属性的通用格式" class="headerlink" title="属性的通用格式"></a>属性的通用格式</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u2</td>
+<td>attribute_name_index</td>
+<td>1</td>
+<td>属性名索引</td>
+</tr>
+<tr>
+<td>u4</td>
+<td>attribute_length</td>
+<td>1</td>
+<td>属性长度</td>
+</tr>
+<tr>
+<td>u1</td>
+<td>info</td>
+<td>attribute_length</td>
+<td>属性表</td>
+</tr>
+</tbody></table>
+<h2 id="数据类型和默认初始值对应"><a href="#数据类型和默认初始值对应" class="headerlink" title="数据类型和默认初始值对应"></a>数据类型和默认初始值对应</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>默认初始值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>(byte)0</td>
+</tr>
+<tr>
+<td>short</td>
+<td>(short)0</td>
+</tr>
+<tr>
+<td>int</td>
+<td>0</td>
+</tr>
+<tr>
+<td>long</td>
+<td>0L</td>
+</tr>
+<tr>
+<td>float</td>
+<td>0.0f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>char</td>
+<td>\u0000</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>null</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/25/Java/JVM%E6%8C%87%E4%BB%A4%E6%89%8B%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="wenchao">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="技术日记簿">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/Java/JVM%E6%8C%87%E4%BB%A4%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">JVM指令手册</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-25 19:20:13" itemprop="dateCreated datePublished" datetime="2022-03-25T19:20:13+08:00">2022-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-07-04 18:32:50" itemprop="dateModified" datetime="2023-07-04T18:32:50+08:00">2023-07-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="JVM指令手册"><a href="#JVM指令手册" class="headerlink" title="JVM指令手册"></a>JVM指令手册</h1><h2 id="一、栈和局部变量操作"><a href="#一、栈和局部变量操作" class="headerlink" title="一、栈和局部变量操作"></a>一、栈和局部变量操作</h2><h3 id="将常量压入栈的指令"><a href="#将常量压入栈的指令" class="headerlink" title="将常量压入栈的指令"></a>将常量压入栈的指令</h3><p>aconst_null 将null对象引用压入栈<br>iconst_m1 将int类型常量-1压入栈<br>iconst_0 将int类型常量0压入栈<br>iconst_1 将int类型常量1压入栈<br>iconst_2 将int类型常量2压入栈<br>iconst_3 将int类型常量3压入栈<br>iconst_4 将int类型常量4压入栈<br>iconst_5 将int类型常量5压入栈<br>lconst_0 将long类型常量0压入栈<br>lconst_1 将long类型常量1压入栈<br>fconst_0 将float类型常量0压入栈<br>fconst_1 将float类型常量1压入栈<br>dconst_0 将double类型常量0压入栈<br>dconst_1 将double类型常量1压入栈<br>bipush 将一个8位带符号整数压入栈<br>sipush 将16位带符号整数压入栈<br>ldc 把常量池中的项压入栈<br>ldc_w 把常量池中的项压入栈（使用宽索引）<br>ldc2_w 把常量池中long类型或者double类型的项压入栈（使用宽索引）</p>
+<h3 id="从栈中的局部变量中装载值的指令"><a href="#从栈中的局部变量中装载值的指令" class="headerlink" title="从栈中的局部变量中装载值的指令"></a>从栈中的局部变量中装载值的指令</h3><p>iload 从局部变量中装载int类型值<br>lload 从局部变量中装载long类型值<br>fload 从局部变量中装载float类型值<br>dload 从局部变量中装载double类型值<br>aload 从局部变量中装载引用类型值（refernce）<br>iload_0 从局部变量0中装载int类型值<br>iload_1 从局部变量1中装载int类型值<br>iload_2 从局部变量2中装载int类型值<br>iload_3 从局部变量3中装载int类型值<br>lload_0 从局部变量0中装载long类型值<br>lload_1 从局部变量1中装载long类型值<br>lload_2 从局部变量2中装载long类型值<br>lload_3 从局部变量3中装载long类型值<br>fload_0 从局部变量0中装载float类型值<br>fload_1 从局部变量1中装载float类型值<br>fload_2 从局部变量2中装载float类型值<br>fload_3 从局部变量3中装载float类型值<br>dload_0 从局部变量0中装载double类型值<br>dload_1 从局部变量1中装载double类型值<br>dload_2 从局部变量2中装载double类型值<br>dload_3 从局部变量3中装载double类型值<br>aload_0 从局部变量0中装载引用类型值<br>aload_1 从局部变量1中装载引用类型值<br>aload_2 从局部变量2中装载引用类型值<br>aload_3 从局部变量3中装载引用类型值<br>iaload 从数组中装载int类型值<br>laload 从数组中装载long类型值<br>faload 从数组中装载float类型值<br>daload 从数组中装载double类型值<br>aaload 从数组中装载引用类型值<br>baload 从数组中装载byte类型或boolean类型值<br>caload 从数组中装载char类型值<br>saload 从数组中装载short类型值</p>
+<h3 id="将栈中的值存入局部变量的指令"><a href="#将栈中的值存入局部变量的指令" class="headerlink" title="将栈中的值存入局部变量的指令"></a>将栈中的值存入局部变量的指令</h3><p>istore 将int类型值存入局部变量<br>lstore 将long类型值存入局部变量<br>fstore 将float类型值存入局部变量<br>dstore 将double类型值存入局部变量<br>astore 将将引用类型或returnAddress类型值存入局部变量<br>istore_0 将int类型值存入局部变量0<br>istore_1 将int类型值存入局部变量1<br>istore_2 将int类型值存入局部变量2<br>istore_3 将int类型值存入局部变量3<br>lstore_0 将long类型值存入局部变量0<br>lstore_1 将long类型值存入局部变量1<br>lstore_2 将long类型值存入局部变量2<br>lstore_3 将long类型值存入局部变量3<br>fstore_0 将float类型值存入局部变量0<br>fstore_1 将float类型值存入局部变量1<br>fstore_2 将float类型值存入局部变量2<br>fstore_3 将float类型值存入局部变量3<br>dstore_0 将double类型值存入局部变量0<br>dstore_1 将double类型值存入局部变量1<br>dstore_2 将double类型值存入局部变量2<br>dstore_3 将double类型值存入局部变量3<br>astore_0 将引用类型或returnAddress类型值存入局部变量0<br>astore_1 将引用类型或returnAddress类型值存入局部变量1<br>astore_2 将引用类型或returnAddress类型值存入局部变量2<br>astore_3 将引用类型或returnAddress类型值存入局部变量3<br>iastore 将int类型值存入数组中<br>lastore 将long类型值存入数组中<br>fastore 将float类型值存入数组中<br>dastore 将double类型值存入数组中<br>aastore 将引用类型值存入数组中<br>bastore 将byte类型或者boolean类型值存入数组中<br>castore 将char类型值存入数组中<br>sastore 将short类型值存入数组中<br>wide指令<br>wide 使用附加字节扩展局部变量索引</p>
+<h3 id="通用-无类型）栈操作"><a href="#通用-无类型）栈操作" class="headerlink" title="通用(无类型）栈操作"></a>通用(无类型）栈操作</h3><p>nop 不做任何操作<br>pop 弹出栈顶端一个字长的内容<br>pop2 弹出栈顶端两个字长的内容<br>dup 复制栈顶部一个字长内容<br>dup_x1 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的两个字长的内容压入栈<br>dup_x2 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2 复制栈顶部两个字长内容<br>dup2_x1 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2_x2 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的四个字长的内容压入栈<br>swap 交换栈顶部两个字长内容</p>
+<h2 id="二、类型转换"><a href="#二、类型转换" class="headerlink" title="二、类型转换"></a>二、类型转换</h2><p>i2l 把int类型的数据转化为long类型<br>i2f 把int类型的数据转化为float类型<br>i2d 把int类型的数据转化为double类型<br>l2i 把long类型的数据转化为int类型<br>l2f 把long类型的数据转化为float类型<br>l2d 把long类型的数据转化为double类型<br>f2i 把float类型的数据转化为int类型<br>f2l 把float类型的数据转化为long类型<br>f2d 把float类型的数据转化为double类型<br>d2i 把double类型的数据转化为int类型<br>d2l 把double类型的数据转化为long类型<br>d2f 把double类型的数据转化为float类型<br>i2b 把int类型的数据转化为byte类型<br>i2c 把int类型的数据转化为char类型<br>i2s 把int类型的数据转化为short类型</p>
+<h2 id="三、整数运算"><a href="#三、整数运算" class="headerlink" title="三、整数运算"></a>三、整数运算</h2><p>iadd 执行int类型的加法<br>ladd 执行long类型的加法<br>isub 执行int类型的减法<br>lsub 执行long类型的减法<br>imul 执行int类型的乘法<br>lmul 执行long类型的乘法<br>idiv 执行int类型的除法<br>ldiv 执行long类型的除法<br>irem 计算int类型除法的余数<br>lrem 计算long类型除法的余数<br>ineg 对一个int类型值进行取反操作<br>lneg 对一个long类型值进行取反操作<br>iinc 把一个常量值加到一个int类型的局部变量上</p>
+<h2 id="四、逻辑运算"><a href="#四、逻辑运算" class="headerlink" title="四、逻辑运算"></a>四、逻辑运算</h2><h3 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h3><p>ishl 执行int类型的向左移位操作<br>lshl 执行long类型的向左移位操作<br>ishr 执行int类型的向右移位操作<br>lshr 执行long类型的向右移位操作<br>iushr 执行int类型的向右逻辑移位操作<br>lushr 执行long类型的向右逻辑移位操作</p>
+<h3 id="按位布尔运算"><a href="#按位布尔运算" class="headerlink" title="按位布尔运算"></a>按位布尔运算</h3><p>iand 对int类型值进行“逻辑与”操作<br>land 对long类型值进行“逻辑与”操作<br>ior 对int类型值进行“逻辑或”操作<br>lor 对long类型值进行“逻辑或”操作<br>ixor 对int类型值进行“逻辑异或”操作<br>lxor 对long类型值进行“逻辑异或”操作</p>
+<h3 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h3><p>fadd 执行float类型的加法<br>dadd 执行double类型的加法<br>fsub 执行float类型的减法<br>dsub 执行double类型的减法<br>fmul 执行float类型的乘法<br>dmul 执行double类型的乘法<br>fdiv 执行float类型的除法<br>ddiv 执行double类型的除法<br>frem 计算float类型除法的余数<br>drem 计算double类型除法的余数<br>fneg 将一个float类型的数值取反<br>dneg 将一个double类型的数值取反</p>
+<h2 id="五、对象和数组"><a href="#五、对象和数组" class="headerlink" title="五、对象和数组"></a>五、对象和数组</h2><h3 id="对象操作指令"><a href="#对象操作指令" class="headerlink" title="对象操作指令"></a>对象操作指令</h3><p>new 创建一个新对象<br>checkcast 确定对象为所给定的类型。后跟目标类，判断栈顶元素是否为目标类 &#x2F; 接口的实例。如果不是便抛出异常<br>getfield 从对象中获取字段<br>putfield 设置对象中字段的值<br>getstatic 从类中获取静态字段<br>putstatic 设置类中静态字段的值<br>instanceof 判断对象是否为给定的类型。后跟目标类，判断栈顶元素是否为目标类 &#x2F; 接口的实例。是则压入 1，否则压入 0</p>
+<h3 id="数组操作指令"><a href="#数组操作指令" class="headerlink" title="数组操作指令"></a>数组操作指令</h3><p>newarray 分配数据成员类型为基本上数据类型的新数组<br>anewarray 分配数据成员类型为引用类型的新数组<br>arraylength 获取数组长度<br>multianewarray 分配新的多维数组</p>
+<h2 id="六、控制流"><a href="#六、控制流" class="headerlink" title="六、控制流"></a>六、控制流</h2><h3 id="条件分支指令"><a href="#条件分支指令" class="headerlink" title="条件分支指令"></a>条件分支指令</h3><p>ifeq 如果等于0，则跳转<br>ifne 如果不等于0，则跳转<br>iflt 如果小于0，则跳转<br>ifge 如果大于等于0，则跳转<br>ifgt 如果大于0，则跳转<br>ifle 如果小于等于0，则跳转<br>if_icmpcq 如果两个int值相等，则跳转<br>if_icmpne 如果两个int类型值不相等，则跳转<br>if_icmplt 如果一个int类型值小于另外一个int类型值，则跳转<br>if_icmpge 如果一个int类型值大于或者等于另外一个int类型值，则跳转<br>if_icmpgt 如果一个int类型值大于另外一个int类型值，则跳转<br>if_icmple 如果一个int类型值小于或者等于另外一个int类型值，则跳转<br>ifnull 如果等于null，则跳转<br>ifnonnull 如果不等于null，则跳转<br>if_acmpeq 如果两个对象引用相等，则跳转<br>if_acmpnc 如果两个对象引用不相等，则跳转</p>
+<h3 id="比较指令"><a href="#比较指令" class="headerlink" title="比较指令"></a>比较指令</h3><p>lcmp 比较long类型值<br>fcmpl 比较float类型值（当遇到NaN时，返回-1）<br>fcmpg 比较float类型值（当遇到NaN时，返回1）<br>dcmpl 比较double类型值（当遇到NaN时，返回-1）<br>dcmpg 比较double类型值（当遇到NaN时，返回1）</p>
+<h3 id="无条件转移指令"><a href="#无条件转移指令" class="headerlink" title="无条件转移指令"></a>无条件转移指令</h3><p>goto 无条件跳转<br>goto_w 无条件跳转（宽索引）</p>
+<h3 id="表跳转指令"><a href="#表跳转指令" class="headerlink" title="表跳转指令"></a>表跳转指令</h3><p>tableswitch 通过索引访问跳转表，并跳转<br>lookupswitch 通过键值匹配访问跳转表，并执行跳转操作</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>athrow 抛出异常或错误。将栈顶异常抛出<br>finally子句<br>jsr 跳转到子例程<br>jsr_w 跳转到子例程（宽索引）<br>rct 从子例程返回</p>
+<h2 id="七、方法调用与返回"><a href="#七、方法调用与返回" class="headerlink" title="七、方法调用与返回"></a>七、方法调用与返回</h2><h3 id="方法调用指令"><a href="#方法调用指令" class="headerlink" title="方法调用指令"></a>方法调用指令</h3><p>invokcvirtual 运行时按照对象的类来调用实例方法<br>invokespecial 根据编译时类型来调用实例方法<br>invokestatic 调用类（静态）方法<br>invokcinterface 调用接口方法</p>
+<h3 id="方法返回指令"><a href="#方法返回指令" class="headerlink" title="方法返回指令"></a>方法返回指令</h3><p>ireturn 从方法中返回int类型的数据<br>lreturn 从方法中返回long类型的数据<br>freturn 从方法中返回float类型的数据<br>dreturn 从方法中返回double类型的数据<br>areturn 从方法中返回引用类型的数据<br>return 从方法中返回，返回值为void</p>
+<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><p>montiorenter 进入并获取对象监视器。即：为栈顶对象加锁<br>monitorexit 释放并退出对象监视器。即：为栈顶对象解锁</p>
+<h2 id="八、JVM指令助记符"><a href="#八、JVM指令助记符" class="headerlink" title="八、JVM指令助记符"></a>八、JVM指令助记符</h2><p>变量到操作数栈：iload,iload_,lload,lload_,fload,fload_,dload,dload_,aload,aload_<br>操作数栈到变量：istore,istore_,lstore,lstore_,fstore,fstore_,dstore,dstor_,astore,astore_<br>常数到操作数栈：bipush,sipush,ldc,ldc_w,ldc2_w,aconst_null,iconst_ml,iconst_,lconst_,fconst_,dconst_<br>加：iadd,ladd,fadd,dadd<br>减：isub,lsub,fsub,dsub<br>乘：imul,lmul,fmul,dmul<br>除：idiv,ldiv,fdiv,ddiv<br>余数：irem,lrem,frem,drem<br>取负：ineg,lneg,fneg,dneg<br>移位：ishl,lshr,iushr,lshl,lshr,lushr<br>按位或：ior,lor<br>按位与：iand,land<br>按位异或：ixor,lxor<br>类型转换：i2l,i2f,i2d,l2f,l2d,f2d(放宽数值转换)<br>i2b,i2c,i2s,l2i,f2i,f2l,d2i,d2l,d2f(缩窄数值转换)<br>创建类实便：new<br>创建新数组：newarray,anewarray,multianwarray<br>访问类的域和类实例域：getfield,putfield,getstatic,putstatic<br>把数据装载到操作数栈：baload,caload,saload,iaload,laload,faload,daload,aaload<br>从操作数栈存存储到数组：bastore,castore,sastore,iastore,lastore,fastore,dastore,aastore<br>获取数组长度：arraylength<br>检相类实例或数组属性：instanceof,checkcast<br>操作数栈管理：pop,pop2,dup,dup2,dup_xl,dup2_xl,dup_x2,dup2_x2,swap<br>有条件转移：ifeq,iflt,ifle,ifne,ifgt,ifge,ifnull,ifnonnull,if_icmpeq,if_icmpene,<br>if_icmplt,if_icmpgt,if_icmple,if_icmpge,if_acmpeq,if_acmpne,lcmp,fcmpl<br>fcmpg,dcmpl,dcmpg<br>复合条件转移：tableswitch,lookupswitch<br>无条件转移：goto,goto_w,jsr,jsr_w,ret<br>调度对象的实便方法：invokevirtual<br>调用由接口实现的方法：invokeinterface<br>调用需要特殊处理的实例方法：invokespecial<br>调用命名类中的静态方法：invokestatic<br>方法返回：ireturn,lreturn,freturn,dreturn,areturn,return<br>异常：athrow<br>finally关键字的实现使用：jsr,jsr_w,ret</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -11627,692 +12331,11 @@ size表示当前List的长度，elementData的长度是大于等于size的，因
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93/Linux%E4%B8%8BMySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="wenchao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="技术日记簿">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93/Linux%E4%B8%8BMySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">Linux下MySQL的安装与使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-11-09 23:30:13" itemprop="dateCreated datePublished" datetime="2018-11-09T23:30:13+08:00">2018-11-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-13 19:53:16" itemprop="dateModified" datetime="2023-06-13T19:53:16+08:00">2023-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Linux下MySQL的安装与使用"><a href="#Linux下MySQL的安装与使用" class="headerlink" title="Linux下MySQL的安装与使用"></a>Linux下MySQL的安装与使用</h1><h2 id="1-安装前说明"><a href="#1-安装前说明" class="headerlink" title="1. 安装前说明"></a>1. 安装前说明</h2><h2 id="1-1-Linux系统及工具的准备"><a href="#1-1-Linux系统及工具的准备" class="headerlink" title="1. 1 Linux系统及工具的准备"></a>1. 1 Linux系统及工具的准备</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">安装并启动好两台虚拟机：CentOS 7</span><br><span class="line">掌握克隆虚拟机的操作</span><br><span class="line">mac地址</span><br><span class="line">主机名</span><br><span class="line">ip地址</span><br><span class="line">UUID</span><br><span class="line">安装有Xshell 和Xftp等访问CentOS系统的工具</span><br><span class="line">CentOS6和CentOS7在MySQL的使用中的区别</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-2-查看是否安装过MySQL"><a href="#1-2-查看是否安装过MySQL" class="headerlink" title="1. 2 查看是否安装过MySQL"></a>1. 2 查看是否安装过MySQL</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果你是用rpm安装, 检查一下RPM PACKAGE：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">检查mysql service：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果存在mysql-libs的旧版本包，显示如下：</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>防火墙： 6 是iptables， 7 是firewalld</li>
-<li>启动服务的命令： 6 是service， 7 是systemctl</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql  # -i 忽略大小写</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果不存在mysql-lib的版本，显示如下：</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-MySQL的卸载"><a href="#1-3-MySQL的卸载" class="headerlink" title="1. 3 MySQL的卸载"></a>1. 3 MySQL的卸载</h3><p><strong>1. 关闭 mysql 服务</strong></p>
-<p><strong>2. 查看当前 mysql 安装状况</strong></p>
-<h5 id="3-卸载上述命令查询出的已安装程序"><a href="#3-卸载上述命令查询出的已安装程序" class="headerlink" title="3. 卸载上述命令查询出的已安装程序"></a>3. 卸载上述命令查询出的已安装程序</h5><p>务必卸载干净，反复执行rpm -qa | grep -i mysql确认是否有卸载残留</p>
-<p><strong>4. 删除 mysql 相关文件</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查找相关文件</span><br></pre></td></tr></table></figure>
-
-<h5 id="删除上述命令查找出的相关文件"><a href="#删除上述命令查找出的相关文件" class="headerlink" title="删除上述命令查找出的相关文件"></a>删除上述命令查找出的相关文件</h5><p><strong>5 .删除 my.cnf</strong></p>
-<h2 id="2-MySQL的Linux版安装"><a href="#2-MySQL的Linux版安装" class="headerlink" title="2. MySQL的Linux版安装"></a>2. MySQL的Linux版安装</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep -i mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 或</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list installed | grep mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove mysql-xxx mysql-xxx mysql-xxx mysqk-xxxx</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf xxx</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /etc/my.cnf</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-1-MySQL的-4-大版本"><a href="#2-1-MySQL的-4-大版本" class="headerlink" title="2. 1 MySQL的 4 大版本"></a>2. 1 MySQL的 4 大版本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MySQL Community Server 社区版本 ，开源免费，自由下载，但不提供官方技术支持，适用于</span><br><span class="line">大多数普通用户。</span><br><span class="line">MySQL Enterprise Edition 企业版本 ，需付费，不能在线下载，可以试用 30 天。提供了更多的</span><br><span class="line">功能和更完备的技术支持，更适合于对数据库的功能和可靠性要求较高的企业客户。</span><br><span class="line">MySQL Cluster 集群版 ，开源免费。用于架设集群服务器，可将几个MySQL Server封装成一个</span><br><span class="line">Server。需要在社区版或企业版的基础上使用。</span><br><span class="line">MySQL Cluster CGE 高级集群版 ，需付费。</span><br></pre></td></tr></table></figure>
-
-<p>此外，官方还提供了MySQL Workbench（GUITOOL）一款专为MySQL设计的ER&#x2F;数据库建模工具。它是<br>著名的数据库设计工具DBDesigner4的继任者。MySQLWorkbench又分为两个版本，分别是社区版<br>（MySQL Workbench OSS）、商用版（MySQL WorkbenchSE）。</p>
-<h3 id="2-2-下载MySQL指定版本"><a href="#2-2-下载MySQL指定版本" class="headerlink" title="2. 2 下载MySQL指定版本"></a>2. 2 下载MySQL指定版本</h3><h5 id="1-下载地址"><a href="#1-下载地址" class="headerlink" title="1. 下载地址"></a>1. 下载地址</h5><p>官网： <strong><a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com</a></strong></p>
-<p><strong>2. 打开官网，点击DOWNLOADS</strong></p>
-<p>然后，点击MySQL Community(GPL) Downloads</p>
-<p><strong>3. 点击 MySQL Community Server</strong></p>
-<p><strong>4. 在General Availability(GA) Releases中选择适合的版本</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果安装Windows 系统下MySQL ，推荐下载MSI安装程序；点击Go to Download Page进行下载</span><br><span class="line">即可</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Windows下的MySQL安装有两种安装程序</span><br><span class="line">mysql-installer-web-community-8.0.25.0.msi 下载程序大小： 2. 4 M；安装时需要联网安</span><br><span class="line">装组件。</span><br><span class="line">mysql-installer-community-8.0.25.0.msi 下载程序大小： 435. 7 M；安装时离线安装即</span><br><span class="line">可。 推荐。</span><br></pre></td></tr></table></figure>
-
-<p><strong>5. Linux系统下安装MySQL的几种方式</strong></p>
-<p><strong>5.1 Linux系统下安装软件的常用三种方式：</strong></p>
-<p><strong>方式 1 ：rpm命令</strong></p>
-<p>使用rpm命令安装扩展名为”.rpm”的软件包。</p>
-<h5 id="安装方式-特点"><a href="#安装方式-特点" class="headerlink" title="安装方式 特点"></a>安装方式 特点</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm 安装简单，灵活性差，无法灵活选择版本、升级</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm repository 安装包极小，版本安装简单灵活，升级方便，需要联网安装</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通用二进制包 安装比较复杂，灵活性高，平台通用性好</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">源码包 安装最复杂，时间长，参数设置灵活，性能好</span><br></pre></td></tr></table></figure>
-
-<p>.rpm包的一般格式：</p>
-<p><strong>方式 2 ：yum命令</strong></p>
-<p>需联网，从互联网获取的yum源，直接使用yum命令安装。</p>
-<p><strong>方式 3 ：编译安装源码包</strong></p>
-<p>针对tar.gz这样的压缩格式，要用tar命令来解压；如果是其它压缩格式，就使用其它命令。</p>
-<p><strong>5. 2 Linux系统下安装MySQL，官方给出多种安装方式</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这里不能直接选择CentOS 7系统的版本，所以选择与之对应的Red Hat Enterprise Linux</span><br><span class="line">https://downloads.mysql.com/archives/community/直接点Download下载RPM Bundle全量</span><br><span class="line">包。包括了所有下面的组件。不需要一个一个下载了。</span><br></pre></td></tr></table></figure>
-
-<p><strong>6. 下载的tar包，用压缩工具打开</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解压后rpm安装包 （红框为抽取出来的安装包）</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-CentOS7下检查MySQL依赖"><a href="#2-3-CentOS7下检查MySQL依赖" class="headerlink" title="2.3 CentOS7下检查MySQL依赖"></a>2.3 CentOS7下检查MySQL依赖</h3><h4 id="1-检查-x2F-tmp临时目录权限（必不可少）"><a href="#1-检查-x2F-tmp临时目录权限（必不可少）" class="headerlink" title="1. 检查&#x2F;tmp临时目录权限（必不可少）"></a>1. 检查&#x2F;tmp临时目录权限（必不可少）</h4><p>由于mysql安装过程中，会通过mysql用户在&#x2F;tmp目录下新建tmp_db文件，所以请给&#x2F;tmp较大的权限。执<br>行 ：</p>
-<h4 id="2-安装前，检查依赖"><a href="#2-安装前，检查依赖" class="headerlink" title="2. 安装前，检查依赖"></a>2. 安装前，检查依赖</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果存在libaio包如下：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果存在net-tools包如下：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果不存在需要到centos安装盘里进行rpm安装。安装linux如果带图形化界面，这些都是安装好</span><br><span class="line">的。</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-4-CentOS7下MySQL安装过程"><a href="#2-4-CentOS7下MySQL安装过程" class="headerlink" title="2.4 CentOS7下MySQL安装过程"></a>2.4 CentOS7下MySQL安装过程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 /tmp</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep libaio</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep net-tools</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep net-tools</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-将安装程序拷贝到-x2F-opt目录下"><a href="#1-将安装程序拷贝到-x2F-opt目录下" class="headerlink" title="1. 将安装程序拷贝到&#x2F;opt目录下"></a>1. 将安装程序拷贝到&#x2F;opt目录下</h4><p>在mysql的安装文件目录下执行：（必须按照顺序执行）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意: 如在检查工作时，没有检查mysql依赖环境在安装mysql-community-server会报错</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm 是Redhat Package Manage缩写，通过RPM的管理，用户可以把源代码包装成以rpm为扩展名的</span><br><span class="line">文件形式，易于安装。</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>i, –install 安装软件包</li>
-<li>v, –verbose 提供更多的详细信息输出</li>
-<li>h, –hash 软件包安装的时候列出哈希标记 (和 -v 一起使用效果更好)，展示进度条</li>
-</ul>
-<h4 id="2-安装过程截图"><a href="#2-安装过程截图" class="headerlink" title="2. 安装过程截图"></a>2. 安装过程截图</h4><h5 id="安装过程中可能的报错信息："><a href="#安装过程中可能的报错信息：" class="headerlink" title="安装过程中可能的报错信息："></a>安装过程中可能的报错信息：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个命令： yum remove mysql-libs 解决，清除之前安装过的依赖即可</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-common-8.0.25-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-client-plugins-8.0.25-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-libs-8.0.25-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-client-8.0.25-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh mysql-community-server-8.0.25-1.el7.x86_64.rpm</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-查看MySQL版本"><a href="#3-查看MySQL版本" class="headerlink" title="3. 查看MySQL版本"></a>3. 查看MySQL版本</h4><p>执行如下命令，如果成功表示安装mysql成功。类似java -version如果打出版本等信息</p>
-<p>执行如下命令，查看是否安装成功。需要增加 -i 不用去区分大小写，否则搜索不到。</p>
-<h4 id="4-服务的初始化"><a href="#4-服务的初始化" class="headerlink" title="4. 服务的初始化"></a>4. 服务的初始化</h4><p>为了保证数据库目录与文件的所有者为 mysql 登录用户，如果你是以 root 身份运行 mysql 服务，需要执<br>行下面的命令初始化：</p>
-<p>说明： –initialize 选项默认以“安全”模式来初始化，则会为 root 用户生成一个密码并将该密码标记为过<br>期，登录后你需要设置一个新的密码。生成的临时密码会往日志中记录一份。</p>
-<p>查看密码：</p>
-<p>root@localhost: 后面就是初始化的密码</p>
-<h4 id="5-启动MySQL，查看状态"><a href="#5-启动MySQL，查看状态" class="headerlink" title="5. 启动MySQL，查看状态"></a>5. 启动MySQL，查看状态</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql --version</span><br><span class="line">#或</span><br><span class="line">mysqladmin --version</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa|grep -i mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqld --initialize --user=mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#加不加.service后缀都可以</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">启动：systemctl start mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">关闭：systemctl stop mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">重启：systemctl restart mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看状态：systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysqld这个可执行文件就代表着MySQL服务器程序，运行这个可执行文件就可以直接启动一个</span><br><span class="line">服务器进程。</span><br></pre></td></tr></table></figure>
-
-<h5 id="查看进程："><a href="#查看进程：" class="headerlink" title="查看进程："></a>查看进程：</h5><h4 id="6-查看MySQL服务是否自启动"><a href="#6-查看MySQL服务是否自启动" class="headerlink" title="6. 查看MySQL服务是否自启动"></a>6. 查看MySQL服务是否自启动</h4><p>默认是enabled。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如不是enabled可以运行如下命令设置自启动</span><br></pre></td></tr></table></figure>
-
-<h5 id="如果希望不进行自启动，运行如下命令设置"><a href="#如果希望不进行自启动，运行如下命令设置" class="headerlink" title="如果希望不进行自启动，运行如下命令设置"></a>如果希望不进行自启动，运行如下命令设置</h5><h2 id="3-MySQL登录"><a href="#3-MySQL登录" class="headerlink" title="3. MySQL登录"></a>3. MySQL登录</h2><h3 id="3-1-首次登录"><a href="#3-1-首次登录" class="headerlink" title="3. 1 首次登录"></a>3. 1 首次登录</h3><p>通过 mysql -hlocalhost -P3306 -uroot -p进行登录，在Enter password：录入初始化密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep -i mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl list-unit-files|grep mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable mysqld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable mysqld.service</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-修改密码"><a href="#3-2-修改密码" class="headerlink" title="3. 2 修改密码"></a>3. 2 修改密码</h3><h5 id="因为初始化密码默认是过期的，所以查看数据库会报错"><a href="#因为初始化密码默认是过期的，所以查看数据库会报错" class="headerlink" title="因为初始化密码默认是过期的，所以查看数据库会报错"></a>因为初始化密码默认是过期的，所以查看数据库会报错</h5><h5 id="修改密码："><a href="#修改密码：" class="headerlink" title="修改密码："></a>修改密码：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">5.7版本之后（不含5.7），mysql加入了全新的密码安全机制。设置新密码太简单会报错。</span><br></pre></td></tr></table></figure>
-
-<h5 id="改为更复杂的密码规则之后，设置成功，可以正常使用数据库了"><a href="#改为更复杂的密码规则之后，设置成功，可以正常使用数据库了" class="headerlink" title="改为更复杂的密码规则之后，设置成功，可以正常使用数据库了"></a>改为更复杂的密码规则之后，设置成功，可以正常使用数据库了</h5><h3 id="3-3-设置远程登录"><a href="#3-3-设置远程登录" class="headerlink" title="3. 3 设置远程登录"></a>3. 3 设置远程登录</h3><h4 id="1-当前问题"><a href="#1-当前问题" class="headerlink" title="1. 当前问题"></a>1. 当前问题</h4><p>在用SQLyog或Navicat中配置远程连接Mysql数据库时遇到如下报错信息，这是由于Mysql配置了不支持远<br>程连接引起的。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED BY &#x27;new_password&#x27;;</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-确认网络"><a href="#2-确认网络" class="headerlink" title="2. 确认网络"></a>2. 确认网络</h4><p>1.在远程机器上使用ping ip地址保证网络畅通</p>
-<p>2.在远程机器上使用telnet命令保证端口号开放访问</p>
-<p>拓展：telnet命令开启:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet ip地址 端口号</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-关闭防火墙或开放端口"><a href="#3-关闭防火墙或开放端口" class="headerlink" title="3. 关闭防火墙或开放端口"></a>3. 关闭防火墙或开放端口</h4><h5 id="方式一：关闭防火墙"><a href="#方式一：关闭防火墙" class="headerlink" title="方式一：关闭防火墙"></a>方式一：关闭防火墙</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CentOS6 ：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CentOS7：</span><br></pre></td></tr></table></figure>
-
-<h5 id="方式二：开放端口"><a href="#方式二：开放端口" class="headerlink" title="方式二：开放端口"></a>方式二：开放端口</h5><h5 id="查看开放的端口号"><a href="#查看开放的端口号" class="headerlink" title="查看开放的端口号"></a>查看开放的端口号</h5><h5 id="设置开放的端口号"><a href="#设置开放的端口号" class="headerlink" title="设置开放的端口号"></a>设置开放的端口号</h5><h5 id="重启防火墙"><a href="#重启防火墙" class="headerlink" title="重启防火墙"></a>重启防火墙</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables stop</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#设置开机启用防火墙</span><br><span class="line">systemctl enable firewalld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#设置开机禁用防火墙</span><br><span class="line">systemctl disable firewalld.service</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --list-all</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-service=http --permanent</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --add-port= 3306 /tcp --permanent</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-Linux下修改配置"><a href="#4-Linux下修改配置" class="headerlink" title="4. Linux下修改配置"></a>4. Linux下修改配置</h4><p>在Linux系统MySQL下测试：</p>
-<p>可以看到root用户的当前主机配置信息为localhost。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">修改Host为通配符%</span><br></pre></td></tr></table></figure>
-
-<p>Host列指定了允许用户登录所使用的IP，比如user&#x3D;root Host&#x3D;192.168.1.1。这里的意思就是说root用户只<br>能通过192.168.1.1的客户端去访问。 user&#x3D;root Host&#x3D;localhost，表示只能通过本机客户端去访问。而%<br>是个通配符，如果Host&#x3D;192.168.1.%，那么就表示只要是IP地址前缀为“192.168.1.”的客户端都可以连<br>接。如果Host&#x3D;%，表示所有IP都有连接权限。</p>
-<p>注意：在生产环境下不能为了省事将host设置为%，这样做会存在安全问题，具体的设置可以根据生产<br>环境的IP进行设置。</p>
-<p>Host设置了“%”后便可以允许远程访问。</p>
-<p>Host修改完成后记得执行flush privileges使配置立即生效：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use mysql;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select Host,User from user;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update user set host = &#x27;%&#x27; where user =&#x27;root&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-测试"><a href="#5-测试" class="headerlink" title="5. 测试"></a>5. 测试</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果是 MySQL5.7 版本，接下来就可以使用SQLyog或者Navicat成功连接至MySQL了。</span><br><span class="line">如果是 MySQL8 版本，连接时还会出现如下问题：</span><br></pre></td></tr></table></figure>
-
-<p>配置新连接报错：错误号码 2058 ，分析是 mysql 密码加密方法变了。</p>
-<p><strong>解决方法：</strong> Linux下 mysql -u root -p 登录你的 mysql 数据库，然后 执行这条SQL：</p>
-<p>然后在重新配置SQLyog的连接，则可连接成功了，OK。</p>
-<h2 id="4-MySQL-8-的密码强度评估（了解）"><a href="#4-MySQL-8-的密码强度评估（了解）" class="headerlink" title="4. MySQL 8 的密码强度评估（了解）"></a>4. MySQL 8 的密码强度评估（了解）</h2><h3 id="4-1-MySQL不同版本设置密码-可能出现"><a href="#4-1-MySQL不同版本设置密码-可能出现" class="headerlink" title="4. 1 MySQL不同版本设置密码(可能出现)"></a>4. 1 MySQL不同版本设置密码(可能出现)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL5.7中：成功</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL8.0中：失败</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER &#x27;root&#x27;@&#x27;%&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;abc123&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter user &#x27;root&#x27; identified by &#x27;abcd1234&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter user &#x27;root&#x27; identified by &#x27;abcd1234&#x27;; # HelloWorld_</span><br><span class="line">ERROR 1819 (HY000): Your password does not satisfy the current policy requirements</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-MySQL-8-之前的安全策略"><a href="#4-2-MySQL-8-之前的安全策略" class="headerlink" title="4. 2 MySQL 8 之前的安全策略"></a>4. 2 MySQL 8 之前的安全策略</h3><p>在MySQL 8.0之前，MySQL使用的是validate_password插件检测、验证账号密码强度，保障账号的安全<br>性。</p>
-<p><strong>安装&#x2F;启用插件方式 1 ：在参数文件my.cnf中添加参数</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">说明 1 ： plugin library中的validate_password文件名的后缀名根据平台不同有所差异。 对于Unix和</span><br><span class="line">Unix-like系统而言，它的文件后缀名是.so，对于Windows系统而言，它的文件后缀名是.dll。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">说明 2 ： 修改参数后必须重启MySQL服务才能生效。</span><br><span class="line">说明 3 ： 参数FORCE_PLUS_PERMANENT是为了防止插件在MySQL运行时的时候被卸载。当你卸载插</span><br><span class="line">件时就会报错。如下所示。</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装-x2F-启用插件方式-2-：运行时命令安装-（推荐）"><a href="#安装-x2F-启用插件方式-2-：运行时命令安装-（推荐）" class="headerlink" title="安装&#x2F;启用插件方式 2 ：运行时命令安装 （推荐）"></a>安装&#x2F;启用插件方式 2 ：运行时命令安装 （推荐）</h5><p>此方法也会注册到元数据，也就是mysql.plugin表中，所以不用担心MySQL重启后插件会失效。</p>
-<h3 id="4-3-MySQL-8-的安全策略"><a href="#4-3-MySQL-8-的安全策略" class="headerlink" title="4. 3 MySQL 8 的安全策略"></a>4. 3 MySQL 8 的安全策略</h3><p><strong>1. validate_password说明</strong></p>
-<p>MySQL 8.0，引入了服务器组件（Components）这个特性，validate_password插件已用服务器组件重新实<br>现。8.0.25版本的数据库中，默认自动安装validate_password组件。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">未安装插件前，执行如下两个指令，执行效果：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugin-load-add=validate_password.so</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\#ON/OFF/FORCE/FORCE_PLUS_PERMANENT: 是否使用该插件(及强制/永久强制使用)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate-password=FORCE_PLUS_PERMANENT</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT PLUGIN_NAME, PLUGIN_LIBRARY, PLUGIN_STATUS, LOAD_OPTION</span><br><span class="line">-&gt; FROM INFORMATION_SCHEMA.PLUGINS</span><br><span class="line">-&gt; WHERE PLUGIN_NAME = &#x27;validate_password&#x27;;</span><br><span class="line">+-------------------+----------------------+---------------+----------------------+</span><br><span class="line">| PLUGIN_NAME | PLUGIN_LIBRARY | PLUGIN_STATUS | LOAD_OPTION |</span><br><span class="line">+-------------------+----------------------+---------------+----------------------+</span><br><span class="line">| validate_password | validate_password.so | ACTIVE | FORCE_PLUS_PERMANENT |</span><br><span class="line">+-------------------+----------------------+---------------+----------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  UNINSTALL PLUGIN validate_password;</span><br><span class="line">ERROR 1702 (HY000): Plugin &#x27;validate_password&#x27; is force_plus_permanent and can not be</span><br><span class="line">unloaded</span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSTALL PLUGIN validate_password SONAME &#x27;validate_password.so&#x27;;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.11 sec)</span><br></pre></td></tr></table></figure>
-
-<h5 id="安装插件后，执行如下两个指令，执行效果："><a href="#安装插件后，执行如下两个指令，执行效果：" class="headerlink" title="安装插件后，执行如下两个指令，执行效果："></a>安装插件后，执行如下两个指令，执行效果：</h5><p>关于validate_password组件对应的系统变量说明：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;validate_password%&#x27;;</span><br><span class="line">Empty set (0.04 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM mysql.component;</span><br><span class="line">ERROR 1146 ( 42 S02): Table &#x27;mysql.component&#x27; doesn&#x27;t exist</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM mysql.component;</span><br><span class="line">+--------------+--------------------+------------------------------------+</span><br><span class="line">| component_id | component_group_id | component_urn |</span><br><span class="line">+--------------+--------------------+------------------------------------+</span><br><span class="line">| 1 | 1 | file://component_validate_password |</span><br><span class="line">+--------------+--------------------+------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;validate_password%&#x27;;</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">| validate_password.check_user_name | ON |</span><br><span class="line">| validate_password.dictionary_file | |</span><br><span class="line">| validate_password.length | 8 |</span><br><span class="line">| validate_password.mixed_case_count | 1 |</span><br><span class="line">| validate_password.number_count | 1 |</span><br><span class="line">| validate_password.policy | MEDIUM |</span><br><span class="line">| validate_password.special_char_count | 1 |</span><br><span class="line">+--------------------------------------+--------+</span><br><span class="line">7 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure>
-
-<h5 id="选项-默认值-参数描述"><a href="#选项-默认值-参数描述" class="headerlink" title="选项 默认值 参数描述"></a>选项 默认值 参数描述</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">validate_password_check_user_name ON 设置为ON的时候表示能将密码设置成当前</span><br><span class="line">用户名。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_dictionary_file</span><br></pre></td></tr></table></figure>
-
-<h5 id="用于检查密码的字典文件的路径名，默认为"><a href="#用于检查密码的字典文件的路径名，默认为" class="headerlink" title="用于检查密码的字典文件的路径名，默认为"></a>用于检查密码的字典文件的路径名，默认为</h5><h5 id="空"><a href="#空" class="headerlink" title="空"></a>空</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_length 8</span><br></pre></td></tr></table></figure>
-
-<h5 id="密码的最小长度，也就是说密码长度必须大"><a href="#密码的最小长度，也就是说密码长度必须大" class="headerlink" title="密码的最小长度，也就是说密码长度必须大"></a>密码的最小长度，也就是说密码长度必须大</h5><h5 id="于或等于-8"><a href="#于或等于-8" class="headerlink" title="于或等于 8"></a>于或等于 8</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_mixed_case_count 1</span><br></pre></td></tr></table></figure>
-
-<h5 id="如果密码策略是中等或更强的，"><a href="#如果密码策略是中等或更强的，" class="headerlink" title="如果密码策略是中等或更强的，"></a>如果密码策略是中等或更强的，</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">validate_password要求密码具有的小写和大</span><br><span class="line">写字符的最小数量。对于给定的这个值密码</span><br><span class="line">必须有那么多小写字符和那么多大写字符。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_number_count 1 密码必须包含的数字个数</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_policy MEDIUM</span><br></pre></td></tr></table></figure>
-
-<h5 id="密码强度检验等级，可以使用数值-0-、-1-、-2"><a href="#密码强度检验等级，可以使用数值-0-、-1-、-2" class="headerlink" title="密码强度检验等级，可以使用数值 0 、 1 、 2"></a>密码强度检验等级，可以使用数值 0 、 1 、 2</h5><h5 id="或相应的符号值LOW、MEDIUM、STRONG来"><a href="#或相应的符号值LOW、MEDIUM、STRONG来" class="headerlink" title="或相应的符号值LOW、MEDIUM、STRONG来"></a>或相应的符号值LOW、MEDIUM、STRONG来</h5><h5 id="指定。0-x2F-LOW：只检查长度。"><a href="#指定。0-x2F-LOW：只检查长度。" class="headerlink" title="指定。0&#x2F;LOW：只检查长度。"></a>指定。0&#x2F;LOW：只检查长度。</h5><h5 id="1-x2F-MEDIUM：检查长度、数字、大小写、特"><a href="#1-x2F-MEDIUM：检查长度、数字、大小写、特" class="headerlink" title="1&#x2F;MEDIUM：检查长度、数字、大小写、特"></a>1&#x2F;MEDIUM：检查长度、数字、大小写、特</h5><h5 id="殊字符。2-x2F-STRONG：检查长度、数字、大"><a href="#殊字符。2-x2F-STRONG：检查长度、数字、大" class="headerlink" title="殊字符。2&#x2F;STRONG：检查长度、数字、大"></a>殊字符。2&#x2F;STRONG：检查长度、数字、大</h5><h5 id="小写、特殊字符、字典文件。"><a href="#小写、特殊字符、字典文件。" class="headerlink" title="小写、特殊字符、字典文件。"></a>小写、特殊字符、字典文件。</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">validate_password_special_char_count 1 密码必须包含的特殊字符个数</span><br></pre></td></tr></table></figure>
-
-<h5 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">组件和插件的默认值可能有所不同。例如，MySQL 5.7. validate_password_check_user_name的默认</span><br><span class="line">值为OFF。</span><br></pre></td></tr></table></figure>
-
-<p><strong>2. 修改安全策略</strong></p>
-<p>修改密码验证安全强度</p>
-<h5 id="此外，还可以修改密码中字符的长度"><a href="#此外，还可以修改密码中字符的长度" class="headerlink" title="此外，还可以修改密码中字符的长度"></a>此外，还可以修改密码中字符的长度</h5><h5 id="3-密码强度测试"><a href="#3-密码强度测试" class="headerlink" title="3. 密码强度测试"></a>3. 密码强度测试</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy=LOW;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy=MEDIUM;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy=STRONG;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy= 0 ;  # For LOW</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy= 1 ;  # For MEDIUM</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL validate_password_policy= 2 ;  # For HIGH</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#注意，如果是插件的话,SQL为set global validate_password_policy=LOW</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global validate_password_length= 1 ;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Password Test Return Value</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Length &lt; 4 0</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Length ≥ 4 and &lt; validate_password.length 25</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfies policy 1 (LOW) 50</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfies policy 2 (MEDIUM) 75</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Satisfies policy 3 (STRONG) 100</span><br></pre></td></tr></table></figure>
-
-<p>如果你创建密码是遇到“Your password does not satisfy the current policy requirements”，可以通过函数组<br>件去检测密码是否满足条件： 0-100。当评估在 100 时就是说明使用上了最基本的规则：大写+小写+特殊<br>字符+数字组成的 8 位以上密码</p>
-<p>注意：如果没有安装validate_password组件或插件的话，那么这个函数永远都返回 0 。 关于密码复杂度对<br>应的密码复杂度策略。如下表格所示：</p>
-<h3 id="4-4-卸载插件、组件-了解"><a href="#4-4-卸载插件、组件-了解" class="headerlink" title="4. 4 卸载插件、组件(了解)"></a>4. 4 卸载插件、组件(了解)</h3><h5 id="卸载插件"><a href="#卸载插件" class="headerlink" title="卸载插件"></a>卸载插件</h5><h5 id="卸载组件"><a href="#卸载组件" class="headerlink" title="卸载组件"></a>卸载组件</h5><h2 id="5-字符集的相关操作"><a href="#5-字符集的相关操作" class="headerlink" title="5. 字符集的相关操作"></a>5. 字符集的相关操作</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  SELECT VALIDATE_PASSWORD_STRENGTH(&#x27;medium&#x27;);</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| VALIDATE_PASSWORD_STRENGTH(&#x27;medium&#x27;) |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">| 25 |</span><br><span class="line">+--------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT VALIDATE_PASSWORD_STRENGTH(&#x27;K354*45jKd5&#x27;);</span><br><span class="line">+-------------------------------------------+</span><br><span class="line">| VALIDATE_PASSWORD_STRENGTH(&#x27;K354*45jKd5&#x27;) |</span><br><span class="line">+-------------------------------------------+</span><br><span class="line">| 100 |</span><br><span class="line">+-------------------------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UNINSTALL PLUGIN validate_password;</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.01 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; UNINSTALL COMPONENT &#x27;file://component_validate_password&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-1-修改MySQL-5-7-字符集"><a href="#5-1-修改MySQL-5-7-字符集" class="headerlink" title="5. 1 修改MySQL 5. 7 字符集"></a>5. 1 修改MySQL 5. 7 字符集</h3><h4 id="1-修改步骤"><a href="#1-修改步骤" class="headerlink" title="1. 修改步骤"></a>1. 修改步骤</h4><p>在MySQL 8. 0 版本之前，默认字符集为latin1，utf 8 字符集指向的是utf8mb3。网站开发人员在数据库<br>设计的时候往往会将编码修改为utf 8 字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL<br>8. 0 开始，数据库的默认编码将改为utf8mb4，从而避免上述乱码的问题。</p>
-<p><strong>操作 1 ：查看默认使用的字符集</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL 8. 0 中执行：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL 5. 7 中执行：</span><br></pre></td></tr></table></figure>
-
-<p>MySQL 5. 7 默认的客户端和服务器都用了latin1，不支持中文，保存中文会报错。MySQL 5. 7 截图如<br>下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;character%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># 或者</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%char%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>在MySQL 5. 7 中添加中文数据时，报错：</p>
-<p>因为默认情况下，创建表使用的是latin1。如下：</p>
-<h5 id="操作-2-：修改字符集"><a href="#操作-2-：修改字符集" class="headerlink" title="操作 2 ：修改字符集"></a>操作 2 ：修改字符集</h5><p>在MySQL 5. 7 或之前的版本中，在文件最后加上中文字符集配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_server=utf</span><br></pre></td></tr></table></figure>
-
-<p><strong>操作 3 ：重新启动MySQL服务</strong></p>
-<h5 id="但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。"><a href="#但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。" class="headerlink" title="但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。"></a>但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。</h5><h4 id="2-已有库-amp-表字符集的变更"><a href="#2-已有库-amp-表字符集的变更" class="headerlink" title="2. 已有库&amp;表字符集的变更"></a>2. 已有库&amp;表字符集的变更</h4><p>MySQL 5. 7 版本中，以前创建的库，创建的表字符集还是latin 1 。</p>
-<h5 id="修改已创建数据库的字符集"><a href="#修改已创建数据库的字符集" class="headerlink" title="修改已创建数据库的字符集"></a>修改已创建数据库的字符集</h5><h5 id="修改已创建数据表的字符集"><a href="#修改已创建数据表的字符集" class="headerlink" title="修改已创建数据表的字符集"></a>修改已创建数据表的字符集</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter database dbtest1 character set &#x27;utf8&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table t_emp convert to character set &#x27;utf8&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注意：但是原有的数据如果是用非&#x27;utf 8 &#x27;编码的话，数据本身编码不会发生改变。已有数据需要导</span><br><span class="line">出或删除，然后重新插入。</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-2-各级别的字符集"><a href="#5-2-各级别的字符集" class="headerlink" title="5. 2 各级别的字符集"></a>5. 2 各级别的字符集</h3><p>MySQL有 4 个级别的字符集和比较规则，分别是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">服务器级别</span><br><span class="line">数据库级别</span><br><span class="line">表级别</span><br><span class="line">列级别</span><br></pre></td></tr></table></figure>
-
-<p>执行如下SQL语句：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;character%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">character_set_server：服务器级别的字符集</span><br><span class="line">character_set_database：当前数据库的字符集</span><br><span class="line">character_set_client：服务器解码请求时使用的字符集</span><br><span class="line">character_set_connection：服务器处理请求时会把请求字符串从character_set_client转为</span><br><span class="line">character_set_connection</span><br><span class="line">character_set_results：服务器向客户端返回数据时使用的字符集</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-服务器级别"><a href="#1-服务器级别" class="headerlink" title="1. 服务器级别"></a>1. 服务器级别</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_server：服务器级别的字符集。</span><br></pre></td></tr></table></figure>
-
-<p>我们可以在启动服务器程序时通过启动选项或者在服务器程序运行过程中使用SET语句修改这两个变量<br>的值。比如我们可以在配置文件中这样写：</p>
-<h5 id="当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。"><a href="#当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。" class="headerlink" title="当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。"></a>当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。</h5><h4 id="2-数据库级别"><a href="#2-数据库级别" class="headerlink" title="2. 数据库级别"></a>2. 数据库级别</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_database：当前数据库的字符集</span><br></pre></td></tr></table></figure>
-
-<p>我们在创建和修改数据库的时候可以指定该数据库的字符集和比较规则，具体语法如下：</p>
-<h4 id="3-表级别"><a href="#3-表级别" class="headerlink" title="3. 表级别"></a>3. 表级别</h4><h5 id="我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下："><a href="#我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下：" class="headerlink" title="我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下："></a>我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">character_set_server=gbk  # 默认字符集</span><br><span class="line">collation_server=gbk_chinese_ci  #对应的默认的比较规则</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE 数据库名</span><br><span class="line">[[DEFAULT] CHARACTER SET 字符集名称]</span><br><span class="line">[[DEFAULT] COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE 数据库名</span><br><span class="line">[[DEFAULT] CHARACTER SET 字符集名称]</span><br><span class="line">[[DEFAULT] COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
-
-<h5 id="如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作"><a href="#如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作" class="headerlink" title="如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作"></a>如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作</h5><h5 id="为该表的字符集和比较规则。"><a href="#为该表的字符集和比较规则。" class="headerlink" title="为该表的字符集和比较规则。"></a>为该表的字符集和比较规则。</h5><h4 id="4-列级别"><a href="#4-列级别" class="headerlink" title="4. 列级别"></a>4. 列级别</h4><h5 id="对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列"><a href="#对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列" class="headerlink" title="对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列"></a>对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列</h5><h5 id="定义的时候可以指定该列的字符集和比较规则，语法如下："><a href="#定义的时候可以指定该列的字符集和比较规则，语法如下：" class="headerlink" title="定义的时候可以指定该列的字符集和比较规则，语法如下："></a>定义的时候可以指定该列的字符集和比较规则，语法如下：</h5><h5 id="对于某个列来说，如果在创建和修改的语句中没有指明字符集和比较规则，将使用该列所在表的字符集"><a href="#对于某个列来说，如果在创建和修改的语句中没有指明字符集和比较规则，将使用该列所在表的字符集" class="headerlink" title="对于某个列来说，如果在创建和修改的语句中没有指明字符集和比较规则，将使用该列所在表的字符集"></a>对于某个列来说，如果在创建和修改的语句中没有指明字符集和比较规则，将使用该列所在表的字符集</h5><h5 id="和比较规则作为该列的字符集和比较规则。"><a href="#和比较规则作为该列的字符集和比较规则。" class="headerlink" title="和比较规则作为该列的字符集和比较规则。"></a>和比较规则作为该列的字符集和比较规则。</h5><h5 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h5><h5 id="在转换列的字符集时需要注意，如果转换前列中存储的数据不能用转换后的字符集进行表示会发生"><a href="#在转换列的字符集时需要注意，如果转换前列中存储的数据不能用转换后的字符集进行表示会发生" class="headerlink" title="在转换列的字符集时需要注意，如果转换前列中存储的数据不能用转换后的字符集进行表示会发生"></a>在转换列的字符集时需要注意，如果转换前列中存储的数据不能用转换后的字符集进行表示会发生</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">错误。比方说原先列使用的字符集是utf 8 ，列中存储了一些汉字，现在把列的字符集转换为ascii的</span><br><span class="line">话就会出错，因为ascii字符集并不能表示汉字字符。</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-小结"><a href="#5-小结" class="headerlink" title="5. 小结"></a>5. 小结</h4><h5 id="我们介绍的这-4-个级别字符集和比较规则的联系如下："><a href="#我们介绍的这-4-个级别字符集和比较规则的联系如下：" class="headerlink" title="我们介绍的这 4 个级别字符集和比较规则的联系如下："></a>我们介绍的这 4 个级别字符集和比较规则的联系如下：</h5><h5 id="如果创建或修改列时没有显式的指定字符集和比较规则，则该列默认用表的字符集和比较规则"><a href="#如果创建或修改列时没有显式的指定字符集和比较规则，则该列默认用表的字符集和比较规则" class="headerlink" title="如果创建或修改列时没有显式的指定字符集和比较规则，则该列默认用表的字符集和比较规则"></a>如果创建或修改列时没有显式的指定字符集和比较规则，则该列默认用表的字符集和比较规则</h5><h5 id="如果创建表时没有显式的指定字符集和比较规则，则该表默认用数据库的字符集和比较规则"><a href="#如果创建表时没有显式的指定字符集和比较规则，则该表默认用数据库的字符集和比较规则" class="headerlink" title="如果创建表时没有显式的指定字符集和比较规则，则该表默认用数据库的字符集和比较规则"></a>如果创建表时没有显式的指定字符集和比较规则，则该表默认用数据库的字符集和比较规则</h5><h5 id="如果创建数据库时没有显式的指定字符集和比较规则，则该数据库默认用服务器的字符集和比较规"><a href="#如果创建数据库时没有显式的指定字符集和比较规则，则该数据库默认用服务器的字符集和比较规" class="headerlink" title="如果创建数据库时没有显式的指定字符集和比较规则，则该数据库默认用服务器的字符集和比较规"></a>如果创建数据库时没有显式的指定字符集和比较规则，则该数据库默认用服务器的字符集和比较规</h5><h5 id="则"><a href="#则" class="headerlink" title="则"></a>则</h5><h5 id="知道了这些规则之后，对于给定的表，我们应该知道它的各个列的字符集和比较规则是什么，从而根据"><a href="#知道了这些规则之后，对于给定的表，我们应该知道它的各个列的字符集和比较规则是什么，从而根据" class="headerlink" title="知道了这些规则之后，对于给定的表，我们应该知道它的各个列的字符集和比较规则是什么，从而根据"></a>知道了这些规则之后，对于给定的表，我们应该知道它的各个列的字符集和比较规则是什么，从而根据</h5><p>这个列的类型来确定存储数据时每个列的实际数据占用的存储空间大小了。比方说我们向表t中插入一<br>条记录：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名 (列的信息)</span><br><span class="line">[[DEFAULT] CHARACTER SET 字符集名称]</span><br><span class="line">[COLLATE 比较规则名称]]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE 表名</span><br><span class="line">[[DEFAULT] CHARACTER SET 字符集名称]</span><br><span class="line">[COLLATE 比较规则名称]</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名(</span><br><span class="line">列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称],</span><br><span class="line">其他列...</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE 表名 MODIFY 列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; INSERT INTO t(col) VALUES(&#x27;我们&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM t;</span><br><span class="line">+--------+</span><br><span class="line">| s |</span><br><span class="line">+--------+</span><br><span class="line">| 我们 |</span><br><span class="line">+--------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<h5 id="后缀-英文释义-描述"><a href="#后缀-英文释义-描述" class="headerlink" title="后缀 英文释义 描述"></a>后缀 英文释义 描述</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_ai accent insensitive 不区分重音</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_as accent sensitive 区分重音</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_ci case insensitive 不区分大小写</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_cs case sensitive 区分大小写</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_bin binary 以二进制方式比较</span><br></pre></td></tr></table></figure>
-
-<p>首先列col使用的字符集是gbk，一个字符’我’在gbk中的编码为0xCED2，占用两个字节，两个字<br>符的实际数据就占用 4 个字节。如果把该列的字符集修改为utf8的话，这两个字符就实际占用 6 个字节</p>
-<h3 id="5-3-字符集与比较规则-了解"><a href="#5-3-字符集与比较规则-了解" class="headerlink" title="5. 3 字符集与比较规则(了解)"></a>5. 3 字符集与比较规则(了解)</h3><h4 id="1-utf-8-与-utf-8-mb-4"><a href="#1-utf-8-与-utf-8-mb-4" class="headerlink" title="1. utf 8 与 utf 8 mb 4"></a>1. utf 8 与 utf 8 mb 4</h4><p>utf8字符集表示一个字符需要使用 1 ～ 4 个字节，但是我们常用的一些字符使用 1 ～ 3 个字节就可以表示<br>了。而字符集表示一个字符所用的最大字节长度，在某些方面会影响系统的存储和性能，所以设计<br>MySQL的设计者偷偷的定义了两个概念：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">utf8mb3：阉割过的utf8字符集，只使用 1 ～ 3 个字节表示字符。</span><br><span class="line">utf8mb4：正宗的utf8字符集，使用 1 ～ 4 个字节表示字符。</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-比较规则"><a href="#2-比较规则" class="headerlink" title="2. 比较规则"></a>2. 比较规则</h4><p>上表中，MySQL版本一共支持 41 种字符集，其中的Default collation列表示这种字符集中一种默认<br>的比较规则，里面包含着该比较规则主要作用于哪种语言，比如utf8_polish_ci表示以波兰语的规则<br>比较，utf8_spanish_ci是以西班牙语的规则比较，utf8_general_ci是一种通用的比较规则。</p>
-<p>后缀表示该比较规则是否区分语言中的重音、大小写。具体如下：</p>
-<p>最后一列Maxlen，它代表该种字符集表示一个字符最多需要几个字节。</p>
-<p><strong>常用操作 1 ：</strong></p>
-<h5 id="常用操作-2-："><a href="#常用操作-2-：" class="headerlink" title="常用操作 2 ："></a>常用操作 2 ：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看GBK字符集的比较规则</span><br><span class="line">SHOW COLLATION LIKE &#x27;gbk%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看UTF-8字符集的比较规则</span><br><span class="line">SHOW COLLATION LIKE &#x27;utf8%&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看服务器的字符集和比较规则</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%_server&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看数据库的字符集和比较规则</span><br><span class="line">SHOW VARIABLES LIKE &#x27;%_database&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看具体数据库的字符集</span><br><span class="line">SHOW CREATE DATABASE dbtest1;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#修改具体数据库的字符集</span><br><span class="line">ALTER DATABASE dbtest1 DEFAULT CHARACTER SET &#x27;utf8&#x27; COLLATE &#x27;utf8_general_ci&#x27;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="系统变量-描述"><a href="#系统变量-描述" class="headerlink" title="系统变量 描述"></a>系统变量 描述</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_client 服务器解码请求时使用的字符集</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_connection</span><br></pre></td></tr></table></figure>
-
-<h5 id="服务器处理请求时会把请求字符串从"><a href="#服务器处理请求时会把请求字符串从" class="headerlink" title="服务器处理请求时会把请求字符串从"></a>服务器处理请求时会把请求字符串从</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_client转为character_set_connection</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">character_set_results 服务器向客户端返回数据时使用的字符集</span><br></pre></td></tr></table></figure>
-
-<h5 id="常用操作-3-："><a href="#常用操作-3-：" class="headerlink" title="常用操作 3 ："></a>常用操作 3 ：</h5><h3 id="5-4-请求到响应过程中字符集的变化"><a href="#5-4-请求到响应过程中字符集的变化" class="headerlink" title="5. 4 请求到响应过程中字符集的变化"></a>5. 4 请求到响应过程中字符集的变化</h3><h5 id="这几个系统变量在我的计算机上的默认值如下（不同操作系统的默认值可能不同）："><a href="#这几个系统变量在我的计算机上的默认值如下（不同操作系统的默认值可能不同）：" class="headerlink" title="这几个系统变量在我的计算机上的默认值如下（不同操作系统的默认值可能不同）："></a>这几个系统变量在我的计算机上的默认值如下（不同操作系统的默认值可能不同）：</h5><h5 id="为了体现出字符集在请求处理过程中的变化，我们这里特意修改一个系统变量的值："><a href="#为了体现出字符集在请求处理过程中的变化，我们这里特意修改一个系统变量的值：" class="headerlink" title="为了体现出字符集在请求处理过程中的变化，我们这里特意修改一个系统变量的值："></a>为了体现出字符集在请求处理过程中的变化，我们这里特意修改一个系统变量的值：</h5><h5 id="现在假设我们客户端发送的请求是下边这个字符串："><a href="#现在假设我们客户端发送的请求是下边这个字符串：" class="headerlink" title="现在假设我们客户端发送的请求是下边这个字符串："></a>现在假设我们客户端发送的请求是下边这个字符串：</h5><h5 id="为了方便大家理解这个过程，我们只分析字符’我’在这个过程中字符集的转换。"><a href="#为了方便大家理解这个过程，我们只分析字符’我’在这个过程中字符集的转换。" class="headerlink" title="为了方便大家理解这个过程，我们只分析字符’我’在这个过程中字符集的转换。"></a>为了方便大家理解这个过程，我们只分析字符’我’在这个过程中字符集的转换。</h5><h5 id="现在看一下在请求从发送到结果返回过程中字符集的变化："><a href="#现在看一下在请求从发送到结果返回过程中字符集的变化：" class="headerlink" title="现在看一下在请求从发送到结果返回过程中字符集的变化："></a>现在看一下在请求从发送到结果返回过程中字符集的变化：</h5><h5 id="1-客户端发送请求所使用的字符集"><a href="#1-客户端发送请求所使用的字符集" class="headerlink" title="1. 客户端发送请求所使用的字符集"></a>1. 客户端发送请求所使用的字符集</h5><h5 id="一般情况下客户端所使用的字符集和当前操作系统一致，不同操作系统使用的字符集可能不一"><a href="#一般情况下客户端所使用的字符集和当前操作系统一致，不同操作系统使用的字符集可能不一" class="headerlink" title="一般情况下客户端所使用的字符集和当前操作系统一致，不同操作系统使用的字符集可能不一"></a>一般情况下客户端所使用的字符集和当前操作系统一致，不同操作系统使用的字符集可能不一</h5><h5 id="样，如下："><a href="#样，如下：" class="headerlink" title="样，如下："></a>样，如下：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看表的字符集</span><br><span class="line">show create table employees;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#查看表的比较规则</span><br><span class="line">show table status from atguigudb like &#x27;employees&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#修改表的字符集和比较规则</span><br><span class="line">ALTER TABLE emp1 DEFAULT CHARACTER SET &#x27;utf8&#x27; COLLATE &#x27;utf8_general_ci&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set character_set_connection = gbk;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM t WHERE s = &#x27;我&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类Unix系统使用的是utf8</span><br><span class="line">Windows使用的是gbk</span><br><span class="line">当客户端使用的是utf8字符集，字符&#x27;我&#x27;在发送给服务器的请求中的字节形式就是：</span><br><span class="line">0xE68891</span><br></pre></td></tr></table></figure>
-
-<h5 id="提示-1"><a href="#提示-1" class="headerlink" title="提示"></a>提示</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">如果你使用的是可视化工具，比如navicat之类的，这些工具可能会使用自定义的字符集来编</span><br><span class="line">码发送到服务器的字符串，而不采用操作系统默认的字符集（所以在学习的时候还是尽量用</span><br><span class="line">命令行窗口）。</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-服务器接收到客户端发送来的请求其实是一串二进制的字节，它会认为这串字节采用的字符集是"><a href="#2-服务器接收到客户端发送来的请求其实是一串二进制的字节，它会认为这串字节采用的字符集是" class="headerlink" title="2. 服务器接收到客户端发送来的请求其实是一串二进制的字节，它会认为这串字节采用的字符集是"></a>2. 服务器接收到客户端发送来的请求其实是一串二进制的字节，它会认为这串字节采用的字符集是</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">character_set_client，然后把这串字节转换为character_set_connection字符集编码的</span><br><span class="line">字符。</span><br><span class="line">由于我的计算机上character_set_client的值是utf8，首先会按照utf8字符集对字节串</span><br><span class="line">0xE68891进行解码，得到的字符串就是&#x27;我&#x27;，然后按照character_set_connection代表的</span><br><span class="line">字符集，也就是gbk进行编码，得到的结果就是字节串0xCED2。</span><br><span class="line">3. 因为表t的列col采用的是gbk字符集，与character_set_connection一致，所以直接到列</span><br><span class="line">中找字节值为0xCED2的记录，最后找到了一条记录。</span><br></pre></td></tr></table></figure>
-
-<h5 id="提示-2"><a href="#提示-2" class="headerlink" title="提示"></a>提示</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">如果某个列使用的字符集和character_set_connection代表的字符集不一致的话，还需要进行</span><br><span class="line">一次字符集转换。</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">4. 上一步骤找到的记录中的col列其实是一个字节串0xCED2，col列是采用gbk进行编码的，所</span><br><span class="line">以首先会将这个字节串使用gbk进行解码，得到字符串&#x27;我&#x27;，然后再把这个字符串使用</span><br><span class="line">character_set_results代表的字符集，也就是utf8进行编码，得到了新的字节串：</span><br><span class="line">0xE68891，然后发送给客户端。</span><br><span class="line">5. 由于客户端是用的字符集是utf8，所以可以顺利的将0xE68891解释成字符我，从而显示到我</span><br><span class="line">们的显示器上，所以我们人类也读懂了返回的结果。</span><br></pre></td></tr></table></figure>
-
-<p>总结图示如下：</p>
-<h2 id="6-SQL大小写规范"><a href="#6-SQL大小写规范" class="headerlink" title="6. SQL大小写规范"></a>6. SQL大小写规范</h2><h3 id="6-1-Windows和Linux平台区别"><a href="#6-1-Windows和Linux平台区别" class="headerlink" title="6. 1 Windows和Linux平台区别"></a>6. 1 Windows和Linux平台区别</h3><h5 id="在-SQL-中，关键字和函数名是不用区分字母大小写的，比如-SELECT、WHERE、ORDER、GROUP-BY-等关"><a href="#在-SQL-中，关键字和函数名是不用区分字母大小写的，比如-SELECT、WHERE、ORDER、GROUP-BY-等关" class="headerlink" title="在 SQL 中，关键字和函数名是不用区分字母大小写的，比如 SELECT、WHERE、ORDER、GROUP BY 等关"></a>在 SQL 中，关键字和函数名是不用区分字母大小写的，比如 SELECT、WHERE、ORDER、GROUP BY 等关</h5><h5 id="键字，以及-ABS、MOD、ROUND、MAX-等函数名。"><a href="#键字，以及-ABS、MOD、ROUND、MAX-等函数名。" class="headerlink" title="键字，以及 ABS、MOD、ROUND、MAX 等函数名。"></a>键字，以及 ABS、MOD、ROUND、MAX 等函数名。</h5><p>不过在 SQL 中，你还是要确定大小写的规范，因为在 Linux 和 Windows 环境下，你可能会遇到不同的大<br>小写问题。windows系统默认大小写不敏感，但是linux系统是大小写敏感的。</p>
-<p>通过如下命令查看：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows系统下：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux系统下：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lower_case_table_names参数值的设置：</span><br><span class="line">默认为 0 ，大小写敏感。</span><br><span class="line">设置 1 ，大小写不敏感。创建的表，数据库都是以小写形式存放在磁盘上，对于sql语句都是转</span><br><span class="line">换为小写对表和数据库进行查找。</span><br><span class="line">设置 2 ，创建的表和数据库依据语句上格式存放，凡是查找都是转换为小写进行。</span><br><span class="line">两个平台上SQL大小写的区别具体来说：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL在Linux下数据库名、表名、列名、别名大小写规则是这样的：</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 、数据库名、表名、表的别名、变量名是严格区分大小写的；</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2 、关键字、函数名称在 SQL 中不区分大小写；</span><br><span class="line">3 、列名（或字段名）与列的别名（或字段别名）在所有的情况下均是忽略大小写的；</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MySQL在Windows的环境下全部不区分大小写</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-2-Linux下大小写规则设置"><a href="#6-2-Linux下大小写规则设置" class="headerlink" title="6. 2 Linux下大小写规则设置"></a>6. 2 Linux下大小写规则设置</h3><p>当想设置为大小写不敏感时，要在my.cnf这个配置文件 [mysqld] 中加入<br>lower_case_table_names&#x3D;1 ，然后重启服务器。<br>但是要在重启数据库实例之前就需要将原来的数据库和表转换为小写，否则将找不到数据库名。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#x27;%lower_case_table_names%&#x27;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">此参数适用于MySQL5.7。在MySQL 8下禁止在重新启动 MySQL 服务时将</span><br><span class="line">lower_case_table_names 设置成不同于初始化 MySQL 服务时设置的</span><br><span class="line">lower_case_table_names 值。如果非要将MySQL8设置为大小写不敏感，具体步骤为：</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-3-SQL编写建议"><a href="#6-3-SQL编写建议" class="headerlink" title="6.3 SQL编写建议"></a>6.3 SQL编写建议</h3><h5 id="如果你的变量名命名规范没有统一，就可能产生错误。这里有一个有关命名规范的建议："><a href="#如果你的变量名命名规范没有统一，就可能产生错误。这里有一个有关命名规范的建议：" class="headerlink" title="如果你的变量名命名规范没有统一，就可能产生错误。这里有一个有关命名规范的建议："></a>如果你的变量名命名规范没有统一，就可能产生错误。这里有一个有关命名规范的建议：</h5><h5 id="1-关键字和函数名称全部大写；"><a href="#1-关键字和函数名称全部大写；" class="headerlink" title="1. 关键字和函数名称全部大写；"></a>1. 关键字和函数名称全部大写；</h5><h5 id="2-数据库名、表名、表别名、字段名、字段别名等全部小写；"><a href="#2-数据库名、表名、表别名、字段名、字段别名等全部小写；" class="headerlink" title="2. 数据库名、表名、表别名、字段名、字段别名等全部小写；"></a>2. 数据库名、表名、表别名、字段名、字段别名等全部小写；</h5><h5 id="3-SQL-语句必须以分号结尾。"><a href="#3-SQL-语句必须以分号结尾。" class="headerlink" title="3. SQL 语句必须以分号结尾。"></a>3. SQL 语句必须以分号结尾。</h5><p>数据库名、表名和字段名在 Linux MySQL 环境下是区分大小写的，因此建议你统一这些字段的命名规<br>则，比如全部采用小写的方式。</p>
-<p>虽然关键字和函数名称在 SQL 中不区分大小写，也就是如果小写的话同样可以执行。但是同时将关键词<br>和函数名称全部大写，以便于区分数据库名、表名、字段名。</p>
-<h2 id="7-sql-mode的合理设置"><a href="#7-sql-mode的合理设置" class="headerlink" title="7. sql_mode的合理设置"></a>7. sql_mode的合理设置</h2><h3 id="7-1-宽松模式-vs-严格模式"><a href="#7-1-宽松模式-vs-严格模式" class="headerlink" title="7.1 宽松模式 vs 严格模式"></a>7.1 宽松模式 vs 严格模式</h3><h5 id="宽松模式："><a href="#宽松模式：" class="headerlink" title="宽松模式："></a>宽松模式：</h5><h5 id="如果设置的是宽松模式，那么我们在插入数据的时候，即便是给了一个错误的数据，也可能会被接受，"><a href="#如果设置的是宽松模式，那么我们在插入数据的时候，即便是给了一个错误的数据，也可能会被接受，" class="headerlink" title="如果设置的是宽松模式，那么我们在插入数据的时候，即便是给了一个错误的数据，也可能会被接受，"></a>如果设置的是宽松模式，那么我们在插入数据的时候，即便是给了一个错误的数据，也可能会被接受，</h5><h5 id="并且不报错。"><a href="#并且不报错。" class="headerlink" title="并且不报错。"></a>并且不报错。</h5><p>举例：我在创建一个表时，该表中有一个字段为name，给name设置的字段类型时char(10)，如果我<br>在插入数据的时候，其中name这个字段对应的有一条数据的长度超过了 10 ，例如’1234567890abc’，超<br>过了设定的字段长度 10 ，那么不会报错，并且取前 10 个字符存上，也就是说你这个数据被存为<br>了’1234567890’，而’abc’就没有了。但是，我们给的这条数据是错误的，因为超过了字段长度，但是并没<br>有报错，并且mysql自行处理并接受了，这就是宽松模式的效果。</p>
-<p>应用场景：通过设置sql mode为宽松模式，来保证大多数sql符合标准的sql语法，这样应用在不同数据<br>库之间进行迁移时，则不需要对业务sql 进行较大的修改。</p>
-<p><strong>严格模式：</strong></p>
-<p>出现上面宽松模式的错误，应该报错才对，所以MySQL5.7版本就将sql_mode默认值改为了严格模式。所<br>以在生产等环境中，我们必须采用的是严格模式，进而开发、测试环境的数据库也必须要设置，这样在<br>开发测试阶段就可以发现问题。并且我们即便是用的MySQL5.6，也应该自行将其改为严格模式。</p>
-<p>开发经验：MySQL等数据库总想把关于数据的所有操作都自己包揽下来，包括数据的校验，其实开发<br>中，我们应该在自己开发的项目程序级别将这些校验给做了，虽然写项目的时候麻烦了一些步骤，但是这<br>样做之后，我们在进行数据库迁移或者在项目的迁移时，就会方便很多。</p>
-<p>改为严格模式后可能会存在的问题：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1 、停止MySQL服务</span><br><span class="line">2 、删除数据目录，即删除 /var/lib/mysql 目录</span><br><span class="line">3 、在MySQL配置文件（ /etc/my.cnf ）中添加 lower_case_table_names=1</span><br><span class="line">4 、启动MySQL服务</span><br></pre></td></tr></table></figure>
-
-<p>若设置模式中包含了NO_ZERO_DATE，那么MySQL数据库不允许插入零日期，插入零日期会抛出错误而<br>不是警告。例如，表中含字段TIMESTAMP列（如果未声明为NULL或显示DEFAULT子句）将自动分配<br>DEFAULT ‘0000-00-00 00:00:00’（零时间戳），这显然是不满足sql_mode中的NO_ZERO_DATE而报错。</p>
-<h3 id="7-2-宽松模式再举例"><a href="#7-2-宽松模式再举例" class="headerlink" title="7. 2 宽松模式再举例"></a>7. 2 宽松模式再举例</h3><h5 id="宽松模式举例-1-："><a href="#宽松模式举例-1-：" class="headerlink" title="宽松模式举例 1 ："></a>宽松模式举例 1 ：</h5><h5 id="宽松模式举例-2-："><a href="#宽松模式举例-2-：" class="headerlink" title="宽松模式举例 2 ："></a>宽松模式举例 2 ：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from employees group by department_id limit 10 ;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set sql_mode = ONLY_FULL_GROUP_BY;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from employees group by department_id limit 10 ;</span><br></pre></td></tr></table></figure>
-
-<p>设置 sql_mode 模式为 STRICT_TRANS_TABLES ，然后插入数据：</p>
-<h3 id="7-3-模式查看和设置"><a href="#7-3-模式查看和设置" class="headerlink" title="7. 3 模式查看和设置"></a>7. 3 模式查看和设置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">查看当前的sql_mode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">临时设置方式：设置当前窗口中设置sql_mode</span><br></pre></td></tr></table></figure>
-
-<h5 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@session.sql_mode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@global.sql_mode</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#或者</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;sql_mode&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL sql_mode = &#x27;modes...&#x27;; #全局</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET SESSION sql_mode = &#x27;modes...&#x27;; #当前会话</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">永久设置方式：在/etc/my.cnf中配置sql_mode</span><br></pre></td></tr></table></figure>
-
-<p>在my.cnf文件(windows系统是my.ini文件)，新增：</p>
-<p>然后重启MySQL。</p>
-<p>当然生产环境上是禁止重启MySQL服务的，所以采用临时设置方式 + 永久设置方式来解决线上的问题，<br>那么即便是有一天真的重启了MySQL服务，也会永久生效了。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#改为严格模式。此方法只在当前会话中生效，关闭当前会话就不生效了。</span><br><span class="line">set SESSION sql_mode=&#x27;STRICT_TRANS_TABLES&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#改为严格模式。此方法在当前服务中生效，重启MySQL服务后失效。</span><br><span class="line">set GLOBAL sql_mode=&#x27;STRICT_TRANS_TABLES&#x27;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR</span><br><span class="line">_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="wenchao">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="技术日记簿">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL%E7%9A%84%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95/" class="post-title-link" itemprop="url">MySQL的数据目录</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-11-09 23:30:13" itemprop="dateCreated datePublished" datetime="2018-11-09T23:30:13+08:00">2018-11-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-13 19:53:56" itemprop="dateModified" datetime="2023-06-13T19:53:56+08:00">2023-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="MySQL的数据目录"><a href="#MySQL的数据目录" class="headerlink" title="MySQL的数据目录"></a>MySQL的数据目录</h1><h2 id="1-MySQL-8-的主要目录结构"><a href="#1-MySQL-8-的主要目录结构" class="headerlink" title="1. MySQL 8 的主要目录结构"></a>1. MySQL 8 的主要目录结构</h2><h5 id="安装好MySQL-8-之后，我们查看如下的目录结构："><a href="#安装好MySQL-8-之后，我们查看如下的目录结构：" class="headerlink" title="安装好MySQL 8 之后，我们查看如下的目录结构："></a>安装好MySQL 8 之后，我们查看如下的目录结构：</h5><h2 id="1-1-数据库文件的存放路径"><a href="#1-1-数据库文件的存放路径" class="headerlink" title="1. 1 数据库文件的存放路径"></a>1. 1 数据库文件的存放路径</h2><h5 id="MySQL数据库文件的存放路径：-x2F-var-x2F-lib-x2F-mysql-x2F"><a href="#MySQL数据库文件的存放路径：-x2F-var-x2F-lib-x2F-mysql-x2F" class="headerlink" title="MySQL数据库文件的存放路径：&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;"></a>MySQL数据库文件的存放路径：&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;</h5><h5 id="从结果中可以看出，在我的计算机上MySQL的数据目录就是-x2F-var-x2F-lib-x2F-mysql-x2F-。"><a href="#从结果中可以看出，在我的计算机上MySQL的数据目录就是-x2F-var-x2F-lib-x2F-mysql-x2F-。" class="headerlink" title="从结果中可以看出，在我的计算机上MySQL的数据目录就是&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;。"></a>从结果中可以看出，在我的计算机上MySQL的数据目录就是&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;。</h5><h2 id="1-2-相关命令目录"><a href="#1-2-相关命令目录" class="headerlink" title="1. 2 相关命令目录"></a>1. 2 相关命令目录</h2><h5 id="相关命令目录：-x2F-usr-x2F-bin（mysqladmin、mysqlbinlog、mysqldump等命令）和-x2F-usr-x2F-sbin。"><a href="#相关命令目录：-x2F-usr-x2F-bin（mysqladmin、mysqlbinlog、mysqldump等命令）和-x2F-usr-x2F-sbin。" class="headerlink" title="相关命令目录：&#x2F;usr&#x2F;bin（mysqladmin、mysqlbinlog、mysqldump等命令）和&#x2F;usr&#x2F;sbin。"></a>相关命令目录：&#x2F;usr&#x2F;bin（mysqladmin、mysqlbinlog、mysqldump等命令）和&#x2F;usr&#x2F;sbin。</h5><h2 id="1-3-配置文件目录"><a href="#1-3-配置文件目录" class="headerlink" title="1. 3 配置文件目录"></a>1. 3 配置文件目录</h2><h5 id="配置文件目录：-x2F-usr-x2F-share-x2F-mysql-8-0（命令及配置文件），-x2F-etc-x2F-mysql（如my-cnf）"><a href="#配置文件目录：-x2F-usr-x2F-share-x2F-mysql-8-0（命令及配置文件），-x2F-etc-x2F-mysql（如my-cnf）" class="headerlink" title="配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）"></a>配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@atguigu01 ~]# find / -name mysql</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;datadir&#x27;;</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| datadir | /var/lib/mysql/ |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">1 row in set (0.04 sec)</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-数据库和文件系统的关系"><a href="#2-数据库和文件系统的关系" class="headerlink" title="2. 数据库和文件系统的关系"></a>2. 数据库和文件系统的关系</h2><h3 id="2-1-查看默认数据库"><a href="#2-1-查看默认数据库" class="headerlink" title="2. 1 查看默认数据库"></a>2. 1 查看默认数据库</h3><h5 id="查看一下在我的计算机上当前有哪些数据库："><a href="#查看一下在我的计算机上当前有哪些数据库：" class="headerlink" title="查看一下在我的计算机上当前有哪些数据库："></a>查看一下在我的计算机上当前有哪些数据库：</h5><h5 id="可以看到有-4-个数据库是属于MySQL自带的系统数据库。"><a href="#可以看到有-4-个数据库是属于MySQL自带的系统数据库。" class="headerlink" title="可以看到有 4 个数据库是属于MySQL自带的系统数据库。"></a>可以看到有 4 个数据库是属于MySQL自带的系统数据库。</h5><h6 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h6><h5 id="MySQL-系统自带的核心数据库，它存储了MySQL的用户账户和权限信息，一些存储过程、事件的定"><a href="#MySQL-系统自带的核心数据库，它存储了MySQL的用户账户和权限信息，一些存储过程、事件的定" class="headerlink" title="MySQL 系统自带的核心数据库，它存储了MySQL的用户账户和权限信息，一些存储过程、事件的定"></a>MySQL 系统自带的核心数据库，它存储了MySQL的用户账户和权限信息，一些存储过程、事件的定</h5><h5 id="义信息，一些运行过程中产生的日志信息，一些帮助信息以及时区信息等。"><a href="#义信息，一些运行过程中产生的日志信息，一些帮助信息以及时区信息等。" class="headerlink" title="义信息，一些运行过程中产生的日志信息，一些帮助信息以及时区信息等。"></a>义信息，一些运行过程中产生的日志信息，一些帮助信息以及时区信息等。</h5><h6 id="information-schema"><a href="#information-schema" class="headerlink" title="information_schema"></a>information_schema</h6><h5 id="MySQL-系统自带的数据库，这个数据库保存着MySQL服务器维护的所有其他数据库的信息，比如有"><a href="#MySQL-系统自带的数据库，这个数据库保存着MySQL服务器维护的所有其他数据库的信息，比如有" class="headerlink" title="MySQL 系统自带的数据库，这个数据库保存着MySQL服务器维护的所有其他数据库的信息，比如有"></a>MySQL 系统自带的数据库，这个数据库保存着MySQL服务器维护的所有其他数据库的信息，比如有</h5><h5 id="哪些表、哪些视图、哪些触发器、哪些列、哪些索引。这些信息并不是真实的用户数据，而是一些"><a href="#哪些表、哪些视图、哪些触发器、哪些列、哪些索引。这些信息并不是真实的用户数据，而是一些" class="headerlink" title="哪些表、哪些视图、哪些触发器、哪些列、哪些索引。这些信息并不是真实的用户数据，而是一些"></a>哪些表、哪些视图、哪些触发器、哪些列、哪些索引。这些信息并不是真实的用户数据，而是一些</h5><h5 id="描述性信息，有时候也称之为元数据。在系统数据库information-schema中提供了一些以"><a href="#描述性信息，有时候也称之为元数据。在系统数据库information-schema中提供了一些以" class="headerlink" title="描述性信息，有时候也称之为元数据。在系统数据库information_schema中提供了一些以"></a>描述性信息，有时候也称之为元数据。在系统数据库information_schema中提供了一些以</h5><h5 id="innodb-sys开头的表，用于表示内部系统表。"><a href="#innodb-sys开头的表，用于表示内部系统表。" class="headerlink" title="innodb_sys开头的表，用于表示内部系统表。"></a>innodb_sys开头的表，用于表示内部系统表。</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW DATABASES;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE information_schema;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW TABLES LIKE &#x27;innodb_sys%&#x27;;</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">| Tables_in_information_schema (innodb_sys%) |</span><br></pre></td></tr></table></figure>
-
-<h6 id="performance-schema"><a href="#performance-schema" class="headerlink" title="performance_schema"></a>performance_schema</h6><h5 id="MySQL-系统自带的数据库，这个数据库里主要保存MySQL服务器运行过程中的一些状态信息，可以"><a href="#MySQL-系统自带的数据库，这个数据库里主要保存MySQL服务器运行过程中的一些状态信息，可以" class="headerlink" title="MySQL 系统自带的数据库，这个数据库里主要保存MySQL服务器运行过程中的一些状态信息，可以"></a>MySQL 系统自带的数据库，这个数据库里主要保存MySQL服务器运行过程中的一些状态信息，可以</h5><h5 id="用来监控-MySQL-服务的各类性能指标。包括统计最近执行了哪些语句，在执行过程的每个阶段都"><a href="#用来监控-MySQL-服务的各类性能指标。包括统计最近执行了哪些语句，在执行过程的每个阶段都" class="headerlink" title="用来监控 MySQL 服务的各类性能指标。包括统计最近执行了哪些语句，在执行过程的每个阶段都"></a>用来监控 MySQL 服务的各类性能指标。包括统计最近执行了哪些语句，在执行过程的每个阶段都</h5><h5 id="花费了多长时间，内存的使用情况等信息。"><a href="#花费了多长时间，内存的使用情况等信息。" class="headerlink" title="花费了多长时间，内存的使用情况等信息。"></a>花费了多长时间，内存的使用情况等信息。</h5><h6 id="sys"><a href="#sys" class="headerlink" title="sys"></a>sys</h6><h5 id="MySQL-系统自带的数据库，这个数据库主要是通过视图的形式把information-schema和"><a href="#MySQL-系统自带的数据库，这个数据库主要是通过视图的形式把information-schema和" class="headerlink" title="MySQL 系统自带的数据库，这个数据库主要是通过视图的形式把information_schema和"></a>MySQL 系统自带的数据库，这个数据库主要是通过视图的形式把information_schema和</h5><h5 id="performance-schema结合起来，帮助系统管理员和开发人员监控-MySQL-的技术性能。"><a href="#performance-schema结合起来，帮助系统管理员和开发人员监控-MySQL-的技术性能。" class="headerlink" title="performance_schema结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。"></a>performance_schema结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。</h5><h3 id="2-2-数据库在文件系统中的表示"><a href="#2-2-数据库在文件系统中的表示" class="headerlink" title="2. 2 数据库在文件系统中的表示"></a>2. 2 数据库在文件系统中的表示</h3><h5 id="看一下我的计算机上的数据目录下的内容："><a href="#看一下我的计算机上的数据目录下的内容：" class="headerlink" title="看一下我的计算机上的数据目录下的内容："></a>看一下我的计算机上的数据目录下的内容：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------------------------+</span><br><span class="line">| INNODB_SYS_DATAFILES |</span><br><span class="line">| INNODB_SYS_VIRTUAL |</span><br><span class="line">| INNODB_SYS_INDEXES |</span><br><span class="line">| INNODB_SYS_TABLES |</span><br><span class="line">| INNODB_SYS_FIELDS |</span><br><span class="line">| INNODB_SYS_TABLESPACES |</span><br><span class="line">| INNODB_SYS_FOREIGN_COLS |</span><br><span class="line">| INNODB_SYS_COLUMNS |</span><br><span class="line">| INNODB_SYS_FOREIGN |</span><br><span class="line">| INNODB_SYS_TABLESTATS |</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">10 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[root@atguigu01 mysql]# cd /var/lib/mysql</span><br><span class="line">[root@atguigu01 mysql]# ll</span><br><span class="line">总用量 189980</span><br><span class="line">-rw-r-----. 1 mysql mysql 56 7 月  28 00 :27 auto.cnf</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 7 月  28 00 :27 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 820 7 月  28 01 :00 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 7 月  29 14 :08 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 582 7 月  29 16 :47 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 7 月  29 16 :51 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 7 月  29 16 :56 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 7 月  29 17 :37 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 24555 7 月  30 00 :28 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 8 月 1 11 :57 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 156 8 月 1 23 :21 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 156 8 月 2 09 :25 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 1469 8 月 4 01 :40 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 156 8 月 6 00 :24 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 179 8 月 6 08 :43 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 156 8 月 6 10 :56 binlog.</span><br><span class="line">-rw-r-----. 1 mysql mysql 240 8 月 6 10 :56 binlog.index</span><br><span class="line">-rw-------. 1 mysql mysql 1676 7 月  28 00 :27 ca-key.pem</span><br><span class="line">-rw-r--r--. 1 mysql mysql 1112 7 月  28 00 :27 ca.pem</span><br><span class="line">-rw-r--r--. 1 mysql mysql 1112 7 月  28 00 :27 client-cert.pem</span><br><span class="line">-rw-------. 1 mysql mysql 1676 7 月  28 00 :27 client-key.pem</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 7 月  29 16 :34 dbtest</span><br><span class="line">-rw-r-----. 1 mysql mysql 196608 8 月 6 10 :58 #ib_16384_0.dblwr</span><br><span class="line">-rw-r-----. 1 mysql mysql 8585216 7 月  28 00 :27 #ib_16384_1.dblwr</span><br><span class="line">-rw-r-----. 1 mysql mysql 3486 8 月 6 08 :43 ib_buffer_pool</span><br><span class="line">-rw-r-----. 1 mysql mysql 12582912 8 月 6 10 :56 ibdata</span><br><span class="line">-rw-r-----. 1 mysql mysql 50331648 8 月 6 10 :58 ib_logfile</span><br></pre></td></tr></table></figure>
-
-<h5 id="这个数据目录下的文件和子目录比较多，除了information-schema这个系统数据库外，其他的数据库"><a href="#这个数据目录下的文件和子目录比较多，除了information-schema这个系统数据库外，其他的数据库" class="headerlink" title="这个数据目录下的文件和子目录比较多，除了information_schema这个系统数据库外，其他的数据库"></a>这个数据目录下的文件和子目录比较多，除了information_schema这个系统数据库外，其他的数据库</h5><h5 id="在数据目录下都有对应的子目录。"><a href="#在数据目录下都有对应的子目录。" class="headerlink" title="在数据目录下都有对应的子目录。"></a>在数据目录下都有对应的子目录。</h5><h5 id="以我的temp数据库为例，在MySQL-5-7-中打开："><a href="#以我的temp数据库为例，在MySQL-5-7-中打开：" class="headerlink" title="以我的temp数据库为例，在MySQL 5. 7 中打开："></a>以我的temp数据库为例，在MySQL 5. 7 中打开：</h5><h5 id="在MySQL-8-0-中打开："><a href="#在MySQL-8-0-中打开：" class="headerlink" title="在MySQL 8. 0 中打开："></a>在MySQL 8. 0 中打开：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-rw-r-----. 1 mysql mysql 50331648 7 月  28 00 :27 ib_logfile</span><br><span class="line">-rw-r-----. 1 mysql mysql 12582912 8 月 6 10 :56 ibtmp</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 8 月 6 10 :56 #innodb_temp</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 7 月  28 00 :27 mysql</span><br><span class="line">-rw-r-----. 1 mysql mysql 26214400 8 月 6 10 :56 mysql.ibd</span><br><span class="line">srwxrwxrwx. 1 mysql mysql 0 8 月 6 10 :56 mysql.sock</span><br><span class="line">-rw-------. 1 mysql mysql 5 8 月 6 10 :56 mysql.sock.lock</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 7 月  28 00 :27 performance_schema</span><br><span class="line">-rw-------. 1 mysql mysql 1680 7 月  28 00 :27 private_key.pem</span><br><span class="line">-rw-r--r--. 1 mysql mysql 452 7 月  28 00 :27 public_key.pem</span><br><span class="line">-rw-r--r--. 1 mysql mysql 1112 7 月  28 00 :27 server-cert.pem</span><br><span class="line">-rw-------. 1 mysql mysql 1680 7 月  28 00 :27 server-key.pem</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 7 月  28 00 :27 sys</span><br><span class="line">drwxr-x---. 2 mysql mysql 4096 7 月  29 23 :10 temp</span><br><span class="line">-rw-r-----. 1 mysql mysql 16777216 8 月 6 10 :58 undo_</span><br><span class="line">-rw-r-----. 1 mysql mysql 16777216 8 月 6 10 :58 undo_</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[root@atguigu02 mysql]# cd ./temp</span><br><span class="line">[root@atguigu02 temp]# ll</span><br><span class="line">总用量 1144</span><br><span class="line">-rw-r-----. 1 mysql mysql 8658 8 月  18 11 :32 countries.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 114688 8 月  18 11 :32 countries.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 61 8 月  18 11 :32 db.opt</span><br><span class="line">-rw-r-----. 1 mysql mysql 8716 8 月  18 11 :32 departments.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 147456 8 月  18 11 :32 departments.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 3017 8 月  18 11 :32 emp_details_view.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 8982 8 月  18 11 :32 employees.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 180224 8 月  18 11 :32 employees.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 8660 8 月  18 11 :32 job_grades.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 98304 8 月  18 11 :32 job_grades.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 8736 8 月  18 11 :32 job_history.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 147456 8 月  18 11 :32 job_history.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 8688 8 月  18 11 :32 jobs.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 114688 8 月  18 11 :32 jobs.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 8790 8 月  18 11 :32 locations.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 131072 8 月  18 11 :32 locations.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 8614 8 月  18 11 :32 regions.frm</span><br><span class="line">-rw-r-----. 1 mysql mysql 114688 8 月  18 11 :32 regions.ibd</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-表在文件系统中的表示"><a href="#2-3-表在文件系统中的表示" class="headerlink" title="2. 3 表在文件系统中的表示"></a>2. 3 表在文件系统中的表示</h3><h4 id="2-3-1-InnoDB存储引擎模式"><a href="#2-3-1-InnoDB存储引擎模式" class="headerlink" title="2. 3. 1 InnoDB存储引擎模式"></a>2. 3. 1 InnoDB存储引擎模式</h4><h5 id="1-表结构"><a href="#1-表结构" class="headerlink" title="1. 表结构"></a>1. 表结构</h5><h5 id="为了保存表结构，InnoDB在数据目录下对应的数据库子目录下创建了一个专门用于描述表结构的文"><a href="#为了保存表结构，InnoDB在数据目录下对应的数据库子目录下创建了一个专门用于描述表结构的文" class="headerlink" title="为了保存表结构，InnoDB在数据目录下对应的数据库子目录下创建了一个专门用于描述表结构的文"></a>为了保存表结构，InnoDB在数据目录下对应的数据库子目录下创建了一个专门用于描述表结构的文</h5><h5 id="件，文件名是这样："><a href="#件，文件名是这样：" class="headerlink" title="件，文件名是这样："></a>件，文件名是这样：</h5><h5 id="比方说我们在atguigu数据库下创建一个名为test的表："><a href="#比方说我们在atguigu数据库下创建一个名为test的表：" class="headerlink" title="比方说我们在atguigu数据库下创建一个名为test的表："></a>比方说我们在atguigu数据库下创建一个名为test的表：</h5><h5 id="那在数据库atguigu对应的子目录下就会创建一个名为test-frm的用于描述表结构的文件。-frm文件"><a href="#那在数据库atguigu对应的子目录下就会创建一个名为test-frm的用于描述表结构的文件。-frm文件" class="headerlink" title="那在数据库atguigu对应的子目录下就会创建一个名为test.frm的用于描述表结构的文件。.frm文件"></a>那在数据库atguigu对应的子目录下就会创建一个名为test.frm的用于描述表结构的文件。.frm文件</h5><h5 id="的格式在不同的平台上都是相同的。这个后缀名为-frm是以二进制格式存储的，我们直接打开是乱码"><a href="#的格式在不同的平台上都是相同的。这个后缀名为-frm是以二进制格式存储的，我们直接打开是乱码" class="headerlink" title="的格式在不同的平台上都是相同的。这个后缀名为.frm是以二进制格式存储的，我们直接打开是乱码"></a>的格式在不同的平台上都是相同的。这个后缀名为.frm是以二进制格式存储的，我们直接打开是乱码</h5><h5 id="的。"><a href="#的。" class="headerlink" title="的。"></a>的。</h5><h5 id="2-表中数据和索引"><a href="#2-表中数据和索引" class="headerlink" title="2. 表中数据和索引"></a>2. 表中数据和索引</h5><h5 id="①-系统表空间（system-tablespace）"><a href="#①-系统表空间（system-tablespace）" class="headerlink" title="① 系统表空间（system tablespace）"></a>① 系统表空间（system tablespace）</h5><h5 id="默认情况下，InnoDB会在数据目录下创建一个名为ibdata1、大小为12M的文件，这个文件就是对应"><a href="#默认情况下，InnoDB会在数据目录下创建一个名为ibdata1、大小为12M的文件，这个文件就是对应" class="headerlink" title="默认情况下，InnoDB会在数据目录下创建一个名为ibdata1、大小为12M的文件，这个文件就是对应"></a>默认情况下，InnoDB会在数据目录下创建一个名为ibdata1、大小为12M的文件，这个文件就是对应</h5><h5 id="的系统表空间在文件系统上的表示。怎么才-12-M？注意这个文件是自扩展文件，当不够用的时候它会自"><a href="#的系统表空间在文件系统上的表示。怎么才-12-M？注意这个文件是自扩展文件，当不够用的时候它会自" class="headerlink" title="的系统表空间在文件系统上的表示。怎么才 12 M？注意这个文件是自扩展文件，当不够用的时候它会自"></a>的系统表空间在文件系统上的表示。怎么才 12 M？注意这个文件是自扩展文件，当不够用的时候它会自</h5><h5 id="己增加文件大小。"><a href="#己增加文件大小。" class="headerlink" title="己增加文件大小。"></a>己增加文件大小。</h5><h5 id="当然，如果你想让系统表空间对应文件系统上多个实际文件，或者仅仅觉得原来的ibdata1这个文件名"><a href="#当然，如果你想让系统表空间对应文件系统上多个实际文件，或者仅仅觉得原来的ibdata1这个文件名" class="headerlink" title="当然，如果你想让系统表空间对应文件系统上多个实际文件，或者仅仅觉得原来的ibdata1这个文件名"></a>当然，如果你想让系统表空间对应文件系统上多个实际文件，或者仅仅觉得原来的ibdata1这个文件名</h5><h5 id="难听，那可以在MySQL启动时配置对应的文件路径以及它们的大小，比如我们这样修改一下my-cnf-配置"><a href="#难听，那可以在MySQL启动时配置对应的文件路径以及它们的大小，比如我们这样修改一下my-cnf-配置" class="headerlink" title="难听，那可以在MySQL启动时配置对应的文件路径以及它们的大小，比如我们这样修改一下my.cnf 配置"></a>难听，那可以在MySQL启动时配置对应的文件路径以及它们的大小，比如我们这样修改一下my.cnf 配置</h5><h5 id="文件："><a href="#文件：" class="headerlink" title="文件："></a>文件：</h5><h5 id="②-独立表空间-file-per-table-tablespace"><a href="#②-独立表空间-file-per-table-tablespace" class="headerlink" title="② 独立表空间(file-per-table tablespace)"></a>② 独立表空间(file-per-table tablespace)</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@atguigu01 mysql]# cd ./temp</span><br><span class="line">[root@atguigu01 temp]# ll</span><br><span class="line">总用量 1080</span><br><span class="line">-rw-r-----. 1 mysql mysql 131072 7 月  29 23 :10 countries.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 163840 7 月  29 23 :10 departments.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 196608 7 月  29 23 :10 employees.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 114688 7 月  29 23 :10 job_grades.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 163840 7 月  29 23 :10 job_history.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 131072 7 月  29 23 :10 jobs.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 147456 7 月  29 23 :10 locations.ibd</span><br><span class="line">-rw-r-----. 1 mysql mysql 131072 7 月  29 23 :10 regions.ibd</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表名.frm</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; USE atguigu;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE test (</span><br><span class="line">-&gt; c1 INT</span><br><span class="line">-&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">innodb_data_file_path=data1:512M;data2:512M:autoextend</span><br></pre></td></tr></table></figure>
-
-<h5 id="在MySQL5-6-6以及之后的版本中，InnoDB并不会默认的把各个表的数据存储到系统表空间中，而是为每"><a href="#在MySQL5-6-6以及之后的版本中，InnoDB并不会默认的把各个表的数据存储到系统表空间中，而是为每" class="headerlink" title="在MySQL5.6.6以及之后的版本中，InnoDB并不会默认的把各个表的数据存储到系统表空间中，而是为每"></a>在MySQL5.6.6以及之后的版本中，InnoDB并不会默认的把各个表的数据存储到系统表空间中，而是为每</h5><h5 id="一个表建立一个独立表空间，也就是说我们创建了多少个表，就有多少个独立表空间。使用独立表空间来"><a href="#一个表建立一个独立表空间，也就是说我们创建了多少个表，就有多少个独立表空间。使用独立表空间来" class="headerlink" title="一个表建立一个独立表空间，也就是说我们创建了多少个表，就有多少个独立表空间。使用独立表空间来"></a>一个表建立一个独立表空间，也就是说我们创建了多少个表，就有多少个独立表空间。使用独立表空间来</h5><h5 id="存储表数据的话，会在该表所属数据库对应的子目录下创建一个表示该独立表空间的文件，文件名和表"><a href="#存储表数据的话，会在该表所属数据库对应的子目录下创建一个表示该独立表空间的文件，文件名和表" class="headerlink" title="存储表数据的话，会在该表所属数据库对应的子目录下创建一个表示该独立表空间的文件，文件名和表"></a>存储表数据的话，会在该表所属数据库对应的子目录下创建一个表示该独立表空间的文件，文件名和表</h5><h5 id="名相同，只不过添加了一个-ibd的扩展名而已，所以完整的文件名称长这样："><a href="#名相同，只不过添加了一个-ibd的扩展名而已，所以完整的文件名称长这样：" class="headerlink" title="名相同，只不过添加了一个.ibd的扩展名而已，所以完整的文件名称长这样："></a>名相同，只不过添加了一个.ibd的扩展名而已，所以完整的文件名称长这样：</h5><h5 id="比如：我们使用了独立表空间去存储atguigu数据库下的test表的话，那么在该表所在数据库对应"><a href="#比如：我们使用了独立表空间去存储atguigu数据库下的test表的话，那么在该表所在数据库对应" class="headerlink" title="比如：我们使用了独立表空间去存储atguigu数据库下的test表的话，那么在该表所在数据库对应"></a>比如：我们使用了独立表空间去存储atguigu数据库下的test表的话，那么在该表所在数据库对应</h5><h5 id="的atguigu目录下会为test表创建这两个文件："><a href="#的atguigu目录下会为test表创建这两个文件：" class="headerlink" title="的atguigu目录下会为test表创建这两个文件："></a>的atguigu目录下会为test表创建这两个文件：</h5><h5 id="其中test-ibd文件就用来存储test表中的数据和索引。"><a href="#其中test-ibd文件就用来存储test表中的数据和索引。" class="headerlink" title="其中test.ibd文件就用来存储test表中的数据和索引。"></a>其中test.ibd文件就用来存储test表中的数据和索引。</h5><h5 id="③-系统表空间与独立表空间的设置"><a href="#③-系统表空间与独立表空间的设置" class="headerlink" title="③ 系统表空间与独立表空间的设置"></a>③ 系统表空间与独立表空间的设置</h5><h5 id="我们可以自己指定使用系统表空间还是独立表空间来存储数据，这个功能由启动参数"><a href="#我们可以自己指定使用系统表空间还是独立表空间来存储数据，这个功能由启动参数" class="headerlink" title="我们可以自己指定使用系统表空间还是独立表空间来存储数据，这个功能由启动参数"></a>我们可以自己指定使用系统表空间还是独立表空间来存储数据，这个功能由启动参数</h5><h5 id="innodb-file-per-table控制，比如说我们想刻意将表数据都存储到系统表空间时，可以在启动"><a href="#innodb-file-per-table控制，比如说我们想刻意将表数据都存储到系统表空间时，可以在启动" class="headerlink" title="innodb_file_per_table控制，比如说我们想刻意将表数据都存储到系统表空间时，可以在启动"></a>innodb_file_per_table控制，比如说我们想刻意将表数据都存储到系统表空间时，可以在启动</h5><h5 id="MySQL服务器的时候这样配置："><a href="#MySQL服务器的时候这样配置：" class="headerlink" title="MySQL服务器的时候这样配置："></a>MySQL服务器的时候这样配置：</h5><h5 id="默认情况："><a href="#默认情况：" class="headerlink" title="默认情况："></a>默认情况：</h5><h5 id="④-其他类型的表空间"><a href="#④-其他类型的表空间" class="headerlink" title="④ 其他类型的表空间"></a>④ 其他类型的表空间</h5><h5 id="随着MySQL的发展，除了上述两种老牌表空间之外，现在还新提出了一些不同类型的表空间，比如通用"><a href="#随着MySQL的发展，除了上述两种老牌表空间之外，现在还新提出了一些不同类型的表空间，比如通用" class="headerlink" title="随着MySQL的发展，除了上述两种老牌表空间之外，现在还新提出了一些不同类型的表空间，比如通用"></a>随着MySQL的发展，除了上述两种老牌表空间之外，现在还新提出了一些不同类型的表空间，比如通用</h5><h5 id="表空间（general-tablespace）、临时表空间（temporary-tablespace）等。"><a href="#表空间（general-tablespace）、临时表空间（temporary-tablespace）等。" class="headerlink" title="表空间（general tablespace）、临时表空间（temporary tablespace）等。"></a>表空间（general tablespace）、临时表空间（temporary tablespace）等。</h5><h4 id="2-3-2-MyISAM存储引擎模式"><a href="#2-3-2-MyISAM存储引擎模式" class="headerlink" title="2. 3. 2 MyISAM存储引擎模式"></a>2. 3. 2 MyISAM存储引擎模式</h4><h5 id="1-表结构-1"><a href="#1-表结构-1" class="headerlink" title="1. 表结构"></a>1. 表结构</h5><h5 id="在存储表结构方面，MyISAM和InnoDB一样，也是在数据目录下对应的数据库子目录下创建了一个专"><a href="#在存储表结构方面，MyISAM和InnoDB一样，也是在数据目录下对应的数据库子目录下创建了一个专" class="headerlink" title="在存储表结构方面，MyISAM和InnoDB一样，也是在数据目录下对应的数据库子目录下创建了一个专"></a>在存储表结构方面，MyISAM和InnoDB一样，也是在数据目录下对应的数据库子目录下创建了一个专</h5><h5 id="门用于描述表结构的文件："><a href="#门用于描述表结构的文件：" class="headerlink" title="门用于描述表结构的文件："></a>门用于描述表结构的文件：</h5><h5 id="2-表中数据和索引-1"><a href="#2-表中数据和索引-1" class="headerlink" title="2. 表中数据和索引"></a>2. 表中数据和索引</h5><h5 id="在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是"><a href="#在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是" class="headerlink" title="在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是"></a>在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是</h5><h5 id="使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test"><a href="#使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test" class="headerlink" title="使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test"></a>使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test</h5><h5 id="表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu目录下会为test表创建这三个文"><a href="#表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu目录下会为test表创建这三个文" class="headerlink" title="表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu目录下会为test表创建这三个文"></a>表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu目录下会为test表创建这三个文</h5><h5 id="件："><a href="#件：" class="headerlink" title="件："></a>件：</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表名.ibd</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test.frm</span><br><span class="line">test.ibd</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">innodb_file_per_table=0 # 0：代表使用系统表空间； 1 ：代表使用独立表空间</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;innodb_file_per_table&#x27;;</span><br><span class="line">+-----------------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+-----------------------+-------+</span><br><span class="line">| innodb_file_per_table | ON |</span><br><span class="line">+-----------------------+-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表名.frm</span><br></pre></td></tr></table></figure>
-
-<h5 id="举例：创建一个MyISAM-表，使用ENGINE-选项显式指定引擎。因为InnoDB是默认引擎。"><a href="#举例：创建一个MyISAM-表，使用ENGINE-选项显式指定引擎。因为InnoDB是默认引擎。" class="headerlink" title="举例：创建一个MyISAM 表，使用ENGINE 选项显式指定引擎。因为InnoDB是默认引擎。"></a>举例：创建一个MyISAM 表，使用ENGINE 选项显式指定引擎。因为InnoDB是默认引擎。</h5><h3 id="2-4-小结"><a href="#2-4-小结" class="headerlink" title="2. 4 小结"></a>2. 4 小结</h3><h5 id="举例：数据库a，表b。"><a href="#举例：数据库a，表b。" class="headerlink" title="举例：数据库a，表b。"></a>举例：数据库a，表b。</h5><h5 id="1-、如果表b采用InnoDB，data-a中会产生-1-个或者-2-个文件："><a href="#1-、如果表b采用InnoDB，data-a中会产生-1-个或者-2-个文件：" class="headerlink" title="1 、如果表b采用InnoDB，data\a中会产生 1 个或者 2 个文件："></a>1 、如果表b采用InnoDB，data\a中会产生 1 个或者 2 个文件：</h5><h5 id="b-frm-：描述表结构文件，字段长度等"><a href="#b-frm-：描述表结构文件，字段长度等" class="headerlink" title="b.frm ：描述表结构文件，字段长度等"></a>b.frm ：描述表结构文件，字段长度等</h5><h5 id="如果采用系统表空间模式的，数据信息和索引信息都存储在ibdata1中"><a href="#如果采用系统表空间模式的，数据信息和索引信息都存储在ibdata1中" class="headerlink" title="如果采用系统表空间模式的，数据信息和索引信息都存储在ibdata1中"></a>如果采用系统表空间模式的，数据信息和索引信息都存储在ibdata1中</h5><h5 id="如果采用独立表空间存储模式，data-a中还会产生b-ibd文件（存储数据信息和索引信息）"><a href="#如果采用独立表空间存储模式，data-a中还会产生b-ibd文件（存储数据信息和索引信息）" class="headerlink" title="如果采用独立表空间存储模式，data\a中还会产生b.ibd文件（存储数据信息和索引信息）"></a>如果采用独立表空间存储模式，data\a中还会产生b.ibd文件（存储数据信息和索引信息）</h5><h5 id="此外："><a href="#此外：" class="headerlink" title="此外："></a>此外：</h5><h5 id="①-MySQL5-7-中会在data-x2F-a的目录下生成db-opt文件用于保存数据库的相关配置。比如：字符集、比较"><a href="#①-MySQL5-7-中会在data-x2F-a的目录下生成db-opt文件用于保存数据库的相关配置。比如：字符集、比较" class="headerlink" title="① MySQL5.7 中会在data&#x2F;a的目录下生成db.opt文件用于保存数据库的相关配置。比如：字符集、比较"></a>① MySQL5.7 中会在data&#x2F;a的目录下生成db.opt文件用于保存数据库的相关配置。比如：字符集、比较</h5><h5 id="规则。而MySQL8-0不再提供db-opt文件。"><a href="#规则。而MySQL8-0不再提供db-opt文件。" class="headerlink" title="规则。而MySQL8.0不再提供db.opt文件。"></a>规则。而MySQL8.0不再提供db.opt文件。</h5><h5 id="②-MySQL8-0中不再单独提供b-frm，而是合并在b-ibd文件中。"><a href="#②-MySQL8-0中不再单独提供b-frm，而是合并在b-ibd文件中。" class="headerlink" title="② MySQL8.0中不再单独提供b.frm，而是合并在b.ibd文件中。"></a>② MySQL8.0中不再单独提供b.frm，而是合并在b.ibd文件中。</h5><h5 id="2-、如果表b采用MyISAM，data-a中会产生-3-个文件："><a href="#2-、如果表b采用MyISAM，data-a中会产生-3-个文件：" class="headerlink" title="2 、如果表b采用MyISAM，data\a中会产生 3 个文件："></a>2 、如果表b采用MyISAM，data\a中会产生 3 个文件：</h5><h5 id="MySQL5-7-中：b-frm：描述表结构文件，字段长度等。"><a href="#MySQL5-7-中：b-frm：描述表结构文件，字段长度等。" class="headerlink" title="MySQL5.7 中：b.frm：描述表结构文件，字段长度等。"></a>MySQL5.7 中：b.frm：描述表结构文件，字段长度等。</h5><h5 id="MySQL8-0-中-b-xxx-sdi：描述表结构文件，字段长度等"><a href="#MySQL8-0-中-b-xxx-sdi：描述表结构文件，字段长度等" class="headerlink" title="MySQL8.0 中 b.xxx.sdi：描述表结构文件，字段长度等"></a>MySQL8.0 中 b.xxx.sdi：描述表结构文件，字段长度等</h5><h5 id="b-MYD-MYData-：数据信息文件，存储数据信息-如果采用独立表存储模式"><a href="#b-MYD-MYData-：数据信息文件，存储数据信息-如果采用独立表存储模式" class="headerlink" title="b.MYD(MYData)：数据信息文件，存储数据信息(如果采用独立表存储模式)"></a>b.MYD(MYData)：数据信息文件，存储数据信息(如果采用独立表存储模式)</h5><h5 id="b-MYI-MYIndex-：存放索引信息文件"><a href="#b-MYI-MYIndex-：存放索引信息文件" class="headerlink" title="b.MYI(MYIndex)：存放索引信息文件"></a>b.MYI(MYIndex)：存放索引信息文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test.frm 存储表结构</span><br><span class="line">test.MYD 存储数据 (MYData)</span><br><span class="line">test.MYI 存储索引 (MYIndex)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `student_myisam` (</span><br><span class="line">`id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">`name` varchar( 64 ) DEFAULT NULL,</span><br><span class="line">`age` int DEFAULT NULL,</span><br><span class="line">`sex` varchar( 2 ) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">)ENGINE=MYISAM AUTO_INCREMENT= 0 DEFAULT CHARSET=utf8mb3;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -12379,7 +12402,7 @@ size表示当前List的长度，elementData的长度是大于等于size的，因
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -12392,7 +12415,7 @@ size表示当前List的长度，elementData的长度是大于等于size的，因
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

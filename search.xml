@@ -1,6 +1,877 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>class字节码文件结构</title>
+    <url>/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h2 id="class字节码文件结构"><a href="#class字节码文件结构" class="headerlink" title="class字节码文件结构"></a>class字节码文件结构</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>说明</th>
+<th>长度</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u4</td>
+<td>magic</td>
+<td>魔数,识别Class文件格式</td>
+<td>4个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>minor_version</td>
+<td>副版本号(小版本)</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>major_version</td>
+<td>主版本号(大版本)</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>constant_pool_count</td>
+<td>常量池计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>cp_info</td>
+<td>constant_pool</td>
+<td>常量池表</td>
+<td>n个字节</td>
+<td>constant_pool_count-1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>access_flags</td>
+<td>访问标识</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>this_class</td>
+<td>类索引</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>super_class</td>
+<td>父类索引</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces_count</td>
+<td>接口计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces</td>
+<td>接口索引集合</td>
+<td>2个字节</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>fields_count</td>
+<td>字段计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>field_info</td>
+<td>fields</td>
+<td>字段表</td>
+<td>n个字节</td>
+<td>fields_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>methods_count</td>
+<td>方法计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>method_info</td>
+<td>methods</td>
+<td>方法表</td>
+<td>n个字节</td>
+<td>methods_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>attributes_count</td>
+<td>属性计数器</td>
+<td>2个字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>attributes</td>
+<td>属性表</td>
+<td>n个字节</td>
+<td>attributes_count</td>
+</tr>
+</tbody></table>
+<h2 id="Class文件版本号和平台的对应"><a href="#Class文件版本号和平台的对应" class="headerlink" title="Class文件版本号和平台的对应"></a>Class文件版本号和平台的对应</h2><table>
+<thead>
+<tr>
+<th>主版本（十进制）</th>
+<th>副版本（十进制）</th>
+<th>编译器版本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>45</td>
+<td>3</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>46</td>
+<td>0</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>47</td>
+<td>0</td>
+<td>1.3</td>
+</tr>
+<tr>
+<td>48</td>
+<td>0</td>
+<td>1.4</td>
+</tr>
+<tr>
+<td>49</td>
+<td>0</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>50</td>
+<td>0</td>
+<td>1.6</td>
+</tr>
+<tr>
+<td>51</td>
+<td>0</td>
+<td>1.7</td>
+</tr>
+<tr>
+<td>52</td>
+<td>0</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>53</td>
+<td>0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<td>54</td>
+<td>0</td>
+<td>1.10</td>
+</tr>
+<tr>
+<td>55</td>
+<td>0</td>
+<td>1.11</td>
+</tr>
+</tbody></table>
+<h2 id="class文件数据类型"><a href="#class文件数据类型" class="headerlink" title="class文件数据类型"></a>class文件数据类型</h2><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>定义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无符号数</td>
+<td>无符号数可以用来描述数字、索引引用、数量值或按照utf-8编码构成的字符串值。</td>
+<td>其中无符号数属于基本的数据类型。 以u1、u2、u4、u8来分别代表1个字节、2个字节、4个字节和8个字节</td>
+</tr>
+<tr>
+<td>表</td>
+<td>表是由多个无符号数或其他表构成的复合数据结构。</td>
+<td>所有的表都以“_info”结尾。 由于表没有固定长度，所以通常会在其前面加上个数说明。</td>
+</tr>
+</tbody></table>
+<h2 id="类型描述符"><a href="#类型描述符" class="headerlink" title="类型描述符"></a>类型描述符</h2><table>
+<thead>
+<tr>
+<th>标志符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>B</td>
+<td>基本数据类型byte</td>
+</tr>
+<tr>
+<td>C</td>
+<td>基本数据类型char</td>
+</tr>
+<tr>
+<td>D</td>
+<td>基本数据类型double</td>
+</tr>
+<tr>
+<td>F</td>
+<td>基本数据类型float</td>
+</tr>
+<tr>
+<td>I</td>
+<td>基本数据类型int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>基本数据类型long</td>
+</tr>
+<tr>
+<td>S</td>
+<td>基本数据类型short</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>基本数据类型boolean</td>
+</tr>
+<tr>
+<td>V</td>
+<td>代表void类型</td>
+</tr>
+<tr>
+<td>L</td>
+<td>对象类型，比如：<code>Ljava/lang/Object;</code></td>
+</tr>
+<tr>
+<td>[</td>
+<td>数组类型，代表一维数组。比如：<code>double[][][] is [[[D</code></td>
+</tr>
+</tbody></table>
+<h2 id="常量类型和结构"><a href="#常量类型和结构" class="headerlink" title="常量类型和结构"></a>常量类型和结构</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>标志(或标识)</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CONSTANT_utf8_info</td>
+<td>1</td>
+<td>UTF-8编码的字符串</td>
+</tr>
+<tr>
+<td>CONSTANT_Integer_info</td>
+<td>3</td>
+<td>整型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Float_info</td>
+<td>4</td>
+<td>浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Long_info</td>
+<td>5</td>
+<td>长整型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Double_info</td>
+<td>6</td>
+<td>双精度浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Class_info</td>
+<td>7</td>
+<td>类或接口的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_String_info</td>
+<td>8</td>
+<td>字符串类型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Fieldref_info</td>
+<td>9</td>
+<td>字段的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_Methodref_info</td>
+<td>10</td>
+<td>类中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_InterfaceMethodref_info</td>
+<td>11</td>
+<td>接口中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_NameAndType_info</td>
+<td>12</td>
+<td>字段或方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodHandle_info</td>
+<td>15</td>
+<td>表示方法句柄</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodType_info</td>
+<td>16</td>
+<td>标志方法类型</td>
+</tr>
+<tr>
+<td>CONSTANT_InvokeDynamic_info</td>
+<td>18</td>
+<td>表示一个动态方法调用点</td>
+</tr>
+</tbody></table>
+<h2 id="常量类型和结构细节"><a href="#常量类型和结构细节" class="headerlink" title="常量类型和结构细节"></a>常量类型和结构细节</h2><p><img src="/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1598773300484.png" alt="1598773300484"></p>
+<p><img src="/2022/03/25/Java/Class%E5%AD%97%E8%8A%82%E7%A0%81%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/1598773308492.png" alt="1598773308492"></p>
+<h2 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h2><table>
+<thead>
+<tr>
+<th>标志名称</th>
+<th>标志值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACC_PUBLIC</td>
+<td>0x0001</td>
+<td>标志为public类型</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x0010</td>
+<td>标志被声明为final，只有类可以设置</td>
+</tr>
+<tr>
+<td>ACC_SUPER</td>
+<td>0x0020</td>
+<td>标志允许使用invokespecial字节码指令的新语义，JDK1.0.2之后编译出来的类的这个标志默认为真。（使用增强的方法调用父类方法）</td>
+</tr>
+<tr>
+<td>ACC_INTERFACE</td>
+<td>0x0200</td>
+<td>标志这是一个接口</td>
+</tr>
+<tr>
+<td>ACC_ABSTRACT</td>
+<td>0x0400</td>
+<td>是否为abstract类型，对于接口或者抽象类来说，次标志值为真，其他类型为假</td>
+</tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+<td>0x1000</td>
+<td>标志此类并非由用户代码产生（即：由编译器产生的类，没有源码对应）</td>
+</tr>
+<tr>
+<td>ACC_ANNOTATION</td>
+<td>0x2000</td>
+<td>标志这是一个注解</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td>0x4000</td>
+<td>标志这是一个枚举</td>
+</tr>
+</tbody></table>
+<h2 id="字段表访问标志"><a href="#字段表访问标志" class="headerlink" title="字段表访问标志"></a>字段表访问标志</h2><table>
+<thead>
+<tr>
+<th>标志名称</th>
+<th>标志值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ACC_PUBLIC</td>
+<td>0x0001</td>
+<td>字段是否为public</td>
+</tr>
+<tr>
+<td>ACC_PRIVATE</td>
+<td>0x0002</td>
+<td>字段是否为private</td>
+</tr>
+<tr>
+<td>ACC_PROTECTED</td>
+<td>0x0004</td>
+<td>字段是否为protected</td>
+</tr>
+<tr>
+<td>ACC_STATIC</td>
+<td>0x0008</td>
+<td>字段是否为static</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x0010</td>
+<td>字段是否为final</td>
+</tr>
+<tr>
+<td>ACC_VOLATILE</td>
+<td>0x0040</td>
+<td>字段是否为volatile</td>
+</tr>
+<tr>
+<td>ACC_TRANSTENT</td>
+<td>0x0080</td>
+<td>字段是否为transient</td>
+</tr>
+<tr>
+<td>ACC_SYNCHETIC</td>
+<td>0x1000</td>
+<td>字段是否为由编译器自动产生</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td>0x4000</td>
+<td>字段是否为enum</td>
+</tr>
+</tbody></table>
+<h2 id="类索引、父类索引、接口索引"><a href="#类索引、父类索引、接口索引" class="headerlink" title="类索引、父类索引、接口索引"></a>类索引、父类索引、接口索引</h2><table>
+<thead>
+<tr>
+<th>长度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u2</td>
+<td>this_class</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>super_class</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>interfaces[interfaces_count]</td>
+</tr>
+</tbody></table>
+<h2 id="属性的通用格式"><a href="#属性的通用格式" class="headerlink" title="属性的通用格式"></a>属性的通用格式</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>u2</td>
+<td>attribute_name_index</td>
+<td>1</td>
+<td>属性名索引</td>
+</tr>
+<tr>
+<td>u4</td>
+<td>attribute_length</td>
+<td>1</td>
+<td>属性长度</td>
+</tr>
+<tr>
+<td>u1</td>
+<td>info</td>
+<td>attribute_length</td>
+<td>属性表</td>
+</tr>
+</tbody></table>
+<h2 id="数据类型和默认初始值对应"><a href="#数据类型和默认初始值对应" class="headerlink" title="数据类型和默认初始值对应"></a>数据类型和默认初始值对应</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>默认初始值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>(byte)0</td>
+</tr>
+<tr>
+<td>short</td>
+<td>(short)0</td>
+</tr>
+<tr>
+<td>int</td>
+<td>0</td>
+</tr>
+<tr>
+<td>long</td>
+<td>0L</td>
+</tr>
+<tr>
+<td>float</td>
+<td>0.0f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>char</td>
+<td>\u0000</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr>
+<td>reference</td>
+<td>null</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM指令手册</title>
+    <url>/2022/03/25/Java/JVM%E6%8C%87%E4%BB%A4%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[<h1 id="JVM指令手册"><a href="#JVM指令手册" class="headerlink" title="JVM指令手册"></a>JVM指令手册</h1><h2 id="一、栈和局部变量操作"><a href="#一、栈和局部变量操作" class="headerlink" title="一、栈和局部变量操作"></a>一、栈和局部变量操作</h2><h3 id="将常量压入栈的指令"><a href="#将常量压入栈的指令" class="headerlink" title="将常量压入栈的指令"></a>将常量压入栈的指令</h3><p>aconst_null 将null对象引用压入栈<br>iconst_m1 将int类型常量-1压入栈<br>iconst_0 将int类型常量0压入栈<br>iconst_1 将int类型常量1压入栈<br>iconst_2 将int类型常量2压入栈<br>iconst_3 将int类型常量3压入栈<br>iconst_4 将int类型常量4压入栈<br>iconst_5 将int类型常量5压入栈<br>lconst_0 将long类型常量0压入栈<br>lconst_1 将long类型常量1压入栈<br>fconst_0 将float类型常量0压入栈<br>fconst_1 将float类型常量1压入栈<br>dconst_0 将double类型常量0压入栈<br>dconst_1 将double类型常量1压入栈<br>bipush 将一个8位带符号整数压入栈<br>sipush 将16位带符号整数压入栈<br>ldc 把常量池中的项压入栈<br>ldc_w 把常量池中的项压入栈（使用宽索引）<br>ldc2_w 把常量池中long类型或者double类型的项压入栈（使用宽索引）</p>
+<h3 id="从栈中的局部变量中装载值的指令"><a href="#从栈中的局部变量中装载值的指令" class="headerlink" title="从栈中的局部变量中装载值的指令"></a>从栈中的局部变量中装载值的指令</h3><p>iload 从局部变量中装载int类型值<br>lload 从局部变量中装载long类型值<br>fload 从局部变量中装载float类型值<br>dload 从局部变量中装载double类型值<br>aload 从局部变量中装载引用类型值（refernce）<br>iload_0 从局部变量0中装载int类型值<br>iload_1 从局部变量1中装载int类型值<br>iload_2 从局部变量2中装载int类型值<br>iload_3 从局部变量3中装载int类型值<br>lload_0 从局部变量0中装载long类型值<br>lload_1 从局部变量1中装载long类型值<br>lload_2 从局部变量2中装载long类型值<br>lload_3 从局部变量3中装载long类型值<br>fload_0 从局部变量0中装载float类型值<br>fload_1 从局部变量1中装载float类型值<br>fload_2 从局部变量2中装载float类型值<br>fload_3 从局部变量3中装载float类型值<br>dload_0 从局部变量0中装载double类型值<br>dload_1 从局部变量1中装载double类型值<br>dload_2 从局部变量2中装载double类型值<br>dload_3 从局部变量3中装载double类型值<br>aload_0 从局部变量0中装载引用类型值<br>aload_1 从局部变量1中装载引用类型值<br>aload_2 从局部变量2中装载引用类型值<br>aload_3 从局部变量3中装载引用类型值<br>iaload 从数组中装载int类型值<br>laload 从数组中装载long类型值<br>faload 从数组中装载float类型值<br>daload 从数组中装载double类型值<br>aaload 从数组中装载引用类型值<br>baload 从数组中装载byte类型或boolean类型值<br>caload 从数组中装载char类型值<br>saload 从数组中装载short类型值</p>
+<h3 id="将栈中的值存入局部变量的指令"><a href="#将栈中的值存入局部变量的指令" class="headerlink" title="将栈中的值存入局部变量的指令"></a>将栈中的值存入局部变量的指令</h3><p>istore 将int类型值存入局部变量<br>lstore 将long类型值存入局部变量<br>fstore 将float类型值存入局部变量<br>dstore 将double类型值存入局部变量<br>astore 将将引用类型或returnAddress类型值存入局部变量<br>istore_0 将int类型值存入局部变量0<br>istore_1 将int类型值存入局部变量1<br>istore_2 将int类型值存入局部变量2<br>istore_3 将int类型值存入局部变量3<br>lstore_0 将long类型值存入局部变量0<br>lstore_1 将long类型值存入局部变量1<br>lstore_2 将long类型值存入局部变量2<br>lstore_3 将long类型值存入局部变量3<br>fstore_0 将float类型值存入局部变量0<br>fstore_1 将float类型值存入局部变量1<br>fstore_2 将float类型值存入局部变量2<br>fstore_3 将float类型值存入局部变量3<br>dstore_0 将double类型值存入局部变量0<br>dstore_1 将double类型值存入局部变量1<br>dstore_2 将double类型值存入局部变量2<br>dstore_3 将double类型值存入局部变量3<br>astore_0 将引用类型或returnAddress类型值存入局部变量0<br>astore_1 将引用类型或returnAddress类型值存入局部变量1<br>astore_2 将引用类型或returnAddress类型值存入局部变量2<br>astore_3 将引用类型或returnAddress类型值存入局部变量3<br>iastore 将int类型值存入数组中<br>lastore 将long类型值存入数组中<br>fastore 将float类型值存入数组中<br>dastore 将double类型值存入数组中<br>aastore 将引用类型值存入数组中<br>bastore 将byte类型或者boolean类型值存入数组中<br>castore 将char类型值存入数组中<br>sastore 将short类型值存入数组中<br>wide指令<br>wide 使用附加字节扩展局部变量索引</p>
+<h3 id="通用-无类型）栈操作"><a href="#通用-无类型）栈操作" class="headerlink" title="通用(无类型）栈操作"></a>通用(无类型）栈操作</h3><p>nop 不做任何操作<br>pop 弹出栈顶端一个字长的内容<br>pop2 弹出栈顶端两个字长的内容<br>dup 复制栈顶部一个字长内容<br>dup_x1 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的两个字长的内容压入栈<br>dup_x2 复制栈顶部一个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2 复制栈顶部两个字长内容<br>dup2_x1 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的三个字长的内容压入栈<br>dup2_x2 复制栈顶部两个字长的内容，然后将复制内容及原来弹出的四个字长的内容压入栈<br>swap 交换栈顶部两个字长内容</p>
+<h2 id="二、类型转换"><a href="#二、类型转换" class="headerlink" title="二、类型转换"></a>二、类型转换</h2><p>i2l 把int类型的数据转化为long类型<br>i2f 把int类型的数据转化为float类型<br>i2d 把int类型的数据转化为double类型<br>l2i 把long类型的数据转化为int类型<br>l2f 把long类型的数据转化为float类型<br>l2d 把long类型的数据转化为double类型<br>f2i 把float类型的数据转化为int类型<br>f2l 把float类型的数据转化为long类型<br>f2d 把float类型的数据转化为double类型<br>d2i 把double类型的数据转化为int类型<br>d2l 把double类型的数据转化为long类型<br>d2f 把double类型的数据转化为float类型<br>i2b 把int类型的数据转化为byte类型<br>i2c 把int类型的数据转化为char类型<br>i2s 把int类型的数据转化为short类型</p>
+<h2 id="三、整数运算"><a href="#三、整数运算" class="headerlink" title="三、整数运算"></a>三、整数运算</h2><p>iadd 执行int类型的加法<br>ladd 执行long类型的加法<br>isub 执行int类型的减法<br>lsub 执行long类型的减法<br>imul 执行int类型的乘法<br>lmul 执行long类型的乘法<br>idiv 执行int类型的除法<br>ldiv 执行long类型的除法<br>irem 计算int类型除法的余数<br>lrem 计算long类型除法的余数<br>ineg 对一个int类型值进行取反操作<br>lneg 对一个long类型值进行取反操作<br>iinc 把一个常量值加到一个int类型的局部变量上</p>
+<h2 id="四、逻辑运算"><a href="#四、逻辑运算" class="headerlink" title="四、逻辑运算"></a>四、逻辑运算</h2><h3 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h3><p>ishl 执行int类型的向左移位操作<br>lshl 执行long类型的向左移位操作<br>ishr 执行int类型的向右移位操作<br>lshr 执行long类型的向右移位操作<br>iushr 执行int类型的向右逻辑移位操作<br>lushr 执行long类型的向右逻辑移位操作</p>
+<h3 id="按位布尔运算"><a href="#按位布尔运算" class="headerlink" title="按位布尔运算"></a>按位布尔运算</h3><p>iand 对int类型值进行“逻辑与”操作<br>land 对long类型值进行“逻辑与”操作<br>ior 对int类型值进行“逻辑或”操作<br>lor 对long类型值进行“逻辑或”操作<br>ixor 对int类型值进行“逻辑异或”操作<br>lxor 对long类型值进行“逻辑异或”操作</p>
+<h3 id="浮点运算"><a href="#浮点运算" class="headerlink" title="浮点运算"></a>浮点运算</h3><p>fadd 执行float类型的加法<br>dadd 执行double类型的加法<br>fsub 执行float类型的减法<br>dsub 执行double类型的减法<br>fmul 执行float类型的乘法<br>dmul 执行double类型的乘法<br>fdiv 执行float类型的除法<br>ddiv 执行double类型的除法<br>frem 计算float类型除法的余数<br>drem 计算double类型除法的余数<br>fneg 将一个float类型的数值取反<br>dneg 将一个double类型的数值取反</p>
+<h2 id="五、对象和数组"><a href="#五、对象和数组" class="headerlink" title="五、对象和数组"></a>五、对象和数组</h2><h3 id="对象操作指令"><a href="#对象操作指令" class="headerlink" title="对象操作指令"></a>对象操作指令</h3><p>new 创建一个新对象<br>checkcast 确定对象为所给定的类型。后跟目标类，判断栈顶元素是否为目标类 &#x2F; 接口的实例。如果不是便抛出异常<br>getfield 从对象中获取字段<br>putfield 设置对象中字段的值<br>getstatic 从类中获取静态字段<br>putstatic 设置类中静态字段的值<br>instanceof 判断对象是否为给定的类型。后跟目标类，判断栈顶元素是否为目标类 &#x2F; 接口的实例。是则压入 1，否则压入 0</p>
+<h3 id="数组操作指令"><a href="#数组操作指令" class="headerlink" title="数组操作指令"></a>数组操作指令</h3><p>newarray 分配数据成员类型为基本上数据类型的新数组<br>anewarray 分配数据成员类型为引用类型的新数组<br>arraylength 获取数组长度<br>multianewarray 分配新的多维数组</p>
+<h2 id="六、控制流"><a href="#六、控制流" class="headerlink" title="六、控制流"></a>六、控制流</h2><h3 id="条件分支指令"><a href="#条件分支指令" class="headerlink" title="条件分支指令"></a>条件分支指令</h3><p>ifeq 如果等于0，则跳转<br>ifne 如果不等于0，则跳转<br>iflt 如果小于0，则跳转<br>ifge 如果大于等于0，则跳转<br>ifgt 如果大于0，则跳转<br>ifle 如果小于等于0，则跳转<br>if_icmpcq 如果两个int值相等，则跳转<br>if_icmpne 如果两个int类型值不相等，则跳转<br>if_icmplt 如果一个int类型值小于另外一个int类型值，则跳转<br>if_icmpge 如果一个int类型值大于或者等于另外一个int类型值，则跳转<br>if_icmpgt 如果一个int类型值大于另外一个int类型值，则跳转<br>if_icmple 如果一个int类型值小于或者等于另外一个int类型值，则跳转<br>ifnull 如果等于null，则跳转<br>ifnonnull 如果不等于null，则跳转<br>if_acmpeq 如果两个对象引用相等，则跳转<br>if_acmpnc 如果两个对象引用不相等，则跳转</p>
+<h3 id="比较指令"><a href="#比较指令" class="headerlink" title="比较指令"></a>比较指令</h3><p>lcmp 比较long类型值<br>fcmpl 比较float类型值（当遇到NaN时，返回-1）<br>fcmpg 比较float类型值（当遇到NaN时，返回1）<br>dcmpl 比较double类型值（当遇到NaN时，返回-1）<br>dcmpg 比较double类型值（当遇到NaN时，返回1）</p>
+<h3 id="无条件转移指令"><a href="#无条件转移指令" class="headerlink" title="无条件转移指令"></a>无条件转移指令</h3><p>goto 无条件跳转<br>goto_w 无条件跳转（宽索引）</p>
+<h3 id="表跳转指令"><a href="#表跳转指令" class="headerlink" title="表跳转指令"></a>表跳转指令</h3><p>tableswitch 通过索引访问跳转表，并跳转<br>lookupswitch 通过键值匹配访问跳转表，并执行跳转操作</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>athrow 抛出异常或错误。将栈顶异常抛出<br>finally子句<br>jsr 跳转到子例程<br>jsr_w 跳转到子例程（宽索引）<br>rct 从子例程返回</p>
+<h2 id="七、方法调用与返回"><a href="#七、方法调用与返回" class="headerlink" title="七、方法调用与返回"></a>七、方法调用与返回</h2><h3 id="方法调用指令"><a href="#方法调用指令" class="headerlink" title="方法调用指令"></a>方法调用指令</h3><p>invokcvirtual 运行时按照对象的类来调用实例方法<br>invokespecial 根据编译时类型来调用实例方法<br>invokestatic 调用类（静态）方法<br>invokcinterface 调用接口方法</p>
+<h3 id="方法返回指令"><a href="#方法返回指令" class="headerlink" title="方法返回指令"></a>方法返回指令</h3><p>ireturn 从方法中返回int类型的数据<br>lreturn 从方法中返回long类型的数据<br>freturn 从方法中返回float类型的数据<br>dreturn 从方法中返回double类型的数据<br>areturn 从方法中返回引用类型的数据<br>return 从方法中返回，返回值为void</p>
+<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><p>montiorenter 进入并获取对象监视器。即：为栈顶对象加锁<br>monitorexit 释放并退出对象监视器。即：为栈顶对象解锁</p>
+<h2 id="八、JVM指令助记符"><a href="#八、JVM指令助记符" class="headerlink" title="八、JVM指令助记符"></a>八、JVM指令助记符</h2><p>变量到操作数栈：iload,iload_,lload,lload_,fload,fload_,dload,dload_,aload,aload_<br>操作数栈到变量：istore,istore_,lstore,lstore_,fstore,fstore_,dstore,dstor_,astore,astore_<br>常数到操作数栈：bipush,sipush,ldc,ldc_w,ldc2_w,aconst_null,iconst_ml,iconst_,lconst_,fconst_,dconst_<br>加：iadd,ladd,fadd,dadd<br>减：isub,lsub,fsub,dsub<br>乘：imul,lmul,fmul,dmul<br>除：idiv,ldiv,fdiv,ddiv<br>余数：irem,lrem,frem,drem<br>取负：ineg,lneg,fneg,dneg<br>移位：ishl,lshr,iushr,lshl,lshr,lushr<br>按位或：ior,lor<br>按位与：iand,land<br>按位异或：ixor,lxor<br>类型转换：i2l,i2f,i2d,l2f,l2d,f2d(放宽数值转换)<br>i2b,i2c,i2s,l2i,f2i,f2l,d2i,d2l,d2f(缩窄数值转换)<br>创建类实便：new<br>创建新数组：newarray,anewarray,multianwarray<br>访问类的域和类实例域：getfield,putfield,getstatic,putstatic<br>把数据装载到操作数栈：baload,caload,saload,iaload,laload,faload,daload,aaload<br>从操作数栈存存储到数组：bastore,castore,sastore,iastore,lastore,fastore,dastore,aastore<br>获取数组长度：arraylength<br>检相类实例或数组属性：instanceof,checkcast<br>操作数栈管理：pop,pop2,dup,dup2,dup_xl,dup2_xl,dup_x2,dup2_x2,swap<br>有条件转移：ifeq,iflt,ifle,ifne,ifgt,ifge,ifnull,ifnonnull,if_icmpeq,if_icmpene,<br>if_icmplt,if_icmpgt,if_icmple,if_icmpge,if_acmpeq,if_acmpne,lcmp,fcmpl<br>fcmpg,dcmpl,dcmpg<br>复合条件转移：tableswitch,lookupswitch<br>无条件转移：goto,goto_w,jsr,jsr_w,ret<br>调度对象的实便方法：invokevirtual<br>调用由接口实现的方法：invokeinterface<br>调用需要特殊处理的实例方法：invokespecial<br>调用命名类中的静态方法：invokestatic<br>方法返回：ireturn,lreturn,freturn,dreturn,areturn,return<br>异常：athrow<br>finally关键字的实现使用：jsr,jsr_w,ret</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker自学笔记</title>
+    <url>/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h2 id="Docker自学笔记"><a href="#Docker自学笔记" class="headerlink" title="Docker自学笔记"></a>Docker自学笔记</h2><h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Docker镜像的设计，使得Docker打破过去【程序即应用】的观念。通过镜像（<em>images</em>）将作业系统核心除外，运作应用程式所需的系统环境，由上而下打包，达到应用程式跨平台间的无缝接轨运作。</p>
+<p>基于<strong>go语言</strong>开发实现的云开源项目。主要目标是通过对应用组件的封装，分发，部署，运行等生命周期的管理。使得应用及其运行环境能做到<strong>一次封装，到处运行</strong>。</p>
+<p>解决了运行环境和配置问题的软件容器，方便做持续集成并有助于整体发布的容器虚拟化技术</p>
+<h3 id="基本组成："><a href="#基本组成：" class="headerlink" title="基本组成："></a>基本组成：</h3><ul>
+<li>镜像 image  ：是一个只读的模板，类似于java类</li>
+<li>容器 container ：通过镜像创建，类似于java类的实例</li>
+<li>仓库 repository：集中存放镜像的场所</li>
+</ul>
+<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><p>步骤：</p>
+<ol>
+<li>yum  install -y -epel-release  （docker使用EPEL发布，RHEL系的OS首先要确保已经持有EPEL仓库）</li>
+<li>yum install -y docker-io</li>
+<li>安装后配置文件：&#x2F;etc&#x2F;sysconfig&#x2F;docker</li>
+<li>启动Docker后台服务：service docker start</li>
+<li>版本验证：docker version</li>
+</ol>
+<p>阿里云镜像加速配置：</p>
+<ul>
+<li>登录阿里云管理控制台获取镜像加速专属<em>加速器地址</em></li>
+<li>&#x2F;etc&#x2F;sysconfig&#x2F;docker配置文件中 ，配置 other_ages&#x3D;”–registry-mirror&#x3D;<em>加速器地址</em>“</li>
+<li>检查是否失效 ps -ef|grep docker 查看进程中是否包含该<em>加速器地址</em></li>
+</ul>
+<p>HelloWorld镜像:</p>
+<ul>
+<li><p>docker run hello-world</p>
+</li>
+<li><p>先从本地查找镜像，没有则取远程下载</p>
+</li>
+</ul>
+<h3 id="运行原理："><a href="#运行原理：" class="headerlink" title="运行原理："></a>运行原理：</h3><ul>
+<li>Docker是一个client-serve结构的系统，Docker守护进程运行在主机上，然后通过socker连接从客户</li>
+</ul>
+<p>端访问，守护进程从客户端接受命令并管理运行在主机上的容器。可以把容器看作一个精简版的Linux环境。</p>
+<ul>
+<li><p>为什么比虚拟机快？</p>
+<ul>
+<li>docker有着比虚拟机更少的抽象层。由于docker不需要Hypervisor实现硬件资源虚拟化，运行在docker容器上的程序直接使用的都是实际物理机的硬件资源。因此在CPU、内存利用率上docker将会在效率上有明显优势。</li>
+<li>docker利用的是宿主机的内核，而不需要Guest OS。因此当新建一个容器时，docker不需要和虚拟机一样重新加载一个操作系统内核。然而避免引寻，加载操作系用内核是个比较费时费资源的过程，当新建一个虚拟机时，虚拟机软件需要加载Guest OS,新建过程是分钟级别的。而docker直接利用宿主机的操作系用，新建一个docker容器时秒级的。</li>
+</ul>
+</li>
+<li><p>对比：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Docker容器</th>
+<th>虚拟机（VM）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统</td>
+<td>与宿主机共享OS</td>
+<td>宿主机OS上运行虚拟机OS</td>
+</tr>
+<tr>
+<td>存储大小</td>
+<td>镜像小，便于存储和传输</td>
+<td>镜像庞大（vmdk,vdi等）</td>
+</tr>
+<tr>
+<td>运行性能</td>
+<td>几乎无额外性能损失</td>
+<td>操作系统额外的CPU，内存消耗</td>
+</tr>
+<tr>
+<td>移植性</td>
+<td>轻便，灵活，适用于Linux</td>
+<td>笨重，与虚拟化技术耦合度高</td>
+</tr>
+<tr>
+<td>硬件亲和性</td>
+<td>面向软件开发者</td>
+<td>面向硬件运维者</td>
+</tr>
+<tr>
+<td>部署速度</td>
+<td>快速，秒级</td>
+<td>较慢，10s以上</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h3 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h3><ol>
+<li><p>帮助命令</p>
+<ul>
+<li>docker version</li>
+<li>docker info</li>
+<li>docker –help</li>
+</ul>
+</li>
+<li><p>镜像命令</p>
+<ul>
+<li>docker images：列出本地主机上的镜像<ul>
+<li>-a: 所有镜像</li>
+<li>-q:只显示镜像ID</li>
+<li>–digests:显示镜像的摘要信息</li>
+<li>–no-trunc:显示完整 的镜像信息</li>
+</ul>
+</li>
+<li>docker search [xxx]：搜索hub上的镜像<ul>
+<li>-s : 星数超过指定数量的  -s 100  [options]</li>
+</ul>
+</li>
+<li>docker pull [xxx:（版本号，默认时latest）]: 下载镜像</li>
+<li>docker rmi [xxx]:（版本号，默认时latest：删除某个镜像 <ul>
+<li>-f：强制删除</li>
+<li>删除多个  docker rmi -f 镜像名1:tag  镜像名2:tag</li>
+<li>删除全部 docker rmi -f ${docker images -qa}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>容器命令</p>
+<ul>
+<li><p>新建并启动容器： docker run [OPTIONS] IMAGE [COMMAND] [ARG…]</p>
+<p>​    常用options:</p>
+<ul>
+<li>–name :为容器指定一个名字</li>
+<li>-d:后台运行容器，返回容器id，即启动守护式容器</li>
+<li>-i:以交互模式运行容器，通常与*-t* 同时使用</li>
+<li>-t:为容器重新分配一个伪输入终端，通常与*-i*同时使用</li>
+<li>-P:随机端口映射</li>
+<li>-p:指定端口映射，格式：ip:hostPort:containerPort | ip:containerPort | <strong>hostPort:containerPort</strong> | containerPort</li>
+</ul>
+</li>
+<li><p>列出当前所有正在运行的容器：docker ps [OPTIONS]</p>
+<ul>
+<li>-a：列出当前所有正在运行的容器+历史上运行过的</li>
+<li>-l：显示最近创建的容器</li>
+<li>-n：显示最近n个创建的容器</li>
+<li>-q：静默模式，只显示容器编号</li>
+<li>–no-trunc：不截断输出</li>
+</ul>
+</li>
+<li><p>退出容器：</p>
+<ul>
+<li>exit :容器停止退出</li>
+<li>ctrl + P + Q：容器不停止退出</li>
+</ul>
+</li>
+<li><p>启动容器：</p>
+<p> docker start 容器ID或者容器名</p>
+</li>
+<li><p>重启容器：</p>
+<p> dockers restart 容器ID或者容器名</p>
+</li>
+<li><p>停止容器</p>
+<p> docker stop 容器ID或者容器名</p>
+</li>
+<li><p>强制停止</p>
+<p>  docker kill  容器ID或者容器名</p>
+</li>
+<li><p>删除容器</p>
+<p>  docker rm 容器ID或者容器名  , -f 强制删除</p>
+<p>  删除多个容器： docker rm -f ${docker ps - a -q} ,  docker ps -a -q | xargs docker rm</p>
+<blockquote>
+<p><strong>重要</strong>：</p>
+<ul>
+<li><p>启动守护式容器： docker run -d 容器名</p>
+</li>
+<li><p>查看容器日志： docker logs -f -t –tail 容器ID</p>
+</li>
+<li><p>查看容器内运行的进程：docker top 容器ID</p>
+</li>
+<li><p>查看容器内部细节：docker inspect 容器ID</p>
+</li>
+<li><p>进入正在运行的容器并以命令行交互：</p>
+<p>docker exec -it 容器ID bashShell，在容器外打开新的终端，并且可以启动新的进程</p>
+<p>重新进入 docker attach 容器ID，直接进入容器启动命令的终端，不会启动新的进程</p>
+</li>
+<li><p>从容器内拷贝文件到主机上：docker cp 容器ID:容器内路径 目的主机路径</p>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="镜像原理："><a href="#镜像原理：" class="headerlink" title="镜像原理："></a>镜像原理：</h3><p>​    <em>镜像是一种轻量级的，可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含软件运行时的所有内容，包括代码，运行时，库，环境变量和配置文件。</em></p>
+<h4 id="1-UnionFS（联合文件系统）"><a href="#1-UnionFS（联合文件系统）" class="headerlink" title="1) UnionFS（联合文件系统）"></a>1) UnionFS（联合文件系统）</h4><p>​    Union文件系统是一种分层，轻量级并且高性能的文件系统，<strong>它支持对文件系统的修改作为一次提交来一层层的叠加</strong>，同时可以将不用目录挂载到同一个虚拟文件系统下。Union文件系统是Docker镜像的基础。镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体镜像。</p>
+<p>​    特性：一次同时加载多个文件系统，但从外表看来，只能看到一个文件系统，联合加载会把各层文件系统叠加起来，这样最终的文件系统会包含所有底层文件和目录。</p>
+<h4 id="2-Docker镜像加载原理"><a href="#2-Docker镜像加载原理" class="headerlink" title="2) Docker镜像加载原理"></a>2) Docker镜像加载原理</h4><p>​    docker的镜像实际上由一层一层的文件系统组成，这种层级的文件系统就是UnionFS。</p>
+<blockquote>
+<p>bootfs(boot file system)主要包含bootloader和kernel，bootloader主要是引导加载kernel,Linux刚启动时会加载bootfs文件系统，<strong>在Docker镜像的最底层时bootfs</strong>。这一层与Linux&#x2F;Unix系统是一样的，包含boot加载器和内核，当boot加载完成之后整个内核就在内存中了，此时内存的使用权已由bootfs转交给内核，此时系统也会卸载bootfs。</p>
+</blockquote>
+<blockquote>
+<p>rootfs(root file system)，在bootfs之上，包含的就是Linux系统中的 &#x2F;dev,&#x2F;proc,&#x2F;bin,&#x2F;etc等标准目录和文件。rootfs就是各种不同的操作系统发行版，比如Ubuntu,Centos等</p>
+</blockquote>
+<h4 id="3-分层的镜像"><a href="#3-分层的镜像" class="headerlink" title="3) 分层的镜像"></a>3) 分层的镜像</h4><h4 id="4-为什么Docker镜像采用分层结构？"><a href="#4-为什么Docker镜像采用分层结构？" class="headerlink" title="4) 为什么Docker镜像采用分层结构？"></a>4) 为什么Docker镜像采用分层结构？</h4><pre><code> 共享资源：
+</code></pre>
+<p>​    比如当有多个镜像都从相同的base镜像构建而来，那么宿主机只需要在磁盘上保存一份base镜像，同时内存中也只需要加载一份base镜像，就可以为所有容器服务了。而且镜像的每一层都可以被共享。</p>
+<p> 特点：Docker镜像都是只读的，当启动容器时，和一个新的可写层被加载到镜像的顶部。这一层通常被称为【容器层】，容器层之下的都叫做【镜像层】</p>
+<h3 id="镜像commit"><a href="#镜像commit" class="headerlink" title="镜像commit:"></a>镜像commit:</h3><blockquote>
+<p>docker commit 提交一个容器副本使之成为一个新的镜像</p>
+<p>docker commit -m &#x3D; “提交的描述信息” -a&#x3D;”作者” 容器ID 要创建的目标镜像名:[标签名    ]</p>
+</blockquote>
+<h3 id="Docker容器数据卷："><a href="#Docker容器数据卷：" class="headerlink" title="Docker容器数据卷："></a>Docker容器数据卷：</h3><blockquote>
+<p>​    卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统，因此能绕过ufs提供一些用于<strong>持久存储</strong>或<strong>共享数据</strong>的特性：</p>
+<p>​    数据卷的目的就是做数据的持久化，完全独立于容器的生存周期，因此Docker不会再容器删除时删除其挂载的数据卷</p>
+<p>特点：</p>
+<pre><code>* 数据卷可在容器之间共享或重用数据
+* 卷中的更改可直接生效
+* 卷中的更改不会包含在镜像的更新中
+* 卷的生命周期一直持续到没有容器使用它为止
+</code></pre>
+</blockquote>
+<h4 id="容器内添加数据卷："><a href="#容器内添加数据卷：" class="headerlink" title="容器内添加数据卷："></a>容器内添加数据卷：</h4><h5 id="1）-命令添加-v"><a href="#1）-命令添加-v" class="headerlink" title="1） 命令添加  -v"></a>1） 命令添加  <em>-v</em></h5><p>​    docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录  镜像名</p>
+<p>使用 docker inspect 容器ID ,展示的json中可查看是否添加数据卷成功（”volumes“）</p>
+<p>带权限的命令</p>
+<p>docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录***:ro***  镜像名  (ro: read  only)</p>
+<h5 id="2）DockerFile添加"><a href="#2）DockerFile添加" class="headerlink" title="2）DockerFile添加"></a>2）DockerFile添加</h5><p>​     可在Dockerfile中使用VOLUME指令来给镜像添加一个或多个数据卷。</p>
+<ol>
+<li><p>构建DockerFile</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># volume test</span><br><span class="line">FROM centos</span><br><span class="line">VOLUMN [&quot;/data_1&quot;,&quot;data_2&quot;]</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>build命令生成镜像</p>
+<blockquote>
+<p>docker build -f   dockerfile文件路径  -t 镜像名 .</p>
+</blockquote>
+</li>
+<li><p>run 运行容器</p>
+</li>
+</ol>
+<p><em>docker会默认根据dockerfile中的数据卷生成宿主机目录</em></p>
+<h4 id="数据卷容器："><a href="#数据卷容器：" class="headerlink" title="数据卷容器："></a>数据卷容器：</h4><blockquote>
+<p>​    命名的容器挂载数据卷，其他容器通过挂载这个（父容器）实现数据共享，挂载数据卷的容器，称之为数据卷容器。</p>
+<p>​    容器之间配置信息的传递，数据卷的生命周期一直持续到没有容器使用它为止。</p>
+<ol>
+<li><p>先启动一个父容器 dc01</p>
+</li>
+<li><p>dc02继承自dc01 ,run 加参数   –volumes from dc01</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile:"></a>DockerFile:</h3><h4 id="1-是什么？"><a href="#1-是什么？" class="headerlink" title="1)  是什么？"></a>1)  是什么？</h4><p>​    Dockerfile是用来构建docker镜像的构建文件，是由一系列命令和参数构成的脚本。</p>
+<p>​    构建步骤：编写dockfile文件  -&gt;  docker build -&gt; docker run</p>
+<blockquote>
+<p>DockerFile文件格式基础：</p>
+<ol>
+<li>每条保留字指令都必须为大写字母且后面需跟随至少一个参数</li>
+<li>指令按照从上到下，顺序执行</li>
+<li>#表示注释</li>
+<li>每条指令都会创建一个新的镜像层，并对镜像进行提交</li>
+</ol>
+<p>执行DockerFile大致流程：</p>
+<ol>
+<li>docker从基础镜像运行一个容器</li>
+<li>执行一条指令并对容器做出修改</li>
+<li>执行类似docker commit 的操作提交一个新的镜像层</li>
+<li>docker基于刚提交的镜像运行一个新容器</li>
+<li>执行dockerfile中的下一条指令直到所有容器都执行完成</li>
+</ol>
+</blockquote>
+<h4 id="2）DockerFile-保留字指令"><a href="#2）DockerFile-保留字指令" class="headerlink" title="2）DockerFile 保留字指令"></a>2）DockerFile 保留字指令</h4><ul>
+<li>FROM    基础镜像，当前镜像基于哪个镜像的</li>
+<li>MAINTAINER    镜像维护者的姓名和邮箱</li>
+<li>RUN    容器构建时需要运行的命令</li>
+<li>EXPOSE    当前容器对外暴露的端口</li>
+<li>WORKDIR    执行在创建容器后，终端默认登陆进来后的工作目录</li>
+<li>ENV    用于构建镜像过程中设置环境变量</li>
+<li>ADD    将宿主目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包</li>
+<li>COPY    类似ADD,拷贝文件和目录到镜像中</li>
+<li>VOLUME    容器数据卷，用于数据保存和持久化工作</li>
+<li>CMD    执行一个容器启动时要运行的命令，Dockfile可以有多个CMD命令，但是只有最后一个生效，CMD会被docker run之后的参数替换</li>
+<li>ENTRYPOINT    指定一个容器启动时要运行的命令，和CMD一样，都是在指定容器启动程序和参数。不会像CMD最后的CMD会替换之前的CMD,</li>
+<li>ONBUILD    当构建一个被继承的Dockerfile时运行命令，父镜像在被子镜像继承后父镜像的onbuild被触发</li>
+</ul>
+<h4 id="3）案例"><a href="#3）案例" class="headerlink" title="3）案例"></a>3）案例</h4><blockquote>
+<p>Base镜像（scratch）,Docker Hub上99%的镜像都是通过在base镜像中安装和配置需要的软件构建出来的</p>
+</blockquote>
+<h5 id="1）-自定义镜像，基于centos修改"><a href="#1）-自定义镜像，基于centos修改" class="headerlink" title="1） 自定义镜像，基于centos修改"></a>1） 自定义镜像，基于centos修改</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM centos  ##来源</span><br><span class="line">MAINTAINER vicent&lt;vincent@163.com&gt;  ##作者信息</span><br><span class="line">ENV MYPATH /usr/local ## 设置环境变量，供后面引用</span><br><span class="line">WORKDIR &amp;MYPATH  ## 设置工作目录 </span><br><span class="line">RUN yum -y install vim   ## 容器构建时需要运行的命令</span><br><span class="line">RUN yum -y install net-tools</span><br><span class="line">EXPOSE 80  ## 容器对外暴露的端口</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>​    DockFile中 CMD和ENTRYPOINT 区别：</p>
+<p>例：DockerFile1: CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​        DockerFile2: ENTRYPOINT [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​    当使用docker run 后面更参数 -i 时，DockerFile1镜像的容器，会报错，因为相当于使用CMD -i 替换了 CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
+<p>​    而使用DockerFile2镜像的容器，正常，因为相当于 CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]后追加了">www.baidu.com&quot;]后追加了</a> ”-i“</p>
+]]></content>
+      <categories>
+        <category>容器</category>
+      </categories>
+      <tags>
+        <tag>容器</tag>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux下MySQL的安装与使用</title>
     <url>/2018/11/09/%E6%95%B0%E6%8D%AE%E5%BA%93/Linux%E4%B8%8BMySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8/</url>
     <content><![CDATA[<h1 id="Linux下MySQL的安装与使用"><a href="#Linux下MySQL的安装与使用" class="headerlink" title="Linux下MySQL的安装与使用"></a>Linux下MySQL的安装与使用</h1><h2 id="1-安装前说明"><a href="#1-安装前说明" class="headerlink" title="1. 安装前说明"></a>1. 安装前说明</h2><h2 id="1-1-Linux系统及工具的准备"><a href="#1-1-Linux系统及工具的准备" class="headerlink" title="1. 1 Linux系统及工具的准备"></a>1. 1 Linux系统及工具的准备</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装并启动好两台虚拟机：CentOS 7</span><br><span class="line">掌握克隆虚拟机的操作</span><br><span class="line">mac地址</span><br><span class="line">主机名</span><br><span class="line">ip地址</span><br><span class="line">UUID</span><br><span class="line">安装有Xshell 和Xftp等访问CentOS系统的工具</span><br><span class="line">CentOS6和CentOS7在MySQL的使用中的区别</span><br></pre></td></tr></table></figure>
@@ -1124,295 +1995,6 @@
       </categories>
       <tags>
         <tag>Mysql</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker自学笔记</title>
-    <url>/2021/05/25/%E5%AE%B9%E5%99%A8/Docker%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<h2 id="Docker自学笔记"><a href="#Docker自学笔记" class="headerlink" title="Docker自学笔记"></a>Docker自学笔记</h2><h3 id="概述："><a href="#概述：" class="headerlink" title="概述："></a>概述：</h3><p>Docker镜像的设计，使得Docker打破过去【程序即应用】的观念。通过镜像（<em>images</em>）将作业系统核心除外，运作应用程式所需的系统环境，由上而下打包，达到应用程式跨平台间的无缝接轨运作。</p>
-<p>基于<strong>go语言</strong>开发实现的云开源项目。主要目标是通过对应用组件的封装，分发，部署，运行等生命周期的管理。使得应用及其运行环境能做到<strong>一次封装，到处运行</strong>。</p>
-<p>解决了运行环境和配置问题的软件容器，方便做持续集成并有助于整体发布的容器虚拟化技术</p>
-<h3 id="基本组成："><a href="#基本组成：" class="headerlink" title="基本组成："></a>基本组成：</h3><ul>
-<li>镜像 image  ：是一个只读的模板，类似于java类</li>
-<li>容器 container ：通过镜像创建，类似于java类的实例</li>
-<li>仓库 repository：集中存放镜像的场所</li>
-</ul>
-<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><p>步骤：</p>
-<ol>
-<li>yum  install -y -epel-release  （docker使用EPEL发布，RHEL系的OS首先要确保已经持有EPEL仓库）</li>
-<li>yum install -y docker-io</li>
-<li>安装后配置文件：&#x2F;etc&#x2F;sysconfig&#x2F;docker</li>
-<li>启动Docker后台服务：service docker start</li>
-<li>版本验证：docker version</li>
-</ol>
-<p>阿里云镜像加速配置：</p>
-<ul>
-<li>登录阿里云管理控制台获取镜像加速专属<em>加速器地址</em></li>
-<li>&#x2F;etc&#x2F;sysconfig&#x2F;docker配置文件中 ，配置 other_ages&#x3D;”–registry-mirror&#x3D;<em>加速器地址</em>“</li>
-<li>检查是否失效 ps -ef|grep docker 查看进程中是否包含该<em>加速器地址</em></li>
-</ul>
-<p>HelloWorld镜像:</p>
-<ul>
-<li><p>docker run hello-world</p>
-</li>
-<li><p>先从本地查找镜像，没有则取远程下载</p>
-</li>
-</ul>
-<h3 id="运行原理："><a href="#运行原理：" class="headerlink" title="运行原理："></a>运行原理：</h3><ul>
-<li>Docker是一个client-serve结构的系统，Docker守护进程运行在主机上，然后通过socker连接从客户</li>
-</ul>
-<p>端访问，守护进程从客户端接受命令并管理运行在主机上的容器。可以把容器看作一个精简版的Linux环境。</p>
-<ul>
-<li><p>为什么比虚拟机快？</p>
-<ul>
-<li>docker有着比虚拟机更少的抽象层。由于docker不需要Hypervisor实现硬件资源虚拟化，运行在docker容器上的程序直接使用的都是实际物理机的硬件资源。因此在CPU、内存利用率上docker将会在效率上有明显优势。</li>
-<li>docker利用的是宿主机的内核，而不需要Guest OS。因此当新建一个容器时，docker不需要和虚拟机一样重新加载一个操作系统内核。然而避免引寻，加载操作系用内核是个比较费时费资源的过程，当新建一个虚拟机时，虚拟机软件需要加载Guest OS,新建过程是分钟级别的。而docker直接利用宿主机的操作系用，新建一个docker容器时秒级的。</li>
-</ul>
-</li>
-<li><p>对比：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Docker容器</th>
-<th>虚拟机（VM）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>操作系统</td>
-<td>与宿主机共享OS</td>
-<td>宿主机OS上运行虚拟机OS</td>
-</tr>
-<tr>
-<td>存储大小</td>
-<td>镜像小，便于存储和传输</td>
-<td>镜像庞大（vmdk,vdi等）</td>
-</tr>
-<tr>
-<td>运行性能</td>
-<td>几乎无额外性能损失</td>
-<td>操作系统额外的CPU，内存消耗</td>
-</tr>
-<tr>
-<td>移植性</td>
-<td>轻便，灵活，适用于Linux</td>
-<td>笨重，与虚拟化技术耦合度高</td>
-</tr>
-<tr>
-<td>硬件亲和性</td>
-<td>面向软件开发者</td>
-<td>面向硬件运维者</td>
-</tr>
-<tr>
-<td>部署速度</td>
-<td>快速，秒级</td>
-<td>较慢，10s以上</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<h3 id="常用命令："><a href="#常用命令：" class="headerlink" title="常用命令："></a>常用命令：</h3><ol>
-<li><p>帮助命令</p>
-<ul>
-<li>docker version</li>
-<li>docker info</li>
-<li>docker –help</li>
-</ul>
-</li>
-<li><p>镜像命令</p>
-<ul>
-<li>docker images：列出本地主机上的镜像<ul>
-<li>-a: 所有镜像</li>
-<li>-q:只显示镜像ID</li>
-<li>–digests:显示镜像的摘要信息</li>
-<li>–no-trunc:显示完整 的镜像信息</li>
-</ul>
-</li>
-<li>docker search [xxx]：搜索hub上的镜像<ul>
-<li>-s : 星数超过指定数量的  -s 100  [options]</li>
-</ul>
-</li>
-<li>docker pull [xxx:（版本号，默认时latest）]: 下载镜像</li>
-<li>docker rmi [xxx]:（版本号，默认时latest：删除某个镜像 <ul>
-<li>-f：强制删除</li>
-<li>删除多个  docker rmi -f 镜像名1:tag  镜像名2:tag</li>
-<li>删除全部 docker rmi -f ${docker images -qa}</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>容器命令</p>
-<ul>
-<li><p>新建并启动容器： docker run [OPTIONS] IMAGE [COMMAND] [ARG…]</p>
-<p>​    常用options:</p>
-<ul>
-<li>–name :为容器指定一个名字</li>
-<li>-d:后台运行容器，返回容器id，即启动守护式容器</li>
-<li>-i:以交互模式运行容器，通常与*-t* 同时使用</li>
-<li>-t:为容器重新分配一个伪输入终端，通常与*-i*同时使用</li>
-<li>-P:随机端口映射</li>
-<li>-p:指定端口映射，格式：ip:hostPort:containerPort | ip:containerPort | <strong>hostPort:containerPort</strong> | containerPort</li>
-</ul>
-</li>
-<li><p>列出当前所有正在运行的容器：docker ps [OPTIONS]</p>
-<ul>
-<li>-a：列出当前所有正在运行的容器+历史上运行过的</li>
-<li>-l：显示最近创建的容器</li>
-<li>-n：显示最近n个创建的容器</li>
-<li>-q：静默模式，只显示容器编号</li>
-<li>–no-trunc：不截断输出</li>
-</ul>
-</li>
-<li><p>退出容器：</p>
-<ul>
-<li>exit :容器停止退出</li>
-<li>ctrl + P + Q：容器不停止退出</li>
-</ul>
-</li>
-<li><p>启动容器：</p>
-<p> docker start 容器ID或者容器名</p>
-</li>
-<li><p>重启容器：</p>
-<p> dockers restart 容器ID或者容器名</p>
-</li>
-<li><p>停止容器</p>
-<p> docker stop 容器ID或者容器名</p>
-</li>
-<li><p>强制停止</p>
-<p>  docker kill  容器ID或者容器名</p>
-</li>
-<li><p>删除容器</p>
-<p>  docker rm 容器ID或者容器名  , -f 强制删除</p>
-<p>  删除多个容器： docker rm -f ${docker ps - a -q} ,  docker ps -a -q | xargs docker rm</p>
-<blockquote>
-<p><strong>重要</strong>：</p>
-<ul>
-<li><p>启动守护式容器： docker run -d 容器名</p>
-</li>
-<li><p>查看容器日志： docker logs -f -t –tail 容器ID</p>
-</li>
-<li><p>查看容器内运行的进程：docker top 容器ID</p>
-</li>
-<li><p>查看容器内部细节：docker inspect 容器ID</p>
-</li>
-<li><p>进入正在运行的容器并以命令行交互：</p>
-<p>docker exec -it 容器ID bashShell，在容器外打开新的终端，并且可以启动新的进程</p>
-<p>重新进入 docker attach 容器ID，直接进入容器启动命令的终端，不会启动新的进程</p>
-</li>
-<li><p>从容器内拷贝文件到主机上：docker cp 容器ID:容器内路径 目的主机路径</p>
-</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="镜像原理："><a href="#镜像原理：" class="headerlink" title="镜像原理："></a>镜像原理：</h3><p>​    <em>镜像是一种轻量级的，可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含软件运行时的所有内容，包括代码，运行时，库，环境变量和配置文件。</em></p>
-<h4 id="1-UnionFS（联合文件系统）"><a href="#1-UnionFS（联合文件系统）" class="headerlink" title="1) UnionFS（联合文件系统）"></a>1) UnionFS（联合文件系统）</h4><p>​    Union文件系统是一种分层，轻量级并且高性能的文件系统，<strong>它支持对文件系统的修改作为一次提交来一层层的叠加</strong>，同时可以将不用目录挂载到同一个虚拟文件系统下。Union文件系统是Docker镜像的基础。镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体镜像。</p>
-<p>​    特性：一次同时加载多个文件系统，但从外表看来，只能看到一个文件系统，联合加载会把各层文件系统叠加起来，这样最终的文件系统会包含所有底层文件和目录。</p>
-<h4 id="2-Docker镜像加载原理"><a href="#2-Docker镜像加载原理" class="headerlink" title="2) Docker镜像加载原理"></a>2) Docker镜像加载原理</h4><p>​    docker的镜像实际上由一层一层的文件系统组成，这种层级的文件系统就是UnionFS。</p>
-<blockquote>
-<p>bootfs(boot file system)主要包含bootloader和kernel，bootloader主要是引导加载kernel,Linux刚启动时会加载bootfs文件系统，<strong>在Docker镜像的最底层时bootfs</strong>。这一层与Linux&#x2F;Unix系统是一样的，包含boot加载器和内核，当boot加载完成之后整个内核就在内存中了，此时内存的使用权已由bootfs转交给内核，此时系统也会卸载bootfs。</p>
-</blockquote>
-<blockquote>
-<p>rootfs(root file system)，在bootfs之上，包含的就是Linux系统中的 &#x2F;dev,&#x2F;proc,&#x2F;bin,&#x2F;etc等标准目录和文件。rootfs就是各种不同的操作系统发行版，比如Ubuntu,Centos等</p>
-</blockquote>
-<h4 id="3-分层的镜像"><a href="#3-分层的镜像" class="headerlink" title="3) 分层的镜像"></a>3) 分层的镜像</h4><h4 id="4-为什么Docker镜像采用分层结构？"><a href="#4-为什么Docker镜像采用分层结构？" class="headerlink" title="4) 为什么Docker镜像采用分层结构？"></a>4) 为什么Docker镜像采用分层结构？</h4><pre><code> 共享资源：
-</code></pre>
-<p>​    比如当有多个镜像都从相同的base镜像构建而来，那么宿主机只需要在磁盘上保存一份base镜像，同时内存中也只需要加载一份base镜像，就可以为所有容器服务了。而且镜像的每一层都可以被共享。</p>
-<p> 特点：Docker镜像都是只读的，当启动容器时，和一个新的可写层被加载到镜像的顶部。这一层通常被称为【容器层】，容器层之下的都叫做【镜像层】</p>
-<h3 id="镜像commit"><a href="#镜像commit" class="headerlink" title="镜像commit:"></a>镜像commit:</h3><blockquote>
-<p>docker commit 提交一个容器副本使之成为一个新的镜像</p>
-<p>docker commit -m &#x3D; “提交的描述信息” -a&#x3D;”作者” 容器ID 要创建的目标镜像名:[标签名    ]</p>
-</blockquote>
-<h3 id="Docker容器数据卷："><a href="#Docker容器数据卷：" class="headerlink" title="Docker容器数据卷："></a>Docker容器数据卷：</h3><blockquote>
-<p>​    卷就是目录或文件，存在于一个或多个容器中，由docker挂载到容器，但不属于联合文件系统，因此能绕过ufs提供一些用于<strong>持久存储</strong>或<strong>共享数据</strong>的特性：</p>
-<p>​    数据卷的目的就是做数据的持久化，完全独立于容器的生存周期，因此Docker不会再容器删除时删除其挂载的数据卷</p>
-<p>特点：</p>
-<pre><code>* 数据卷可在容器之间共享或重用数据
-* 卷中的更改可直接生效
-* 卷中的更改不会包含在镜像的更新中
-* 卷的生命周期一直持续到没有容器使用它为止
-</code></pre>
-</blockquote>
-<h4 id="容器内添加数据卷："><a href="#容器内添加数据卷：" class="headerlink" title="容器内添加数据卷："></a>容器内添加数据卷：</h4><h5 id="1）-命令添加-v"><a href="#1）-命令添加-v" class="headerlink" title="1） 命令添加  -v"></a>1） 命令添加  <em>-v</em></h5><p>​    docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录  镜像名</p>
-<p>使用 docker inspect 容器ID ,展示的json中可查看是否添加数据卷成功（”volumes“）</p>
-<p>带权限的命令</p>
-<p>docker run -it -v &#x2F;宿主机绝对路径目录:&#x2F;容器内目录***:ro***  镜像名  (ro: read  only)</p>
-<h5 id="2）DockerFile添加"><a href="#2）DockerFile添加" class="headerlink" title="2）DockerFile添加"></a>2）DockerFile添加</h5><p>​     可在Dockerfile中使用VOLUME指令来给镜像添加一个或多个数据卷。</p>
-<ol>
-<li><p>构建DockerFile</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># volume test</span><br><span class="line">FROM centos</span><br><span class="line">VOLUMN [&quot;/data_1&quot;,&quot;data_2&quot;]</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>build命令生成镜像</p>
-<blockquote>
-<p>docker build -f   dockerfile文件路径  -t 镜像名 .</p>
-</blockquote>
-</li>
-<li><p>run 运行容器</p>
-</li>
-</ol>
-<p><em>docker会默认根据dockerfile中的数据卷生成宿主机目录</em></p>
-<h4 id="数据卷容器："><a href="#数据卷容器：" class="headerlink" title="数据卷容器："></a>数据卷容器：</h4><blockquote>
-<p>​    命名的容器挂载数据卷，其他容器通过挂载这个（父容器）实现数据共享，挂载数据卷的容器，称之为数据卷容器。</p>
-<p>​    容器之间配置信息的传递，数据卷的生命周期一直持续到没有容器使用它为止。</p>
-<ol>
-<li><p>先启动一个父容器 dc01</p>
-</li>
-<li><p>dc02继承自dc01 ,run 加参数   –volumes from dc01</p>
-</li>
-</ol>
-</blockquote>
-<h3 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile:"></a>DockerFile:</h3><h4 id="1-是什么？"><a href="#1-是什么？" class="headerlink" title="1)  是什么？"></a>1)  是什么？</h4><p>​    Dockerfile是用来构建docker镜像的构建文件，是由一系列命令和参数构成的脚本。</p>
-<p>​    构建步骤：编写dockfile文件  -&gt;  docker build -&gt; docker run</p>
-<blockquote>
-<p>DockerFile文件格式基础：</p>
-<ol>
-<li>每条保留字指令都必须为大写字母且后面需跟随至少一个参数</li>
-<li>指令按照从上到下，顺序执行</li>
-<li>#表示注释</li>
-<li>每条指令都会创建一个新的镜像层，并对镜像进行提交</li>
-</ol>
-<p>执行DockerFile大致流程：</p>
-<ol>
-<li>docker从基础镜像运行一个容器</li>
-<li>执行一条指令并对容器做出修改</li>
-<li>执行类似docker commit 的操作提交一个新的镜像层</li>
-<li>docker基于刚提交的镜像运行一个新容器</li>
-<li>执行dockerfile中的下一条指令直到所有容器都执行完成</li>
-</ol>
-</blockquote>
-<h4 id="2）DockerFile-保留字指令"><a href="#2）DockerFile-保留字指令" class="headerlink" title="2）DockerFile 保留字指令"></a>2）DockerFile 保留字指令</h4><ul>
-<li>FROM    基础镜像，当前镜像基于哪个镜像的</li>
-<li>MAINTAINER    镜像维护者的姓名和邮箱</li>
-<li>RUN    容器构建时需要运行的命令</li>
-<li>EXPOSE    当前容器对外暴露的端口</li>
-<li>WORKDIR    执行在创建容器后，终端默认登陆进来后的工作目录</li>
-<li>ENV    用于构建镜像过程中设置环境变量</li>
-<li>ADD    将宿主目录下的文件拷贝进镜像且ADD命令会自动处理URL和解压tar压缩包</li>
-<li>COPY    类似ADD,拷贝文件和目录到镜像中</li>
-<li>VOLUME    容器数据卷，用于数据保存和持久化工作</li>
-<li>CMD    执行一个容器启动时要运行的命令，Dockfile可以有多个CMD命令，但是只有最后一个生效，CMD会被docker run之后的参数替换</li>
-<li>ENTRYPOINT    指定一个容器启动时要运行的命令，和CMD一样，都是在指定容器启动程序和参数。不会像CMD最后的CMD会替换之前的CMD,</li>
-<li>ONBUILD    当构建一个被继承的Dockerfile时运行命令，父镜像在被子镜像继承后父镜像的onbuild被触发</li>
-</ul>
-<h4 id="3）案例"><a href="#3）案例" class="headerlink" title="3）案例"></a>3）案例</h4><blockquote>
-<p>Base镜像（scratch）,Docker Hub上99%的镜像都是通过在base镜像中安装和配置需要的软件构建出来的</p>
-</blockquote>
-<h5 id="1）-自定义镜像，基于centos修改"><a href="#1）-自定义镜像，基于centos修改" class="headerlink" title="1） 自定义镜像，基于centos修改"></a>1） 自定义镜像，基于centos修改</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM centos  ##来源</span><br><span class="line">MAINTAINER vicent&lt;vincent@163.com&gt;  ##作者信息</span><br><span class="line">ENV MYPATH /usr/local ## 设置环境变量，供后面引用</span><br><span class="line">WORKDIR &amp;MYPATH  ## 设置工作目录 </span><br><span class="line">RUN yum -y install vim   ## 容器构建时需要运行的命令</span><br><span class="line">RUN yum -y install net-tools</span><br><span class="line">EXPOSE 80  ## 容器对外暴露的端口</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;success&quot;</span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
-
-<p>​    DockFile中 CMD和ENTRYPOINT 区别：</p>
-<p>例：DockerFile1: CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
-<p>​        DockerFile2: ENTRYPOINT [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
-<p>​    当使用docker run 后面更参数 -i 时，DockerFile1镜像的容器，会报错，因为相当于使用CMD -i 替换了 CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]">www.baidu.com&quot;]</a></p>
-<p>​    而使用DockerFile2镜像的容器，正常，因为相当于 CMD [“curl”,”-s”,”http:<a href="http://www.baidu.com" ]后追加了">www.baidu.com&quot;]后追加了</a> ”-i“</p>
-]]></content>
-      <categories>
-        <category>容器</category>
-      </categories>
-      <tags>
-        <tag>容器</tag>
-        <tag>docker</tag>
       </tags>
   </entry>
   <entry>
